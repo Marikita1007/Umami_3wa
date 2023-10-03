@@ -1,0 +1,66 @@
+@import 'variables';
+@import url('https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap');
+@import "~bootstrap/scss/bootstrap";
+@import "~font-awesome/css/font-awesome.css";
+
+// global-styles
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+  line-height: 1.625;
+  margin: 0;
+  color: #6F6F6F;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  h1 {
+    color: $umami-yellow;
+    font-family: $umami-font-family;
+  }
+
+  h2 {
+    color: $umami-yellow-dark;
+    font-family: $umami-font-family;
+    text-transform: uppercase;
+  }
+
+  h3 {
+    color: $umami-yellow-dark;
+  }
+
+  .title {
+    font-size: 1.75rem;
+    line-height: 1.1;
+    letter-spacing: 2px;
+    color: $umami-yellow-dark ;
+    font-weight: bold;
+    margin: 1rem 0 0 0;
+  }
+
+}
+
+////For responsive
+@media (max-width: $layout-breakpoint-small) {
+  html {
+    font-size: 16px;
+    border: 1px solid red !important;
+  }
+}
+

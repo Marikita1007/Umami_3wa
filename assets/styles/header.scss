@@ -1,0 +1,200 @@
+//@import 'base';
+//
+//.header {
+//  background:
+//          linear-gradient(180deg, rgba(0, 0, 0, 0.92), rgba(54, 54, 54, 0.5) 39.24%, rgba(28, 28, 28, 0.4)),
+//          url(../../public/images/pancake_2.jpg) center 20% / cover no-repeat;
+//  color: $umami-white;
+//
+//  .topbar {
+//    padding: 18px 20px;
+//    font-size: .875rem;
+//    text-transform: uppercase;
+//    text-align: center;
+//
+//    //MARIKA
+//    //.logo {
+//    //  margin-bottom: 15px;
+//    //}
+//
+//    .menu {
+//      margin-left: auto;
+//
+//      .menu-item:hover {
+//        color: $umami-yellow-dark;
+//      }
+//
+//      .menu-item {
+//        display: inline-block;
+//        margin: 0 15px;
+//      }
+//
+//      .menu-button {
+//        border: solid 1px $umami-yellow;
+//        padding: 7px 10px;
+//        transition-property: color, background-color;
+//        margin-top: 5px;
+//      }
+//
+//      .menu-button:hover {
+//        background: $umami-yellow-dark;
+//        color: $umami-white;
+//      }
+//
+//    }
+//
+//  }
+//
+//  .baseline {
+//    padding: 50px 0 70px 0;
+//    text-align:center;
+//    line-height: 1;
+//
+//    .baseline-name {
+//      padding-bottom: 10px;
+//      width: 300px;
+//      height: auto;
+//    }
+//
+//    .baseline-slogan {
+//      color: $umami-yellow-dark;
+//      font-size: 2.5rem;
+//      font-family: $umami-font-family-cursive ;
+//      //font-weight: 300;
+//      display: block;
+//      letter-spacing: 2px;
+//    }
+//  }
+//}
+//
+////For responsive
+//@media (max-width: $layout-breakpoint-small) {
+//
+//  .topbar {
+//    flex-direction: column;
+//
+//    //Not applied MARIKA
+//    img {
+//      width: 70px;
+//      margin-bottom: 12px;
+//    }
+//
+//    //Not applied MARIKA
+//    //.menu-button {
+//    //  margin-top: 0;
+//    //  margin-right: 0;
+//    //}
+//  }
+//
+//  .baseline {
+//    padding: 125px 0 230px;
+//
+//    .baseline-slogan {
+//      font-size: 1.5rem;
+//    }
+//
+//    .baseline-name {
+//      width: 130px;
+//      padding-top: 8px;
+//      padding-bottom: 18px;
+//    }
+//  }
+//}
+
+@import 'base';
+
+.header {
+  background:
+          linear-gradient(180deg, rgba(0, 0, 0, 0.92), rgba(54, 54, 54, 0.5) 39.24%, rgba(28, 28, 28, 0.4)),
+          url(../../public/images/pancake_2.jpg) center 20% / cover no-repeat;
+  color: $umami-white;
+
+  .baseline {
+    line-height: 1;
+    padding: 50px 0 70px 0;
+    text-align: center;
+
+    .baseline-name {
+      height: auto;
+      padding-bottom: 10px;
+      width: 300px;
+    }
+
+    .baseline-slogan {
+      color: $umami-yellow-dark;
+      display: block;
+      font-family: $umami-font-family-cursive;
+      font-size: 2.5rem;
+      //font-weight: 300;
+      letter-spacing: 2px;
+    }
+  }
+
+  .topbar {
+    font-size: .875rem;
+    padding: 18px 20px;
+    text-align: center;
+    text-transform: uppercase;
+
+    .menu {
+      margin-left: auto;
+
+      .menu-button {
+        background: transparent;
+        border: solid 1px $umami-yellow;
+        color: $umami-white;
+        margin-top: 5px;
+        padding: 7px 10px;
+        transition-property: color, background-color;
+      }
+
+      .menu-button:hover {
+        background: $umami-yellow-dark;
+
+        i {
+          color: $umami-white;
+        }
+      }
+
+      .menu-item {
+        display: inline-block;
+        margin: 0 15px;
+      }
+
+      .menu-item:hover {
+        color: $umami-yellow-dark;
+      }
+    }
+  }
+}
+
+@media (max-width: $layout-breakpoint-small) {
+  .baseline {
+    padding: 125px 0 230px;
+
+    .baseline-name {
+      padding-bottom: 18px;
+      padding-top: 8px;
+      width: 130px;
+    }
+
+    .baseline-slogan {
+      font-size: 1.5rem;
+    }
+  }
+
+  .topbar {
+    flex-direction: column;
+
+    img {
+      margin-bottom: 12px;
+      width: 70px;
+    }
+
+    //Not applied MARIKA
+    //.menu-button {
+    //  margin-top: 0;
+    //  margin-right: 0;
+    //}
+  }
+}

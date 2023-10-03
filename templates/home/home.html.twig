@@ -1,0 +1,220 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section class="home-section">
+        <div class="container-small">
+            <article  class="block block-last">
+                <div class="block-body">
+                    <h2 class="title">Popular Categories</h2>
+                </div>
+            </article>
+            {% if getCuisineCategories is defined %}
+                <nav class="ingredients-menu">
+                    <a href="{{ path('show_categories', {'cuisine': 'Italian'}) }}">Italian</a>
+                    <a href="{{ path('show_categories', {'cuisine': 'American'}) }}">American</a>
+                    <a href="{{ path('show_categories', {'cuisine': 'African'}) }}">African</a>
+                    <a href="{{ path('show_categories', {'cuisine': 'Japanese'}) }}">Japanese</a>
+                    <a href="{{ path('show_categories', {'cuisine': 'French'}) }}">French</a>
+                    <a href="{{ path('show_categories', {'cuisine': 'Greek'}) }}">Greek</a>
+                    <a href="{{ path('show_categories', {'cuisine': 'Mexican'}) }}">Mexican</a>
+                </nav>
+            {% endif %}
+        </div>
+        <div class="container">
+            <div class="menu-summary" id="menu">
+                <article  class="menu-summary-item">
+                    <img src="{{ asset('images/crusted-chicken-square.jpg') }}" alt="" class="menu-summary-img">
+                    <h3 class="menu-summary-title">Amazing Crusted Chicken</h3>
+                    <p>Beryl Cook is one of Britain’s most talented and amusing artists .Beryl’s pictures feature women of all shapes and sizes enjoying themselves </p>
+                    <div class="menu-summary-price">$20</div>
+                </article >
+                <article class="menu-summary-item">
+                    <img src="{{ asset('images/bobun-light-square.jpg') }}" alt="" class="menu-summary-img">
+                    <h3 class="menu-summary-title">BoBun Light Odd</h3>
+                    <p>Beryl Cook is one of Britain’s most talented and amusing artists .Beryl’s pictures feature women of all shapes and sizes enjoying themselves </p>
+                    <div class="menu-summary-price">$20</div>
+                </article>
+                <article class="menu-summary-item">
+                    <img src="{{ asset('images/poisson-square.jpg') }}" alt="" class="menu-summary-img">
+                    <h3 class="menu-summary-title">Amazing Crusted Chicken</h3>
+                    <p>Beryl Cook is one of Britain’s most talented and amusing artists .Beryl’s pictures feature women of all shapes and sizes enjoying themselves </p>
+                    <div class="menu-summary-price">$20</div>
+                </article>
+                <article class="menu-summary-item">
+                    <img src="{{ asset('images/paella-square.jpg') }}" alt="" class="menu-summary-img">
+                    <h3 class="menu-summary-title">Spicy Egg Paella</h3>
+                    <p>Beryl Cook is one of Britain’s most talented and amusing artists .Beryl’s pictures feature women of all shapes and sizes enjoying themselves </p>
+                    <div class="menu-summary-price">$20</div>
+                </article>
+            </div>
+            {#  MARIKA  Once the data is inside database#}
+            {#                <div class="container">#}
+            {#                    <div class="menu-summary" id="menu">#}
+            {#                        {% for item in menuItems %}#}
+            {#                            <div class="menu-summary-item">#}
+            {#                                <img src="{{ item.image }}" alt="" class="menu-summary-img">#}
+            {#                                <h3 class="menu-summary-title">{{ item.title }}</h3>#}
+            {#                                <p>{{ item.description }}</p>#}
+            {#                                <div class="menu-summary-price">${{ item.price }}</div>#}
+            {#                            </div>#}
+            {#                        {% endfor %}#}
+            {#                    </div>#}
+            {#                </div>#}
+        </div>
+    </section>
+
+    <section class="home-section">
+        <div  class="container-small">
+            <article  class="block block-last">
+                <div class="block-body">
+                    <h2 class="title">This week specials</h2>
+                </div>
+            </article>
+        </div>
+
+        <article  class="block block-left">
+            <div class="block-img">
+                <img src="{{ asset('images/burger.jpg') }}" alt="Delicious burger">
+            </div>
+            <div class="block-body">
+                <h2 class="title"><span>Discover</span> our gastronomy</h2>
+                <p>
+                    Attending a trade show can be a very effective method of promoting your company and its products. And one of the most effective ways to optimize your trade show display and increase traffic to your booth is through the use of banner stands.
+                </p>
+                <a href="" class="more">See more</a>
+            </div>
+        </article >
+        <article class="block block-right">
+            <div class="block-img">
+                <img src="{{ asset('images/crusted-chicken.jpg') }}" alt="Delicious crusted chicken">
+            </div>
+            <div class="block-body">
+                <h2 class="title"><span>Discover</span> our gastronomy</h2>
+                <p>
+                    Attending a trade show can be a very effective method of promoting your company and its products. And one of the most effective ways to optimize your trade show display and increase traffic to your booth is through the use of banner stands.
+                </p>
+                <a href="" class="more">See more</a>
+            </div>
+        </article>
+{#        //MARIKA : Question : block-left and block-right　交互に使いたい#}
+{#        // Sample array of image URLs from the database#}
+{#        $imageUrls = [#}
+{#        'image1.jpg',#}
+{#        'image2.jpg',#}
+{#        'image3.jpg',#}
+{#        'image4.jpg',#}
+{#        ];#}
+
+{#        // Loop through the image URLs and generate HTML#}
+{#        for ($i = 0; $i < count($imageUrls); $i++) {#}
+{#        $imageClass = $i % 2 === 0 ? 'block-left' : 'block-right';#}
+{#        $imageUrl = $imageUrls[$i];#}
+{#        ?>#}
+
+{#        <div class="block <?php echo $imageClass; ?>">#}
+{#            <div class="block-img">#}
+{#                <img src="<?php echo $imageUrl; ?>" alt="Image <?php echo $i + 1; ?>">#}
+{#            </div>#}
+{#            <div class="block-body">#}
+{#                <h2 class="title"><span>Discover</span> our gastronomy</h2>#}
+{#                <p>#}
+{#                    Attending a trade show can be a very effective method of promoting your company and its products. And one of the most effective ways to optimize your trade show display and increase traffic to your booth is through the use of banner stands.#}
+{#                </p>#}
+{#                <a href="#" class="more">See more</a>#}
+{#            </div>#}
+{#        </div>#}
+}
+    </section>
+
+    <section class="home-section">
+        <div class="container-small">
+            <article class="block block-last">
+                <header>
+                    <h2 class="title">Menu Inspirations</h2>
+                </header>
+            </article>
+        </div>
+
+        {% if jsonDataSpoonacular is defined and jsonDataSpoonacular.recipes is defined %}
+            <div class="container">
+                <div class="row">
+                {% for key, recipe in jsonDataSpoonacular.recipes %}
+                    {# レシピごとに新しい行を開始する条件 #}
+                    {% if key % 3 == 0 %}
+                        </div></div><div class="container"><div class="row">
+                    {% endif %}
+
+                    <article class="col-md-4 card m-2 block-card">
+                        {% if recipe.image is defined %}
+                            <img src="{{ recipe.image }}" alt="{{ recipe.title }}">
+                        {% else %}
+                            {# MARIKA This needs to be fixed #}
+                            <img src="{{ asset('images/no-image.png') }}" alt="No Food Image Available">#}
+                        {% endif %}
+                        <div class="card-body">
+                            <h3 class="card-title">{{ recipe.title }}</h3>
+                            <p>Cooking Time: {{ recipe.readyInMinutes }} minutes</p>
+                        </div>
+                        <div class="card-footer">
+                            {# MARIKA 星の表示などの追加コードをここに追加 #}
+                        </div>
+                    </article>
+                {% endfor %}
+                </div>
+            </div>
+{#        {% elseif  %}#}
+{#            #}{#  MARIKA ここ変更加える！！　localstorageに保存するのもあり。#}
+{#            {{ dump(jsonDataSpoonacular) }}#}
+{#            {% set recipes = data.recipes %}#}
+{#            #}{# JSON データ内の 'recipes' キーからレシピ情報を取得 #}
+{#            {% set recipes = data.recipes %}#}
+
+{#            #}{# レシピ情報をループで表示 #}
+{#            {% for recipe in recipes %}#}
+{#                <div class="recipe">#}
+{#                    <h2>{{ recipe.title }}</h2>#}
+{#                    <p>Vegetarian: {{ recipe.vegetarian ? 'Yes' : 'No' }}</p>#}
+{#                    <p>Vegan: {{ recipe.vegan ? 'Yes' : 'No' }}</p>#}
+{#                    <p>Gluten-Free: {{ recipe.glutenFree ? 'Yes' : 'No' }}</p>#}
+{#                    #}{# 他の情報も同様に表示できます #}
+{#                </div>#}
+{#            {% endfor %}#}
+        {% else %}
+            <div class="container">
+                <div class="row">
+                    <article class="col-md-4 card m-2 block-card">
+                        <img src="{{ asset('images/salad_fig.jpg') }}" alt="Delicious Fig Salad">
+                        <div class="card-body">
+                            <h3 class="card-title">Delicious Recipe 1</h3>
+                            <p class="card-text">Description of Recipe 1.</p>
+                        </div>
+                        <ol class="d-flex justify-content-end" aria-label="Rating Stars">
+                            <li><i class="fas fa-star" aria-hidden="true"></i></li>
+                            <li><i class="fas fa-star" aria-hidden="true"></i></li>
+                            <li><i class="fas fa-star" aria-hidden="true"></i></li>
+                            <li><i class="fas fa-star" aria-hidden="true"></i></li>
+                            <li><i class="fas fa-star-half-alt" aria-hidden="true"></i></li>
+                        </ol>
+                    </article>
+                    <article class="col-md-4 card m-2 block-card">
+                        <img src="{{ asset('images/salad_fig.jpg') }}" alt="Delicious Fig Salad">
+                        <div class="card-body">
+                            <h3 class="card-title">Delicious Recipe 1</h3>
+                            <p class="card-text">Description of Recipe 1.</p>
+                        </div>
+                    </article>
+                    <article class="col-md-4 card m-2 block-card">
+                        <img src="{{ asset('images/salad_fig.jpg') }}" alt="Delicious Fig Salad">
+                        <div class="card-body">
+                            <h3 class="card-title">Delicious Recipe 1</h3>
+                            <p class="card-text">Description of Recipe 1.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        {% endif %}
+
+    </section>
+{% endblock %}
+
+{% set pageRoute = 'home' %} {# MARIKA : Set route-data #}

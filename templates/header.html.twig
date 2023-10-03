@@ -1,0 +1,54 @@
+{# MARIKA TODO :  make it accesibility high. NO div as much as possible  #}
+<header class="header">
+    <div class="topbar d-flex">
+        <div class=logo>
+            <a href="{{ path('home') }}">
+                <img src="{{ asset('images/umami_white_small.png') }}" alt="Umami Logo">
+            </a>
+        </div>
+        <nav class="menu">
+            <a href="{{ path('about_us') }}" class="menu-item">About Us</a>
+            <a href="{{ path('categories') }}" class="menu-item">Categories</a>
+            <a href="#" class="menu-item">Contact</a>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('admin_dashboard') }}" class="menu-item">Admin</a>
+            {% endif %}
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.user.displayName != app.user.email %}
+                <a href="{{ path('logout') }}" class="menu-item">Log Out</a>
+                {#  MARIKA Add Shos user Name option here : https://symfonycasts.com/screencast/symfony-security/user-service#play               #}
+                <img
+                        src="{{ app.user.avatarUri }}"
+                        alt="{{ app.user.displayName }} Avatar">
+            {% elseif is_granted('IS_AUTHENTICATED_REMEMBERED') and app.user.displayName == app.user.email  %}
+                <a href="{{ path('logout') }}" class="menu-item">Log Out</a>
+                <i class="fa-regular fa-user"></i>
+            {% else %}
+                <a href="{{ path('login') }}" class="menu-item">Log In</a>
+                <a href="{{ path('register') }}" class="menu-item">Sign up</a>
+            {% endif %}
+            <button href="#" class="menu-item menu-button" aria-label="Search">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+{#           MARIKA アクセシビリティを最適化する内容　後で仕様書の参考にする #}
+{#            Use a single <header> element to represent the header section of your page. #}
+{#            Use <a> elements for your logo and menu items, and provide appropriate href attributes.#}
+{#            Add an aria-label attribute to the <nav> element to provide a label for screen readers, indicating that it's the main navigation.#}
+{#            Use a <button> element for the search icon, as it's interactive.
+              Also, provide an aria-label attribute for the button to describe
+              its purpose to assistive technologies.#}
+        </nav>
+    </div>
+    <div class="baseline">
+        <img class="baseline-name text-center" src="{{ asset('images/umami-logos_white_half.png') }}" alt="UMAMI Logo">
+        <span class="baseline-slogan">Savor the Flavor</span>
+    </div>
+    <div>
+{#        #}{# MARIKA When ths email is verified; this message shows : https://symfonycasts.com/screencast/symfony-security/verify-email#codeblock-0bac7d3cc4#}
+{#        {% for flash in app.flashes('success') %}#}
+{#            <div class="alert alert-success">{{ flash }}</div>#}
+{#        {% endfor %}#}
+{#        {% for flash in app.flashes('error') %}#}
+{#            <div class="alert alert-danger">{{ flash }}</div>#}
+{#        {% endfor %}#}
+    </div>
+</header>

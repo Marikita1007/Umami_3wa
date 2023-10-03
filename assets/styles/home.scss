@@ -1,0 +1,374 @@
+@import 'base';
+
+body[data-route="home"] {
+  .home-section {
+    padding-top: 9px;
+
+    .container-small {
+      margin: 0 auto;
+      padding: 0 20px;
+      max-width: 960px;
+
+      .block {
+        margin-bottom: 50px;
+      }
+
+      .ingredients-menu {
+        margin: 40px 0;
+        font-weight: 600;
+        color: $umami-grey;
+        text-align: center;
+        text-transform: uppercase;
+      }
+
+      .ingredients-menu a {
+        display: inline-block;
+        margin: 0 5px;
+        position: relative;
+      }
+
+      //ingredients...means food categories  MARIKA
+      .ingredients-menu a::after {
+        content: '';
+        display: block;
+        position: absolute;
+        bottom: 5px;
+        left: 0;
+        right: 0;
+        height: 1px;
+        opacity: 0;
+        background: $umami-yellow-dark;
+        transition: .3s;
+      }
+
+      .ingredients-menu .active::after, .ingredients-menu a:hover::after {
+        bottom: 0;
+        opacity: 1;
+      }
+
+    }
+
+    .container {
+      margin: 0 auto;
+      padding: 0 20px;
+      max-width: 1150px;
+
+      .menu-summary-img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100px;
+      }
+
+      .menu-summary-title {
+        font-size: 1.125rem;
+        color: $umami-grey;
+        font-weight: bold;
+        padding-bottom: 0.75rem;
+        margin-bottom: 0;
+      }
+
+      .menu-summary p {
+        margin: 0;
+        padding-bottom: 1rem;
+        font-size: 0.875rem;
+      }
+
+      //Price MARIKA
+      .menu-summary-price {
+        font-family: 'Pinyon Script', serif;
+        color: $umami-yellow-dark;
+        font-size: 2.5rem;
+        line-height: 1;
+      }
+
+      .block-card {
+        width: 350px;
+
+        ol {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+
+          .fa-star {
+            background-color: transparent;
+            border: none;
+          }
+        }
+      }
+    }
+
+    .menu-summary-item {
+      position: relative;
+      padding-left: 120px;
+      margin-bottom: 30px;
+    }
+
+    .container {
+      margin: 0 auto;
+      padding: 0 20px;
+      max-width: 1150px;
+    }
+
+    .block {
+      margin-top: 100px;
+    }
+
+    .title {
+      font-size: 1.75rem;
+      line-height: 1.1;
+      letter-spacing: 2px;
+      color: $umami-yellow-dark;
+      font-weight: bold;
+      text-transform: uppercase;
+      margin: 1rem 0 0 0;
+    }
+
+    .title span {
+      font-family: $umami-yellow;
+      color: $umami-yellow-dark;
+      font-size: 2.5rem;
+      display:block;
+      text-transform: none;
+    }
+
+    //The line on the title
+    //.title::before {
+    //  content: '';
+    //  display: inline-block;
+    //  width: 24px;
+    //  height: 2px;
+    //  background: $umami-yellow-dark;
+    //  margin-bottom: .5rem;
+    //}
+    ///* HEREEEEEE  MARIKA*/
+
+  }
+
+  //MARIKA: This is needed, but it doesn"t change even if I comment it. It needs to be checked
+  //@media only screen and (min-width: 600px) {
+  //  html {
+  //    font-size: 16px;
+  //  }
+  //
+  //  .logo {
+  //    margin-bottom: 10px;
+  //  }
+  //
+  //  .topbar {
+  //    display: flex;
+  //    align-items: center;
+  //    justify-content: space-between;
+  //    max-width: 1150px;
+  //    margin: 0 auto;
+  //  }
+  //
+  //  .baseline {
+  //    padding: 125px 0 230px;
+  //  }
+  //
+  //  .baseline-slogan {
+  //    font-size: 1.5rem;
+  //  }
+  //
+  //  .baseline-name {
+  //    font-size: 4.375rem;
+  //    letter-spacing: 12px;
+  //    padding-top: 8px;
+  //    padding-bottom: 18px;
+  //  }
+  //
+  //  .baseline-welcome {
+  //    font-size: 3.75rem;
+  //  }
+  //
+  //  .menu-button {
+  //    margin-top: 0;
+  //    margin-right: 0;
+  //  }
+  //}
+
+  @media only screen and (min-width: 800px) {
+
+    .block {
+      margin-bottom: 100px;
+    }
+
+    .block-last {
+      margin-bottom: 60px;
+    }
+
+    //MARIKA  It was space between and changed to  justify-content: center;
+    .block-left, .block-right {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .block-img {
+      border: none;
+      position: relative;
+    }
+
+    .block-left .block-body, .block-right .block-body {
+      width: 445px;
+      flex: none;
+    }
+
+    .block-img::before {
+      content: '';
+      display: block;
+      border: solid 1px $umami-yellow-dark;
+      position: absolute;
+      top: -30px;
+      left: -30px;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .block-right .block-img::before {
+      left: auto;
+      right: -30px;
+    }
+
+    .block-left .block-img {
+      margin-left: 30px;
+    }
+
+    .block-right .block-img {
+      margin-right: 30px;
+    }
+
+    .block-left .block-body {
+      margin-left: 20px;
+    }
+
+    .block-right .block-body {
+      margin-right: 20px;
+      order: -1;
+    }
+
+    .title {
+      margin-bottom: 1.2rem;
+    }
+
+    .title::before {
+      margin-bottom: 10px;
+    }
+
+    .more {
+      display: block;
+      margin-top: 1.3rem;
+    }
+
+    .home-section {
+      background:
+              fixed top 95px right 0px url(../../public/images/oranges.jpg) no-repeat,
+              fixed top 640px left 0px url(../../public/images/spices.jpg) no-repeat;
+    }
+
+    .ingredients-menu a {
+      margin: 0 32px;
+    }
+
+    .menu-summary {
+      position: relative;
+      padding: 85px 0;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .menu-summary-item {
+      padding-left: 192px;
+      margin-bottom: 110px;
+      width: calc(50% - 40px);
+    }
+
+    .menu-summary-item:nth-child(even) {
+      text-align: right;
+      padding-left: 0;
+      padding-right:  192px;
+    }
+
+    .menu-summary-item:nth-child(even) .menu-summary-img {
+      left: auto;
+      right: 0;
+    }
+
+    .menu-summary-item:nth-child(even) .menu-summary-price {
+      margin-left: auto;
+    }
+
+    .menu-summary-img {
+      width: 160px;
+    }
+
+    .menu-summary-title {
+      margin-top: 0;
+      line-height: 1.2;
+      background: #FFF;
+    }
+
+    .menu-summary p {
+      background: #FFf;
+    }
+
+    .menu-summary-price {
+      padding-top: 4px;
+      width: 85px;
+      background: #FFF;
+    }
+
+    //Background Diamond
+    .menu-summary::before {
+      content:'';
+      position: absolute;
+      display: block;
+      top: 60%;
+      left: 50%;
+      width: 420px;
+      height: 420px;
+      border: solid 1px $umami-yellow-dark;
+      transform: translate(-50%, -260px) rotate(45deg);
+    }
+
+    .block-chief {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0px;
+    }
+
+    .block-chief .block-img::before {
+      display: none;
+    }
+
+    .block-chief .block-img {
+      flex: none;
+      width: 404px;
+      order: 2;
+    }
+
+    .reservation {
+      padding: 100px 0;
+    }
+
+    .reservation-form-row {
+      margin: 64px 0;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .reservation-form-row input, .reservation-form-row select {
+      width: calc(33.33% - 20px);
+      margin-bottom: 0;
+    }
+
+    .reservation .button {
+      width: calc(33.33% - 20px);
+    }
+  }
+}
+
+

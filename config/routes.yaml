@@ -1,0 +1,28 @@
+#MARIKA Not using this route yet
+#get_spoonacular_recipe:
+#  path: /api/get_spoonacular_recipe
+#  controller: App\Controller\RecipesAPIController::getSpoonacularRandomRecipe
+
+#get_mealdb_recipe:
+#  path: /api/get_mealdb_recipe
+#  controller: App\Controller\RecipesAPIController::getTheMealDBRandomRecipe
+
+#get_cuisines:
+#  path: '/get_cuisines'
+#  controller: 'App\Controller\ReceipesAPIController::showRecipesByCuisine'
+
+about_us:
+  path: /about_us
+  controller: App\Controller\AboutUsController::index
+
+get_cuisine_categories:
+  path: /get_cuisine_categories/{cuisine}
+  controller: App\Controller\YourController::getCuisineCategories
+
+categories:
+  path: /categories
+  controller: App\Controller\CategoriesController::index
+
+show_categories:
+  path: /categories/{cuisine}
+  controller: App\Controller\CategoriesController::show

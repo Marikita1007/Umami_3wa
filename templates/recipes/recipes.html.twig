@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <section class="">
+        <h1>HELLO RecipesController !</h1>
+
+        <ul class="list-unstyled">
+            {% for recipe in recipes %}
+                <li>ID: {{ recipe.id }}</li>
+                <li>Name: {{ recipe.title }}</li>
+                <li>Description: {{ recipe.description }}</li>
+                <br>
+            {% endfor %}
+        </ul>
+    </section>
+
+{% endblock %}
