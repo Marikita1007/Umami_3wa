@@ -22,16 +22,17 @@ Encore
      */
     .addEntry('app', './assets/app.js')
 
-    // Sass File
+    // Added scss files
     .addStyleEntry('base', './assets/styles/base.scss')
     .addStyleEntry('header-styles', './assets/styles/header.scss')
     .addStyleEntry('home-styles', './assets/styles/home.scss')
     .addStyleEntry('categories', './assets/styles/categories.scss')
+    .addStyleEntry('card', './assets/styles/card.scss')
 
-    // BootstrapのCSSファイルを追加 MARIKA
+    // Added bootstrap CSS
     .addStyleEntry('bootstrap-css', './node_modules/bootstrap/dist/css/bootstrap.css')
 
-    // BootstrapのJavaScriptファイルを追加 MARIKA
+    // Added bootstrap JavaScript
     .addEntry('bootstrap-js', './node_modules/bootstrap/dist/js/bootstrap.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)

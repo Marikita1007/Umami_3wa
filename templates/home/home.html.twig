@@ -123,7 +123,7 @@
 {#                <a href="#" class="more">See more</a>#}
 {#            </div>#}
 {#        </div>#}
-}
+{#}#}
     </section>
 
     <section class="home-section">
@@ -139,7 +139,6 @@
             <div class="container">
                 <div class="row">
                 {% for key, recipe in jsonDataSpoonacular.recipes %}
-                    {# レシピごとに新しい行を開始する条件 #}
                     {% if key % 3 == 0 %}
                         </div></div><div class="container"><div class="row">
                     {% endif %}
@@ -148,73 +147,69 @@
                         {% if recipe.image is defined %}
                             <img src="{{ recipe.image }}" alt="{{ recipe.title }}">
                         {% else %}
-                            {# MARIKA This needs to be fixed #}
-                            <img src="{{ asset('images/no-image.png') }}" alt="No Food Image Available">#}
+                             MARIKA This needs to be fixed
+                            <img src="{{ asset('images/no-image.png') }}" alt="No Food Image Available">
                         {% endif %}
                         <div class="card-body">
                             <h3 class="card-title">{{ recipe.title }}</h3>
                             <p>Cooking Time: {{ recipe.readyInMinutes }} minutes</p>
-                        </div>
-                        <div class="card-footer">
-                            {# MARIKA 星の表示などの追加コードをここに追加 #}
                         </div>
                     </article>
                 {% endfor %}
                 </div>
             </div>
 {#        {% elseif  %}#}
-{#            #}{#  MARIKA ここ変更加える！！　localstorageに保存するのもあり。#}
-{#            {{ dump(jsonDataSpoonacular) }}#}
+{#            MARIKA This is for my own API data #}
 {#            {% set recipes = data.recipes %}#}
-{#            #}{# JSON データ内の 'recipes' キーからレシピ情報を取得 #}
 {#            {% set recipes = data.recipes %}#}
 
-{#            #}{# レシピ情報をループで表示 #}
 {#            {% for recipe in recipes %}#}
 {#                <div class="recipe">#}
 {#                    <h2>{{ recipe.title }}</h2>#}
 {#                    <p>Vegetarian: {{ recipe.vegetarian ? 'Yes' : 'No' }}</p>#}
 {#                    <p>Vegan: {{ recipe.vegan ? 'Yes' : 'No' }}</p>#}
 {#                    <p>Gluten-Free: {{ recipe.glutenFree ? 'Yes' : 'No' }}</p>#}
-{#                    #}{# 他の情報も同様に表示できます #}
 {#                </div>#}
 {#            {% endfor %}#}
         {% else %}
-            <div class="container">
-                <div class="row">
-                    <article class="col-md-4 card m-2 block-card">
-                        <img src="{{ asset('images/salad_fig.jpg') }}" alt="Delicious Fig Salad">
-                        <div class="card-body">
-                            <h3 class="card-title">Delicious Recipe 1</h3>
-                            <p class="card-text">Description of Recipe 1.</p>
-                        </div>
-                        <ol class="d-flex justify-content-end" aria-label="Rating Stars">
-                            <li><i class="fas fa-star" aria-hidden="true"></i></li>
-                            <li><i class="fas fa-star" aria-hidden="true"></i></li>
-                            <li><i class="fas fa-star" aria-hidden="true"></i></li>
-                            <li><i class="fas fa-star" aria-hidden="true"></i></li>
-                            <li><i class="fas fa-star-half-alt" aria-hidden="true"></i></li>
-                        </ol>
-                    </article>
-                    <article class="col-md-4 card m-2 block-card">
-                        <img src="{{ asset('images/salad_fig.jpg') }}" alt="Delicious Fig Salad">
-                        <div class="card-body">
-                            <h3 class="card-title">Delicious Recipe 1</h3>
-                            <p class="card-text">Description of Recipe 1.</p>
-                        </div>
-                    </article>
-                    <article class="col-md-4 card m-2 block-card">
-                        <img src="{{ asset('images/salad_fig.jpg') }}" alt="Delicious Fig Salad">
-                        <div class="card-body">
-                            <h3 class="card-title">Delicious Recipe 1</h3>
-                            <p class="card-text">Description of Recipe 1.</p>
-                        </div>
-                    </article>
-                </div>
+            <div class="container-small flex-content">
+                <ul class="card-container" role="list">
+                    <!-- Use <ul> for a list of cards and <li> for each card -->
+                    <li class="card-component" role="listitem">
+                        <figure>
+                            <img src="{{ asset('images/salad_fig.jpg') }}" alt="A photo of a delicious-looking salad featuring figs, Camembert cheese, tomatoes, and cucumbers">
+                            <figcaption>
+                                <h4><b>Delicious Recipe 1</b></h4>
+                                <p>Description of Recipe 1.</p>
+                            </figcaption>
+                        </figure>
+                    </li>
+
+                    <li class="card-component" role="listitem">
+                        <figure>
+                            <img src="{{ asset('images/salad_fig.jpg') }}" alt="A photo of a delicious-looking salad featuring figs, Camembert cheese, tomatoes, and cucumbers">
+                            <figcaption>
+                                <h4><b>Delicious Recipe 1</b></h4>
+                                <p>Description of Recipe 1.</p>
+                            </figcaption>
+                        </figure>
+                    </li>
+
+                    <li class="card-component" role="listitem">
+                        <figure>
+                            <img src="{{ asset('images/salad_fig.jpg') }}" alt="A photo of a delicious-looking salad featuring figs, Camembert cheese, tomatoes, and cucumbers">
+                            <figcaption>
+                                <h4><b>Delicious Recipe 1</b></h4>
+                                <p>Description of Recipe 1.</p>
+                            </figcaption>
+                        </figure>
+                    </li>
+                </ul>
             </div>
         {% endif %}
-
     </section>
+
 {% endblock %}
 
-{% set pageRoute = 'home' %} {# MARIKA : Set route-data #}
+{# Set route-data for scss #}
+{% set pageRoute = 'home' %}

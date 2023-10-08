@@ -1,6 +1,6 @@
 {# MARIKA TODO :  make it accesibility high. NO div as much as possible  #}
 <header class="header">
-    <div class="topbar d-flex">
+    <div class="topbar">
         <div class=logo>
             <a href="{{ path('home') }}">
                 <img src="{{ asset('images/umami_white_small.png') }}" alt="Umami Logo">
@@ -15,7 +15,7 @@
             {% endif %}
             {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.user.displayName != app.user.email %}
                 <a href="{{ path('logout') }}" class="menu-item">Log Out</a>
-                {#  MARIKA Add Shos user Name option here : https://symfonycasts.com/screencast/symfony-security/user-service#play               #}
+{#                  MARIKA Add Show user Name option here : https://symfonycasts.com/screencast/symfony-security/user-service#play               #}
                 <img
                         src="{{ app.user.avatarUri }}"
                         alt="{{ app.user.displayName }} Avatar">
@@ -33,9 +33,9 @@
 {#            Use a single <header> element to represent the header section of your page. #}
 {#            Use <a> elements for your logo and menu items, and provide appropriate href attributes.#}
 {#            Add an aria-label attribute to the <nav> element to provide a label for screen readers, indicating that it's the main navigation.#}
-{#            Use a <button> element for the search icon, as it's interactive.
-              Also, provide an aria-label attribute for the button to describe
-              its purpose to assistive technologies.#}
+{#            Use a <button> element for the search icon, as it's interactive.#}
+{#              Also, provide an aria-label attribute for the button to describe#}
+{#              its purpose to assistive technologies.#}
         </nav>
     </div>
     <div class="baseline">
@@ -43,12 +43,14 @@
         <span class="baseline-slogan">Savor the Flavor</span>
     </div>
     <div>
-{#        #}{# MARIKA When ths email is verified; this message shows : https://symfonycasts.com/screencast/symfony-security/verify-email#codeblock-0bac7d3cc4#}
-{#        {% for flash in app.flashes('success') %}#}
-{#            <div class="alert alert-success">{{ flash }}</div>#}
-{#        {% endfor %}#}
-{#        {% for flash in app.flashes('error') %}#}
-{#            <div class="alert alert-danger">{{ flash }}</div>#}
-{#        {% endfor %}#}
+{#         MARIKA When ths email is verified; this message shows : https://symfonycasts.com/screencast/symfony-security/verify-email#codeblock-0bac7d3cc4#}
+        {% for flash in app.flashes('success') %}
+            <div class="alert alert-success">{{ flash }}</div>
+        {% endfor %}
+        {% for flash in app.flashes('error') %}
+            <div class="alert alert-danger">{{ flash }}</div>
+        {% endfor %}
     </div>
 </header>
+
+
