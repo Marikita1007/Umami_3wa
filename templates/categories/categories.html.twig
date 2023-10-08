@@ -10,61 +10,59 @@
                 </div>
             </article>
         </div>
-        {# MARIKA {{ dump(cuisine) }}#}
-        {# MARIKA {{ dump(getCuisineCategories) }}#}
         {% if getCuisineCategories is defined and getCuisineCategories.results is defined %}
-            <div class="container">
-                <div class="row">
-                    {% for key, recipe in getCuisineCategories.results|batch(3) %}
-                        <div class="row">
-                            {% for item in recipe %}
-                                <article class="col-md-4 card m-2 block-card">
-                                    {% if item.image is defined %}
-                                        <img src="{{ item.image }}" alt="{{ item.title }}">
-                                    {% else %}
-                                        <img src="{{ asset('images/no-image.png') }}" alt="No Food Image Available">
-                                    {% endif %}
-                                    <div class="card-body">
-                                        <h3 class="card-title">{{ item.title }}</h3>
-                                    </div>
-                                </article>
-                            {% endfor %}
-                        </div>
-                    {% endfor %}
-                </div>
+            <div class="recipe-container">
+                {% for key, recipe in getCuisineCategories.results|batch(3) %}
+                    <div class="recipe-row">
+                        {% for item in recipe %}
+                            <article class="recipe-card m-2">
+                                {% if item.image is defined %}
+                                    <img src="{{ item.image }}" alt="{{ item.title }}">
+                                {% else %}
+                                    <img src="{{ asset('images/no-image.png') }}" alt="No Food Image Available">
+                                {% endif %}
+                                <div class="recipe-card-body">
+                                    <h3 class="recipe-card-title">{{ item.title }}</h3>
+                                    <!-- Add any additional recipe information here -->
+                                </div>
+                            </article>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
             </div>
         {% else %}
-            <div class="container">
-                <div class="row justify-content-center">
-                    <article class="col-md-4 card m-2 block-card">
-                        <img src="{{ asset('images/salad_fig.jpg') }}" alt="Delicious Fig Salad">
-                        <div class="card-body">
-                            <h3 class="card-title">Delicious Recipe 1</h3>
-                            <p class="card-text">Description of Recipe 1.</p>
-                        </div>
-                        <ol class="d-flex justify-content-end" aria-label="Rating Stars">
-                            <li><i class="fas fa-star" aria-hidden="true"></i></li>
-                            <li><i class="fas fa-star" aria-hidden="true"></i></li>
-                            <li><i class="fas fa-star" aria-hidden="true"></i></li>
-                            <li><i class="fas fa-star" aria-hidden="true"></i></li>
-                            <li><i class="fas fa-star-half-alt" aria-hidden="true"></i></li>
-                        </ol>
-                    </article>
-                    <article class="col-md-4 card m-2 block-card">
-                        <img src="{{ asset('images/salad_fig.jpg') }}" alt="Delicious Fig Salad">
-                        <div class="card-body">
-                            <h3 class="card-title">Delicious Recipe 1</h3>
-                            <p class="card-text">Description of Recipe 1.</p>
-                        </div>
-                    </article>
-                    <article class="col-md-4 card m-2 block-card">
-                        <img src="{{ asset('images/salad_fig.jpg') }}" alt="Delicious Fig Salad">
-                        <div class="card-body">
-                            <h3 class="card-title">Delicious Recipe 1</h3>
-                            <p class="card-text">Description of Recipe 1.</p>
-                        </div>
-                    </article>
-                </div>
+            <div class="container-small flex-content">
+                <ul class="card-container" role="list">
+                    <li class="card-component" role="listitem">
+                        <figure>
+                            <img src="{{ asset('images/salad_fig.jpg') }}" alt="A photo of a delicious-looking salad featuring figs, Camembert cheese, tomatoes, and cucumbers">
+                            <figcaption>
+                                <h4><b>Delicious Recipe 1</b></h4>
+                                <p>Description of Recipe 1.</p>
+                            </figcaption>
+                        </figure>
+                    </li>
+
+                    <li class="card-component" role="listitem">
+                        <figure>
+                            <img src="{{ asset('images/salad_fig.jpg') }}" alt="A photo of a delicious-looking salad featuring figs, Camembert cheese, tomatoes, and cucumbers">
+                            <figcaption>
+                                <h4><b>Delicious Recipe 1</b></h4>
+                                <p>Description of Recipe 1.</p>
+                            </figcaption>
+                        </figure>
+                    </li>
+
+                    <li class="card-component" role="listitem">
+                        <figure>
+                            <img src="{{ asset('images/salad_fig.jpg') }}" alt="A photo of a delicious-looking salad featuring figs, Camembert cheese, tomatoes, and cucumbers">
+                            <figcaption>
+                                <h4><b>Delicious Recipe 1</b></h4>
+                                <p>Description of Recipe 1.</p>
+                            </figcaption>
+                        </figure>
+                    </li>
+                </ul>
             </div>
         {% endif %}
     </section>

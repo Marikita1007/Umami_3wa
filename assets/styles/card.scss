@@ -1,0 +1,58 @@
+@import 'base';
+
+/* Define a card class for reusability */
+.card-component {
+  border-radius: 5px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  margin: 10px; /* Add margin between cards */
+  transition: 0.3s;
+  width: 30%;
+
+  &:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  img {
+    border-radius: 5px 5px 0 0;
+    width: 100%;
+  }
+
+  .container-test {
+    padding: 2px 16px;
+  }
+}
+
+/* Use Flexbox for card layout */
+.flex-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  .card-container {
+    display: flex;
+    flex-wrap: nowrap;
+    list-style: none; /* Remove default bullets */
+    padding: 0; /* Remove any default padding */
+
+    .card-component {
+      /* Include card styles defined above */
+    }
+  }
+}
+
+/* Media query for responsiveness */
+@media (max-width: 768px) {
+
+  .flex-content .card-container {
+    align-items: center;
+    flex-direction: column; /* Change to a vertical layout on small screens */
+  }
+
+  .card-component {
+    width: 80%; /* Occupy the full width of the container on small screens */
+    margin-bottom: 10px; /* Add margin between cards */
+  }
+}
+
+
+

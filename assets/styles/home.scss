@@ -1,4 +1,5 @@
 @import 'base';
+@import 'card'; // Import the card component styles
 
 body[data-route="home"] {
   .home-section {
@@ -46,6 +47,8 @@ body[data-route="home"] {
         opacity: 1;
       }
 
+      //card.scss : Adding this allows us to use .home-section and .container-small designs
+      .card-component {}
     }
 
     .container {
@@ -145,7 +148,7 @@ body[data-route="home"] {
 
   }
 
-  //MARIKA: This is needed, but it doesn"t change even if I comment it. It needs to be checked
+  //MARIKA: This is needed, but it doesn't change even if I comment it. It needs to be checked
   //@media only screen and (min-width: 600px) {
   //  html {
   //    font-size: 16px;
