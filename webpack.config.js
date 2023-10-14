@@ -27,7 +27,8 @@ Encore
     .addStyleEntry('header-styles', './assets/styles/header.scss')
     .addStyleEntry('home-styles', './assets/styles/home.scss')
     .addStyleEntry('categories', './assets/styles/categories.scss')
-    .addStyleEntry('card', './assets/styles/card.scss')
+    .addStyleEntry('card', './assets/styles/components/card.scss')
+    .addStyleEntry('form', './assets/styles/components/form.scss')
 
     // Added bootstrap CSS
     .addStyleEntry('bootstrap-css', './node_modules/bootstrap/dist/css/bootstrap.css')

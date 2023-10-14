@@ -2,31 +2,72 @@
 
 {% block body %}
 
+    {#    <section class="login-section">#}
+    {#        <form method="post">#}
+    {#            <h1>Please sign in</h1>#}
+
+    {#            {% if error %}#}
+    {#                <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>#}
+    {#            {% endif %}#}
+
+    {#            <label for="inputEmail">Email</label>#}
+    {#            <input type="email" name="email" id="inputEmail" value="{{ last_username }}" required autofocus>#}
+
+    {#            <label for="inputPassword">Password</label>#}
+    {#            <input type="password" name="password" id="inputPassword" required>#}
+
+    {#            <input type="checkbox" name="_remember_me"> Remember me#}
+
+    {#             MARIKA  https://symfonycasts.com/screencast/symfony-security/csrf-token#play#}
+    {#            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">#}
+
+    {#            <button type="submit">Sign in</button>#}
+
+    {#            Don't have an account yet?#}
+    {#            <a href="{{ path('register') }}">Sign up</a>#}
+    {#        </form>#}
+    {#    </section>#}
+
+
     <section class="login-section">
-        <form method="post">
-            <h1>Please sign in</h1>
+        <div class="page-content">
+            <div class="form-content">
+                <div class="form-left">
+                    <img src="{{ asset('images/ramen.jpg') }}" alt="Login Form Image">
+                </div>
+                <form class="form-detail" method="post" action="">
+                    <h2>Login Form</h2>
 
-            {% if error %}
-                <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-            {% endif %}
+                    {% if error %}
+                        <div role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
 
-            <label for="inputEmail">Email</label>
-            <input type="email" name="email" id="inputEmail" value="{{ last_username }}" required autofocus>
+                    <div class="form-row">
+                        <label for="inputEmail" class="visually-hidden">Email:</label>
+                        <input type="email" name="email" id="inputEmail" class="input-text" value="{{ last_username }}" placeholder="Email Address" required autofocus>
+                    </div>
 
-            <label for="inputPassword">Password</label>
-            <input type="password" name="password" id="inputPassword" required>
+                    <div class="form-row">
+                        <label for="inputPassword" class="visually-hidden">Password</label>
+                        <input type="password" name="password" id="inputPassword" class="input-text" placeholder="Password" required>
+                    </div>
 
-            <input type="checkbox" name="_remember_me"> Remember me
+                    <input type="checkbox" name="_remember_me" id="rememberMe" aria-label="Remember me">
+                    <label for="rememberMe" aria-hidden="true">Remember me</label>
 
-            {# MARIKA  https://symfonycasts.com/screencast/symfony-security/csrf-token#play#}
-            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                    <div class="btn-form">
+                        <button type="submit" name="signIn" value="signIn">Sign in</button>
+                    </div>
 
-            <button type="submit">Sign in</button>
+                    {# ARIA attributes for CSRF token #}
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" aria-hidden="true" tabindex="-1">
 
-            Don't have an account yet?
-            <a href="{{ path('register') }}">Sign up</a>
-        </form>
+                    <p>Don't have an account yet? <a href="{{ path('register') }}">Sign up</a></p>
+                </form>
+            </div>
+        </div>
     </section>
+
 
 {% endblock %}
 

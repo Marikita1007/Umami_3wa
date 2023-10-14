@@ -1,5 +1,5 @@
 @import 'base';
-@import 'card'; // Import the card component styles
+@import 'components/card'; // Import the card component styles
 
 body[data-route="home"] {
   .home-section {
