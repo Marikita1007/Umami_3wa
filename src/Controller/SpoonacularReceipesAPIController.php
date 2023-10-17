@@ -4,16 +4,17 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpClient\HttpClient;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
+//use Symfony\Component\HttpFoundation\JsonResponse;
+//use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+//MARIKA TODO Delete non used uses !!
+//use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+//use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
+//use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+//use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
+//use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use App\TestData\ApiDataStorage;
 
@@ -28,6 +29,7 @@ class SpoonacularReceipesAPIController extends AbstractController
 
     public function __construct(ApiDataStorage $apiDataStorage, HttpClientInterface $httpClient)
     {
+        // Initialize API-related dependencies through dependency injection.
         $this->spoonacularApiKey = $_ENV['SPOONACULAR_API_KEY'];
         $this->apiDataStorage = $apiDataStorage;
         $this->httpClient = $httpClient;
@@ -38,13 +40,13 @@ class SpoonacularReceipesAPIController extends AbstractController
      */
     public function getSpoonacularRandomRecipes()
     {
-        // To keep data, first we check cache data and if it exists, we return it
+        // Check if cached data exists and return it if available.
         $cachedData = $this->apiDataStorage->get('spoonacular_recipes');
         if ($cachedData) {
             return $this->json($cachedData);
         }
 
-        // If not cache, we get data from API
+        // If no cached data, make an API request to get random recipes from Spoonacular.
         $apiEndpoint = 'https://api.spoonacular.com/recipes/random';
 
         try {
@@ -55,10 +57,11 @@ class SpoonacularReceipesAPIController extends AbstractController
                     'number' => 9, // Number of API data we receive
                 ],
             ]);
+            // Check the HTTP status code and handle responses accordingly.
             // For HTTP status code 200 (OK)
             if ($response->getStatusCode() === Response::HTTP_OK) {
+                // Convert the response to an array and save it in the cache.
                 $data = $response->toArray();
-                // Save the data in cache
                 $this->apiDataStorage->set('spoonacular_recipes', $data);
                 // Return $response->toArray(); MARIKA : 開発注は何度も呼び出すのを避けるため$data内の保存したレシピを使用。
                 return $this->json($data);
@@ -80,6 +83,7 @@ class SpoonacularReceipesAPIController extends AbstractController
      */
     public function getCuisineCategories($cuisine)
     {
+        // Make an API request to get cuisine categories from Spoonacular.
         $apiEndpoint = 'https://api.spoonacular.com/recipes/complexSearch';
 
         try {
@@ -92,6 +96,7 @@ class SpoonacularReceipesAPIController extends AbstractController
                 ],
             ]);
 
+            // Check the HTTP status code and handle responses accordingly.
             // For HTTP status code 200 (OK)
             if ($response->getStatusCode() === Response::HTTP_OK) {
                 return $response->toArray();
