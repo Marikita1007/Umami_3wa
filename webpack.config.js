@@ -25,6 +25,7 @@ Encore
     // Added scss files
     .addStyleEntry('base', './assets/styles/base.scss')
     .addStyleEntry('header-styles', './assets/styles/header.scss')
+    .addStyleEntry('footer-styles', './assets/styles/footer.scss')
     .addStyleEntry('home-styles', './assets/styles/home.scss')
     .addStyleEntry('categories', './assets/styles/categories.scss')
     .addStyleEntry('card', './assets/styles/components/card.scss')

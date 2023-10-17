@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-{#MARIKA Add languages}#}
 <html lang="{{ app.request.locale }}">
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Umami{% endblock %}</title>
 
-        {% set pageRoute = pageRoute ?? null %} {# MARIKA : data-route Initialize the variable, defaulting to null if not set #}
+        {# data-route : Initialize the variable, defaulting to null if not set #}
+        {% set pageRoute = pageRoute ?? null %}
 
-        {# webpack.config.jsにSCSSファイルを追加する#}
+        {# MARIKA TODO webpack.config.jsにSCSSファイルを追加する#}
         <link rel="stylesheet" href="{{ asset('build/base.css') }}">
         <link rel="stylesheet" href="{{ asset('build/header-styles.css') }}">
+        <link rel="stylesheet" href="{{ asset('build/footer-styles.css') }}">
         <link rel="stylesheet" href="{{ asset('build/home-styles.css') }}">
         <link rel="stylesheet" href="{{ asset('build/categories.css') }}">
         <link rel="stylesheet" href="{{ asset('build/card.css') }}">
@@ -28,6 +29,6 @@
         {% include 'header.html.twig' %}
         {% block body %}
         {% endblock %}
-        <footer>FOOTER</footer>
+        {% include 'footer.html.twig' %}
     </body>
 </html>

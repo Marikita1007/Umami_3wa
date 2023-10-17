@@ -160,4 +160,47 @@ Before you start, make sure you have the following installed:
 
   ```bash
   php bin/console doctrine:fixtures:load --group=recipes
+  ```
 
+***
+# Adding an SCSS File to our Project
+
+## Step 1: Create an SCSS File
+
+1. Create a new SCSS (Sass) file in the `assets/styles/` directory of your Symfony project. Name it appropriately, e.g., `footer.scss`.
+
+  ```directry
+project/
+└── assets/
+      └── styles/
+         └── footer.scss
+  ```
+
+
+## Step 2: Include SCSS in Base Twig Template
+
+2. In your base Twig template (e.g., `base.html.twig`), add a `<link>` tag to include the compiled CSS file. Use the `asset()` function to generate the correct path to the CSS file.
+
+```html
+<link rel="stylesheet" href="{{ asset('build/footer-styles.css') }}">
+```
+
+## Step 3: Update webpack.config.js
+
+3. Open the `webpack.config.js` file in the project's root directory. Add the code to define your SCSS entry point and output.
+
+```code
+.addStyleEntry('footer-styles', './assets/styles/footer.scss')
+```
+
+This code tells Webpack Encore to compile the footer.scss file into a footer-styles.css output.
+
+## Step 4: Compile SCSS and Watch for Changes
+
+4. Open your command line or terminal and execute the following command to compile the SCSS and watch for changes:
+
+```bash
+yarn watch
+```
+
+5. This command will start the Webpack Encore build process and continuously watch for changes in your SCSS file. When changes are detected, the CSS file will be recompiled automatically.

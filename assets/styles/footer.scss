@@ -1,0 +1,25 @@
+@import 'base';
+
+.footer {
+  background: $umami-yellow;
+  color: $umami-grey;
+  font-weight: 300;
+  margin-top: 30px;
+  padding-top: 30px;
+
+  &-columns {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &-column {
+    width: 300px;
+    margin-right: 50px;
+  }
+
+  &-title {
+    color: $umami-yellow-dark;
+    margin-bottom: 1.25em;
+    font-weight: bold;
+  }
+}

@@ -8,9 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
-
-//MARIKA このページはbaseのコピー。ドキュメントにしたがって直すこと。RegistrationControllerで登録出来る。
-
+//MARIKA TODO This page is copy of Security COntroller from Base. Edit it to MINE.
 class SecurityController extends AbstractController
 {
     use TargetPathTrait;
@@ -25,11 +23,13 @@ class SecurityController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        //MARIKA
-        // this statement solves an edge-case: if you change the locale in the login
-        // page, after a successful login you are redirected to a page in the previous
-        // locale. This code regenerates the referrer URL whenever the login page is
-        // browsed, to ensure that its locale is always the current one.
+        /**
+         * MARIKA
+         * This statement solves an edge-case: if you change the locale in the login
+         * page, after a successful login you are redirected to a page in the previous
+         * locale. This code regenerates the referrer URL whenever the login page is
+         * browsed, to ensure that its locale is always the current one.
+         */
         $this->saveTargetPath($request->getSession(), 'main', $this->generateUrl('home'));
 
         return $this->render('security/security.html.twig', [
@@ -55,11 +55,4 @@ class SecurityController extends AbstractController
         throw new \Exception('This should never be reached!');
     }
 
-    /**
-     * @Route("/register", name="app_register")
-     */
-    public function register()
-    {
-
-    }
 }
