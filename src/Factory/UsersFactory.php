@@ -26,7 +26,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
  * @method static UserRepository|RepositoryProxy repository()
  * @method User|Proxy create(array|callable $attributes = [])
  */
-final class UsersFactory extends ModelFactory
+final class UserFactory extends ModelFactory
 {
     private UserPasswordHasherInterface $userPasswordHasherInterface;
 
@@ -40,16 +40,11 @@ final class UsersFactory extends ModelFactory
         return [
             // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
             'email' => self::faker()->email(),
-<<<<<<< Updated upstream:src/Factory/UserFactory.php
             'plainPassword' => 'tada',
-//            'roles' => ["ROLE_USER"], //MARIKA
-=======
-            'plainPassword' => 'umami12345',
             //'roles' => ["ROLE_USER"], //MARIKA
->>>>>>> Stashed changes:src/Factory/UsersFactory.php
             'firstName' => self::faker()->firstName(),
             'lastName' => self::faker()->lastName(),
-//            'isVerified' => true,
+            'isVerified' => true,
         ];
     }
     protected function initialize(): self
