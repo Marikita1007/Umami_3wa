@@ -40,11 +40,11 @@ final class UserFactory extends ModelFactory
         return [
             // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
             'email' => self::faker()->email(),
-            'plainPassword' => 'tada',
+            'plainPassword' => 'test123456',
             //'roles' => ["ROLE_USER"], //MARIKA
             'firstName' => self::faker()->firstName(),
             'lastName' => self::faker()->lastName(),
-            'isVerified' => true,
+            //'isVerified' => true,
         ];
     }
     protected function initialize(): self

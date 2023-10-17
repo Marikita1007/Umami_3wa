@@ -9,12 +9,14 @@ class UserFixtures extends Fixture
     //MARIKA TODO : Write README about FActory and Fixtures
     public function load(ObjectManager $manager)
     {
+        // Create test user admin with infos down below
         UsersFactory::createOne([
-            'email' => 'abraca_admin@example.com',
+            'email' => 'umami_admin@example.com',
             'roles' => ['ROLE_ADMIN']
         ]);
+        // Create test user with infos down below
         UsersFactory::createOne([
-            'email' => 'abraca_user@example.com',
+            'email' => 'umami_user@example.com',
         ]);
         UsersFactory::createMany(10);
         $manager->flush();
