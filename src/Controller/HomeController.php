@@ -8,9 +8,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
-    private ReceipesAPIController $receipesAPIController;
+    private SpoonacularReceipesAPIController $receipesAPIController;
 
-    public function __construct(ReceipesAPIController $receipesAPIController)
+    public function __construct(SpoonacularReceipesAPIController $receipesAPIController)
     {
         $this->receipesAPIController = $receipesAPIController;
     }
