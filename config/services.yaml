@@ -23,3 +23,7 @@ services:
             - '../src/Kernel.php'
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    App\Entity\Recipes:
+        public: true # Make the service accessible from outside Classes
+    App\Repository\RecipesRepository:
+        public: true
