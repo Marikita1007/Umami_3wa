@@ -9,7 +9,7 @@
 
 #get_cuisines:
 #  path: '/get_cuisines'
-#  controller: 'App\Controller\ReceipesAPIController::showRecipesByCuisine'
+#  controller: 'App\Controller\SpoonacularReceipesAPIController::showRecipesByCuisine'
 
 about_us:
   path: /about_us

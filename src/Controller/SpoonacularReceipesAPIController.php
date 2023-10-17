@@ -20,19 +20,15 @@ use App\TestData\ApiDataStorage;
 /**
  * @Route("/api", name="api_", methods={"GET"})
  */
-class ReceipesAPIController extends AbstractController
+class SpoonacularReceipesAPIController extends AbstractController
 {
     private $spoonacularApiKey;
-
-    //MARIKA $edamamApiKey ＡＰＩ呼べるようにする
-    private $edamamApiKey;
     private ApiDataStorage $apiDataStorage;
     private HttpClientInterface $httpClient;
 
     public function __construct(ApiDataStorage $apiDataStorage, HttpClientInterface $httpClient)
     {
         $this->spoonacularApiKey = $_ENV['SPOONACULAR_API_KEY'];
-        $this->edamamApiKey = $_ENV['EDAMAM_API_KEY'];
         $this->apiDataStorage = $apiDataStorage;
         $this->httpClient = $httpClient;
     }
@@ -42,13 +38,13 @@ class ReceipesAPIController extends AbstractController
      */
     public function getSpoonacularRandomRecipes()
     {
-        //データ保存のため。 まずキャッシュからデータを取得し、存在すればそれを返す
+        // To keep data, first we check cache data and if it exists, we return it
         $cachedData = $this->apiDataStorage->get('spoonacular_recipes');
         if ($cachedData) {
             return $this->json($cachedData);
         }
 
-        // キャッシュが存在しない場合はAPIからデータを取得
+        // If not cache, we get data from API
         $apiEndpoint = 'https://api.spoonacular.com/recipes/random';
 
         try {
@@ -56,25 +52,25 @@ class ReceipesAPIController extends AbstractController
             $response = $client->request('GET', $apiEndpoint, [
                 'query' => [
                     'apiKey' => $this->spoonacularApiKey,
-                    'number' => 9,
+                    'number' => 9, // Number of API data we receive
                 ],
             ]);
-            // HTTPステータスコード200（OK）の場合
+            // If http status code is 200 (OK)
             if ($response->getStatusCode() === Response::HTTP_OK) {
                 $data = $response->toArray();
-                // データをキャッシュに保存
+                // Save the data in cache
                 $this->apiDataStorage->set('spoonacular_recipes', $data);
-//                return $response->toArray(); MARIKA : 開発注は何度も呼び出すのを避けるため$data内の保存したレシピを使用。
+                // return $response->toArray(); MARIKA : 開発注は何度も呼び出すのを避けるため$data内の保存したレシピを使用。
                 return $this->json($data);
             } elseif ($response->getStatusCode() === Response::HTTP_PAYMENT_REQUIRED) {
-                // HTTPステータスコード402（Payment Required）の場合
+                // If http status code is 402 (Payment Required)
                 return $this->json(['error' => 'Payment Required'], Response::HTTP_PAYMENT_REQUIRED);
             } else {
-                // 402以外のHTTPエラーコード（例: 404、500など）に対するエラーハンドリング
+                // If http error code is not 402 (404, 505 etc)
                 return $this->json(['error' => 'HTTP error'], Response::HTTP_INTERNAL_SERVER_ERROR);
             }
         } catch (HttpExceptionInterface $e) {
-            // HTTP エラーの場合の処理
+            // HTTP error process
             return $this->json(['error' => 'An error occurred'], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
