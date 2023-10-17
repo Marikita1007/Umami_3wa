@@ -55,22 +55,22 @@ class SpoonacularReceipesAPIController extends AbstractController
                     'number' => 9, // Number of API data we receive
                 ],
             ]);
-            // If http status code is 200 (OK)
+            // For HTTP status code 200 (OK)
             if ($response->getStatusCode() === Response::HTTP_OK) {
                 $data = $response->toArray();
                 // Save the data in cache
                 $this->apiDataStorage->set('spoonacular_recipes', $data);
-                // return $response->toArray(); MARIKA : 開発注は何度も呼び出すのを避けるため$data内の保存したレシピを使用。
+                // Return $response->toArray(); MARIKA : 開発注は何度も呼び出すのを避けるため$data内の保存したレシピを使用。
                 return $this->json($data);
             } elseif ($response->getStatusCode() === Response::HTTP_PAYMENT_REQUIRED) {
-                // If http status code is 402 (Payment Required)
+                // For HTTP status code 402 (Payment Required)
                 return $this->json(['error' => 'Payment Required'], Response::HTTP_PAYMENT_REQUIRED);
             } else {
-                // If http error code is not 402 (404, 505 etc)
+                // For HTTP status code error is not 402 (404, 505 etc)
                 return $this->json(['error' => 'HTTP error'], Response::HTTP_INTERNAL_SERVER_ERROR);
             }
         } catch (HttpExceptionInterface $e) {
-            // HTTP error process
+            // HTTP error handling
             return $this->json(['error' => 'An error occurred'], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
@@ -92,18 +92,18 @@ class SpoonacularReceipesAPIController extends AbstractController
                 ],
             ]);
 
-            // HTTPステータスコード200（OK）の場合
+            // For HTTP status code 200 (OK)
             if ($response->getStatusCode() === Response::HTTP_OK) {
                 return $response->toArray();
             } elseif ($response->getStatusCode() === Response::HTTP_PAYMENT_REQUIRED) {
-                // HTTPステータスコード402（Payment Required）の場合
+                // For HTTP status code 402 (Payment Required)
                 return $this->json(['error' => 'Payment Required'], Response::HTTP_PAYMENT_REQUIRED);
             } else {
-                // 402以外のHTTPエラーコード（例: 404、500など）に対するエラーハンドリング
+                // Error handling for HTTP error codes other than 402 (e.g. 404, 500, etc.)
                 return $this->json(['error' => 'HTTP error'], Response::HTTP_INTERNAL_SERVER_ERROR);
             }
         } catch (HttpExceptionInterface $e) {
-            // HTTP エラーの場合の処理
+            // HTTP error handling
             return $this->json(['error' => 'An error occurred'], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
