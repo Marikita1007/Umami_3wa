@@ -52,6 +52,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
             // MARIKA https://symfonycasts.com/screencast/symfony-security/csrf-token#play
             new PasswordCredentials($password),
             [
+                //MARIKA TODO MAke sure that I understand how this csrf token will be created
                 new CsrfTokenBadge(
                     'authenticate',
                     $request->request->get('_csrf_token')
@@ -63,9 +64,9 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-// MARIKA  This line does two things at once: it sets a $target variable to the target
-// path and, in the if statement, checks to see if this has something in it. Because,
-// if the user goes directly to the login page, then they won't have a target path in the session.
+        // MARIKA  This line does two things at once: it sets a $target variable to the target
+        // path and, in the if statement, checks to see if this has something in it. Because,
+        // if the user goes directly to the login page, then they won't have a target path in the session.
         if ($target = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($target);
         }

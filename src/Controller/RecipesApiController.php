@@ -12,6 +12,7 @@ use App\Entity\Recipes;
 
 
 //MARIKA TODO : ADD SECURITY conditions / Comments codes / Fix comments of error handlings / FIx Updated At
+//MARIKA TODO I make CRUD for Recipes (RecipeController.php) so if this is not used(API), I delete this file.
 /**
  * @Route("/api", name="api_")
  */

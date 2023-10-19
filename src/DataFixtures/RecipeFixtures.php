@@ -27,12 +27,12 @@ class RecipeFixtures extends Fixture implements FixtureGroupInterface
             $recipe->setDescription($this->faker->paragraph);
             $recipe->setInstructions($this->faker->text);
             $recipe->setCreatedAt($this->faker->dateTimeThisYear);
-            $recipe->setImage($this->faker->imageUrl);
+            $recipe->setImage("salad_fig.jpg");
             $recipe->setPrepTime($this->faker->numberBetween(1,120));
             $recipe->setServings($this->faker->numberBetween(1, 10));
             $recipe->setCookTime($this->faker->numberBetween(1,120));
             $recipe->setCalories($this->faker->numberBetween(100, 1000));
-            $recipe->setDifficulty($this->faker->randomElement(['Easy', 'Medium', 'Hard']));
+            $recipe->setDifficulty($this->faker->randomElement(['easy', 'medium', 'difficult']));
 
             $manager->persist($recipe);
         }

@@ -9,10 +9,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     private SpoonacularReceipesAPIController $receipesAPIController;
+    private RecipesController $recipesController;
 
-    public function __construct(SpoonacularReceipesAPIController $receipesAPIController)
+    public function __construct(SpoonacularReceipesAPIController $receipesAPIController, RecipesController $recipesController)
     {
         $this->receipesAPIController = $receipesAPIController;
+        $this->recipesController = $recipesController;
     }
 
     /**
@@ -24,11 +26,16 @@ class HomeController extends AbstractController
 
         $getSpoonacularRandomRecipes = $this->receipesAPIController->getSpoonacularRandomRecipes();
         $getCuisineCategories = $this->receipesAPIController->getCuisineCategories($category);
+        $getRecipes = $this->recipesController->showRecipes(); // Call function to show recipes from database
+
+        // Get only the first 6 recipes to pass to the template
+        $sixRecipes = array_slice($getRecipes, 0, 6);
 
         return $this->render('home/home.html.twig', [
             'controller_name' => 'HomeController',
             'jsonDataSpoonacular' => $getSpoonacularRandomRecipes,
             'getCuisineCategories' => $getCuisineCategories,
+            'sixRecipes' => $sixRecipes
         ]);
     }
 }

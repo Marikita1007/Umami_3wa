@@ -73,6 +73,12 @@ class Recipes
      */
     private $difficulty;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class)
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $user;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -206,6 +212,18 @@ class Recipes
     public function setDifficulty(?string $difficulty): self
     {
         $this->difficulty = $difficulty;
+
+        return $this;
+    }
+
+    public function getUser(): ?int
+    {
+        return $this->user;
+    }
+
+    public function setUser(int $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

@@ -17,6 +17,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
 
+
+// MARIKA TODO Make sure that I understand the process of login form
+// MARIKA TODO Make sure that I understand the process of login form
 class RegistrationController extends AbstractController
 {
     /**
@@ -36,6 +39,7 @@ class RegistrationController extends AbstractController
 
             // 3) Encode the plain password
             $user->setPassword(
+                //MARIKA TODO make sure that I undertand passwordhasherInterface !
                 $userPasswordHasherInterface->hashPassword(
                     $user,
                     $form->get('plainPassword')->getData()

@@ -26,7 +26,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
  * @method static UserRepository|RepositoryProxy repository()
  * @method User|Proxy create(array|callable $attributes = [])
  */
-final class UserFactory extends ModelFactory
+final class UsersFactory extends ModelFactory
 {
     private UserPasswordHasherInterface $userPasswordHasherInterface;
 

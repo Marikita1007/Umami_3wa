@@ -26,3 +26,8 @@ categories:
 show_categories:
   path: /categories/{cuisine}
   controller: App\Controller\CategoriesController::show
+
+recipes_show:
+  path: /recipes/show
+  controller: App\Controller\RecipesController::showRecipes
+  methods: ['GET']
