@@ -1,0 +1,36 @@
+@import '../base';
+@import '../components/card'; // Import the card component styles
+
+.row-recipe {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.rightcolumn {
+  width: 75%;
+  padding: 20px;
+}
+
+.leftcolumn {
+  width: 25%;
+  padding-left: 20px;
+}
+
+.recipe-img {
+  background-color: $umami-yellow;
+  width: 100%;
+  padding: 20px;
+}
+
+.card {
+  background-color: $umami-white;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+@media screen and (max-width: 800px) {
+  .leftcolumn, .rightcolumn {
+    width: 100%;
+    padding: 0;
+  }
+}

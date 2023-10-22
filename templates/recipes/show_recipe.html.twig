@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recipes{% endblock %}
+
+{% block body %}
+    <div class="row-recipe">
+
+        <div class="leftcolumn">
+            <div class="card">
+                <h3>About Recipe</h3>
+                <p>Preparation Time : {{ recipe.prepTime }}</p>
+                <p>Servings : {{ recipe.servings }}</p>
+                <p>Cook Time: {{ recipe.cookTime }}</p>
+                <p>Calories: {{ recipe.calories }}</p>
+                <p>Difficulty: {{ recipe.difficulty }}</p>
+            </div>
+            <div class="card">
+                <h3>Ingredients</h3>
+                {#  TODO CREATE ingredients table #}
+                <ul>
+                    <li>Coffee</li>
+                    <li>Tea</li>
+                    <li>Milk</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>You maybe also like</h3>
+                {#  TODO MARIKA Show semilar recipes #}
+                <div class="fakeimg">Image</div>
+                <div class="fakeimg">Image</div>
+                <div class="fakeimg">Image</div>
+            </div>
+        </div>
+        <div class="rightcolumn">
+            <div class="card">
+                <h2>{{ recipe.name }}</h2>
+                <h5>{{ recipe.description }}</h5>
+                <time> <i class="fa fa-calendar"></i> {{ recipe.createdAt ? recipe.createdAt|date('Y-m-d H:i:s') : (recipe.updatedAt ? recipe.updatedAt|date('Y-m-d H:i:s') : '') }}</time>
+
+                <img class="recipe-img" src="{{ asset('images/' ~ recipe.image) }}" alt="{{ recipe.name }}">
+                <h3>Instructions</h3>
+                <p>{{ recipe.instructions }}</p>
+            </div>
+        </div>
+
+    </div>
+
+
+    {#    MARIKA TODO bring delete_form inside #}
+{#    <a href="{{ path('app_recipes_index') }}">back to list</a>#}
+
+{#    <a href="{{ path('app_recipes_edit', {'id': recipe.id}) }}">edit</a>#}
+
+{#    {{ include('recipes/_delete_form.html.twig') }}#}
+
+
+    {#    <a href="{{ path('app_recipes_index') }}">back to list</a>#}
+
+    {#    <a href="{{ path('app_recipes_edit', {'id': recipe.id}) }}">edit</a>#}
+
+{#    {{ include('recipes/_delete_form.html.twig') }}#}
+
+
+
+{% endblock %}
