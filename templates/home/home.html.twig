@@ -147,7 +147,6 @@
                         {% if recipe.image is defined %}
                             <img src="{{ recipe.image }}" alt="{{ recipe.title }}">
                         {% else %}
-                             MARIKA This needs to be fixed
                             <img src="{{ asset('images/no-image.png') }}" alt="No Food Image Available">
                         {% endif %}
                         <div class="card-body">
@@ -158,6 +157,7 @@
                 {% endfor %}
                 </div>
             </div>
+{#  MARIKA TODO DELETE THIS IF its not useable !!! #}
 {#        {% elseif  %}#}
 {#            MARIKA This is for my own API data #}
 {#            {% set recipes = data.recipes %}#}
@@ -176,46 +176,19 @@
                 <ul class="card-container" role="list">
                     {% for recipe in sixRecipes %}
                         <li class="card-component" role="listitem">
-                            <figure>
-                                {# recipe images are stocked inside public/images #}
-                                <img src="{{ asset('images/' ~ recipe.image) }}" alt="{{ recipe.name }}">
-                                <figcaption>
-                                    <h4><b>{{ recipe.name }}</b></h4>
-                                    <p>{{ recipe.description }}</p>
-                                </figcaption>
-                            </figure>
+                            <a href="{{ path('show_recipe', {id: recipe.id}) }}">
+                                <figure>
+                                    <img src="{{ asset('images/' ~ recipe.image) }}" alt="{{ recipe.name }}">
+                                    <figcaption>
+                                        <h4>
+                                            <b>{{ recipe.name }}</b>
+                                        </h4>
+                                        <p>{{ recipe.description }}</p>
+                                    </figcaption>
+                                </figure>
+                            </a>
                         </li>
                     {% endfor %}
-
-                   {# MARIKA TODO Delete code down below so we show just above  #}
-                    <!-- Use <ul> for a list of cards and <li> for each card -->
-{#                    <li class="card-component" role="listitem">#}
-{#                        <figure>#}
-{#                            <img src="{{ asset('images/salad_fig.jpg') }}" alt="A photo of a delicious-looking salad featuring figs, Camembert cheese, tomatoes, and cucumbers">#}
-{#                            <figcaption>#}
-{#                                <h4><b>Delicious Recipe 1</b></h4>#}
-{#                                <p>Description of Recipe 1.</p>#}
-{#                            </figcaption>#}
-{#                        </figure>#}
-{#                    </li>#}
-{#                    <li class="card-component" role="listitem">#}
-{#                        <figure>#}
-{#                            <img src="{{ asset('images/salad_fig.jpg') }}" alt="A photo of a delicious-looking salad featuring figs, Camembert cheese, tomatoes, and cucumbers">#}
-{#                            <figcaption>#}
-{#                                <h4><b>Delicious Recipe 1</b></h4>#}
-{#                                <p>Description of Recipe 1.</p>#}
-{#                            </figcaption>#}
-{#                        </figure>#}
-{#                    </li>#}
-{#                    <li class="card-component" role="listitem">#}
-{#                        <figure>#}
-{#                            <img src="{{ asset('images/salad_fig.jpg') }}" alt="A photo of a delicious-looking salad featuring figs, Camembert cheese, tomatoes, and cucumbers">#}
-{#                            <figcaption>#}
-{#                                <h4><b>Delicious Recipe 1</b></h4>#}
-{#                                <p>Description of Recipe 1.</p>#}
-{#                            </figcaption>#}
-{#                        </figure>#}
-{#                    </li>#}
                 </ul>
             </div>
         {% endif %}

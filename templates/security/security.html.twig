@@ -1,34 +1,18 @@
 {% extends 'base.html.twig' %}
 
+{# Loop through flash messages of different types (e.g., success, error, info) #}
+{# MARIKA TODO I added this to show error message if non login user try to access to create new recipe page #}
+{% block messages %}
+    {% for type, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ type }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+{% endblock %}
+
 {% block body %}
-
-    {#    <section class="login-section">#}
-    {#        <form method="post">#}
-    {#            <h1>Please sign in</h1>#}
-
-    {#            {% if error %}#}
-    {#                <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>#}
-    {#            {% endif %}#}
-
-    {#            <label for="inputEmail">Email</label>#}
-    {#            <input type="email" name="email" id="inputEmail" value="{{ last_username }}" required autofocus>#}
-
-    {#            <label for="inputPassword">Password</label>#}
-    {#            <input type="password" name="password" id="inputPassword" required>#}
-
-    {#            <input type="checkbox" name="_remember_me"> Remember me#}
-
-    {#             MARIKA  https://symfonycasts.com/screencast/symfony-security/csrf-token#play#}
-    {#            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">#}
-
-    {#            <button type="submit">Sign in</button>#}
-
-    {#            Don't have an account yet?#}
-    {#            <a href="{{ path('register') }}">Sign up</a>#}
-    {#        </form>#}
-    {#    </section>#}
-
-
     <section class="login-section">
         <div class="page-content">
             <div class="form-content">
@@ -67,8 +51,6 @@
             </div>
         </div>
     </section>
-
-
 {% endblock %}
 
 {% set pageRoute = 'login' %}

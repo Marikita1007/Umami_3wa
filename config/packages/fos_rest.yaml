@@ -12,7 +12,8 @@ fos_rest:
 #            App\Exception\MyException: Forbidden area.
     format_listener:
         rules:
+#            MARIKA Comments path /api because we might not use it Delete this when you delete RecipesAPIController
             # Routes starting with /api will primarily respond with JSON, but they also allow HTML as an option.
-            - { path: ^/api, prefer_extension: true, fallback_format: json, priorities: [ json, html ] }
+#            - { path: ^/api, prefer_extension: true, fallback_format: json, priorities: [ json, html ] }
             # Routes that don't start with /api will primarily respond with HTML but will accept any format as a fallback.
             - { path: '^/', priorities: [ 'html', '*/*'], fallback_format: html, prefer_extension: true }

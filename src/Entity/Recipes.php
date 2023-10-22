@@ -74,7 +74,7 @@ class Recipes
     private $difficulty;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class)
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
@@ -216,15 +216,27 @@ class Recipes
         return $this;
     }
 
-    public function getUser(): ?int
+    /**
+     * Get the User associated with this Recipe.
+     *
+     * @return User|null The User associated with this Recipe.
+     */
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function setUser(int $user): self
+    /**
+     * Set the User associated with this Recipe.
+     *
+     * @param User|null $user The User to associate with this Recipe.
+     *
+     * @return $this
+     */
+    public function setUser(?User $user): self
     {
         $this->user = $user;
-
         return $this;
     }
+
 }

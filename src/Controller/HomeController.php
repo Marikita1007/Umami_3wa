@@ -8,13 +8,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
-    private SpoonacularReceipesAPIController $receipesAPIController;
+    private SpoonacularReceipesAPIController $spoonacularReceipesAPIController;
     private RecipesController $recipesController;
 
-    public function __construct(SpoonacularReceipesAPIController $receipesAPIController, RecipesController $recipesController)
+    public function __construct(SpoonacularReceipesAPIController $spoonacularReceipesAPIController, RecipesController $recipesController)
     {
-        $this->receipesAPIController = $receipesAPIController;
-        $this->recipesController = $recipesController;
+        $this->spoonacularReceipesAPIController = $spoonacularReceipesAPIController;
+        $this->recipesController =$recipesController;
     }
 
     /**
@@ -24,8 +24,8 @@ class HomeController extends AbstractController
     {
         $category = '';
 
-        $getSpoonacularRandomRecipes = $this->receipesAPIController->getSpoonacularRandomRecipes();
-        $getCuisineCategories = $this->receipesAPIController->getCuisineCategories($category);
+        $getSpoonacularRandomRecipes = $this->spoonacularReceipesAPIController->getSpoonacularRandomRecipes();
+        $getCuisineCategories = $this->spoonacularReceipesAPIController->getCuisineCategories($category);
         $getRecipes = $this->recipesController->showRecipes(); // Call function to show recipes from database
 
         // Get only the first 6 recipes to pass to the template
