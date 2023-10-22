@@ -14,11 +14,18 @@ class UserFixtures extends Fixture
             'email' => 'umami_admin@example.com',
             'roles' => ['ROLE_ADMIN']
         ]);
-        // Create test user with infos down below
+        // Create test user with ROLE_USER (default)
         UsersFactory::createOne([
             'email' => 'umami_user@example.com',
+            'roles' => ['ROLE_USER'] // Set status to ROLE_USER
         ]);
-        UsersFactory::createMany(10);
+
+        // Create 10 more users with ROLE_USER (default)
+        UsersFactory::createMany(10, function() {
+            return [
+                'roles' => ['ROLE_USER'] // Set status to ROLE_USER
+            ];
+        });
         $manager->flush();
     }
 }
