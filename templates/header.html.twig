@@ -13,22 +13,25 @@
             {% if is_granted('ROLE_ADMIN') %}
                 <a href="{{ path('admin_dashboard') }}" class="menu-item">Admin</a>
             {% endif %}
-            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.user.displayName != app.user.email %}
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.user.displayName is not same as(app.user.email) %}
                 <a href="{{ path('logout') }}" class="menu-item">Log Out</a>
-{#                  MARIKA Add Show user Name option here : https://symfonycasts.com/screencast/symfony-security/user-service#play               #}
+                {# TODO MARIKA Add Show user Name option here : https://symfonycasts.com/screencast/symfony-security/user-service#play               #}
+                <a href="{{ path('new_recipe.scss') }}" class="menu-item">Create New Recipe</a>
                 <img
                         src="{{ app.user.avatarUri }}"
                         alt="{{ app.user.displayName }} Avatar">
-            {% elseif is_granted('IS_AUTHENTICATED_REMEMBERED') and app.user.displayName == app.user.email  %}
+            {% elseif is_granted('IS_AUTHENTICATED_REMEMBERED') and app.user.displayName is same as (app.user.email)  %}
                 <a href="{{ path('logout') }}" class="menu-item">Log Out</a>
                 <i class="fa-regular fa-user"></i>
             {% else %}
                 <a href="{{ path('login') }}" class="menu-item">Log In</a>
                 <a href="{{ path('register') }}" class="menu-item">Sign up</a>
             {% endif %}
-            <button href="#" class="menu-item menu-button" aria-label="Search">
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </button>
+
+            <a href="#" class="menu-item menu-button" aria-label="Search">
+                <i class="fa fa-search"></i>
+            </a>
+
 {#           MARIKA アクセシビリティを最適化する内容　後で仕様書の参考にする #}
 {#            Use a single <header> element to represent the header section of your page. #}
 {#            Use <a> elements for your logo and menu items, and provide appropriate href attributes.#}

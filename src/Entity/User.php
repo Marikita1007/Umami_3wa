@@ -179,8 +179,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    //This css needs to be moved to scss
+    //TODO This css needs to be moved to scss
     //MARIKA https://symfonycasts.com/screencast/symfony-security/user-service#play User Avatar
+    /**
+     * This method generates the URI for the user's avatar using the ui-avatars.com service.
+     * It allows specifying the display name and avatar size.
+     *
+     * @param int $size The size of the avatar image (default is 35).
+     *
+     * @return string The URI for the user's avatar image.
+     */
     public function getAvatarUri(int $size = 35): string
     {
         return 'https://ui-avatars.com/api/?' . http_build_query([

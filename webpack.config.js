@@ -28,6 +28,8 @@ Encore
     .addStyleEntry('footer-styles', './assets/styles/footer.scss')
     .addStyleEntry('home-styles', './assets/styles/home.scss')
     .addStyleEntry('categories', './assets/styles/categories.scss')
+    .addStyleEntry('show_recipe', './assets/styles/recipes/show_recipe.scss')
+    .addStyleEntry('new_recipe', './assets/styles/recipes/new_recipe.scss')
     .addStyleEntry('card', './assets/styles/components/card.scss')
     .addStyleEntry('form', './assets/styles/components/form.scss')
 
