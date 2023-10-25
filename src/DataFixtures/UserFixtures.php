@@ -6,7 +6,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 class UserFixtures extends Fixture
 {
-    //MARIKA TODO : Write README about FActory and Fixtures
+    //MARIKA TODO : Write README about Factory and Fixtures
     public function load(ObjectManager $manager)
     {
         // Create test user admin with infos down below

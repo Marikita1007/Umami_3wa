@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use App\Repository\RecipesRepository;
 use Doctrine\ORM\Mapping as ORM;
-
+use Gedmo\Mapping\Annotation as Gedmo; // MARIKA TODO This is for created_at updated_at
 
 /**
  * @ORM\Entity(repositoryClass=RecipesRepository::class)
@@ -34,12 +34,14 @@ class Recipes
     private $instructions;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime", nullable=false)
+     * @Gedmo\Timestampable(on="create")
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Gedmo\Timestampable(on="create")
      */
     private $updated_at;
 
@@ -69,7 +71,8 @@ class Recipes
     private $calories;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Difficulty")
+     * @ORM\JoinColumn(name="difficulty_id", referencedColumnName="id", nullable=false)
      */
     private $difficulty;
 
@@ -78,6 +81,14 @@ class Recipes
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAtValue(): void
+    {
+        $this->created_at = new \DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
@@ -204,12 +215,12 @@ class Recipes
         return $this;
     }
 
-    public function getDifficulty(): ?string
+    public function getDifficulty(): ?Difficulty
     {
         return $this->difficulty;
     }
 
-    public function setDifficulty(?string $difficulty): self
+    public function setDifficulty(?Difficulty $difficulty): self
     {
         $this->difficulty = $difficulty;
 

@@ -1,0 +1,67 @@
+@import '../base';
+
+// TODO Color needs to have variable
+// TODO Make it alphabetics order
+// TODO Make comments on to nth-child
+
+
+body[data-route="recipes_dashboard"] {
+
+  .recipes-dashboard {
+    border-collapse: collapse;
+
+    /* Border styles for table, th, and td */
+    cursor: pointer;
+    display: inline-block;
+    font-weight: bold;
+    height: auto;
+    margin: 18px;
+
+    .dashboard-top {
+      border: none;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    table {
+      margin: 30px 15px;/* margin top/bottom and side of recipes table */
+
+      .action-buttons {
+        display: flex;
+      }
+
+      /* Image styles */
+      img {
+        /* List recipe image maximum size */
+        margin: 0 5px;
+        max-width: 100px;
+        opacity: 0.8;
+        padding: 8px;
+        text-align: left;
+        text-decoration: none;
+      }
+
+      th {
+        background-color: $umami-whicte-background;/* Background color for th */
+        text-align: center;
+      }
+
+      th, td {
+        border: 1px solid $umami-grey-light;
+        min-width: 80px;
+      }
+
+      tr:nth-child(even) {
+        background-color: $umami-whicte-background;/* Background color for even rows */
+      }
+
+      tr:nth-child(odd) {
+        background-color: $umami-white;/* Background color for odd rows */
+      }
+
+      td:first-child, td:nth-child(2) {
+        text-align: center; // Centered ID and name of recipes table
+      }
+    }
+  }
+}

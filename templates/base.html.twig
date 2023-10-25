@@ -8,15 +8,17 @@
         {% set pageRoute = pageRoute ?? null %}
 
         {# MARIKA TODO webpack.config.jsにSCSSファイルを追加する#}
-        <link rel="stylesheet" href="{{ asset('build/base.css') }}">
+        <link rel="stylesheet" href="{{ asset('build/base-styles.css') }}">
         <link rel="stylesheet" href="{{ asset('build/header-styles.css') }}">
         <link rel="stylesheet" href="{{ asset('build/footer-styles.css') }}">
         <link rel="stylesheet" href="{{ asset('build/home-styles.css') }}">
-        <link rel="stylesheet" href="{{ asset('build/categories.css') }}">
-        <link rel="stylesheet" href="{{ asset('build/card.css') }}">
-        <link rel="stylesheet" href="{{ asset('build/form.css') }}">
-        <link rel="stylesheet" href="{{ asset('build/show_recipe.css') }}">
-        <link rel="stylesheet" href="{{ asset('build/new_recipe.css') }}">
+        <link rel="stylesheet" href="{{ asset('build/categories-styles.css') }}">
+        <link rel="stylesheet" href="{{ asset('build/card-styles.css') }}">
+        <link rel="stylesheet" href="{{ asset('build/form-styles.css') }}">
+        <link rel="stylesheet" href="{{ asset('build/button-styles.css') }}">
+        <link rel="stylesheet" href="{{ asset('build/show-recipe-styles.css') }}">
+        <link rel="stylesheet" href="{{ asset('build/new-recipe-styles.css') }}">
+        <link rel="stylesheet" href="{{ asset('build/recipes-dashboard-styles.css') }}">
         <link rel="stylesheet" href="{{ asset('fonts/fontawesome-free-6.4.2-web/css/all.css') }}" title="Font Awesome Icons">
 
         {% block stylesheets %}
@@ -27,10 +29,27 @@
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
+    {#  Use pageRoute to defined each page design path  #}
     <body data-route="{{ pageRoute }}">
         {% include 'header.html.twig' %}
-        {% block body %}
-        {% endblock %}
+        <main>
+            {# TODO MARIKA Change the design !!   #}
+            {# MARIKA When ths email is verified; this message shows : https://symfonycasts.com/screencast/symfony-security/verify-email#codeblock-0bac7d3cc4#}
+            {% for flash in app.flashes('success') %}
+                <div class="alert-succes-message">{{ flash }}</div>
+            {% endfor %}
+            {% for flash in app.flashes('error') %}
+                <div class="alert-danger-message">{{ flash }}</div>
+            {% endfor %}
+            {#  success message when the new/edit recipe is created #}
+            {#        {% if app.flashes('success') is not empty %}#}
+            {#            <div class="alert-success-recipe">#}
+            {#                {{ app.flashes('success')[0] }}#}
+            {#            </div>#}
+            {#        {% endif %}#}
+            {% block body %}
+            {% endblock %}
+        </main>
         {% include 'footer.html.twig' %}
     </body>
 </html>

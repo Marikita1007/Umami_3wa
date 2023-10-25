@@ -30,19 +30,13 @@ body {
     height: auto;
   }
 
-  h1 {
-    color: $umami-yellow;
+  h1, h2, h3 {
+    color: $umami-yellow-dark;
     font-family: $umami-font-family;
   }
 
   h2 {
-    color: $umami-yellow-dark;
-    font-family: $umami-font-family;
     text-transform: uppercase;
-  }
-
-  h3 {
-    color: $umami-yellow-dark;
   }
 
   .title {
@@ -56,11 +50,27 @@ body {
 
 }
 
-////For responsive
+//For responsive
 @media (max-width: $layout-breakpoint-small) {
   html {
     font-size: 16px;
-    border: 1px solid red !important;
+    border: 1px solid red !important; //MARIKA TODO This is for the test porpose delete at the end
   }
 }
 
+
+// Alert success message
+.alert-succes-message {
+  background-color: $umami-success;
+  color: $umami-grey;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+// Alert error/danger message
+.alert-danger-message {
+  background-color: $umami-danger;
+  color: $umami-grey;
+  padding: 10px;
+  border-radius: 5px;
+}
