@@ -1,0 +1,46 @@
+@import '../base';
+
+
+/* Button design to create a new Recipe */
+.custom-button-wide {
+  align-items: center;
+  background-color: $umami-yellow-dark;
+  border: none;
+  border-radius: 4px;
+  color: $umami-white;
+  cursor: pointer;
+  display: flex;
+  padding: 10px 20px;
+  transition: transform 0.3s; /* Add a smooth transition */
+}
+
+.custom-button-wide:hover {
+  transform: scale(1.03); /* Scale the button by 3% when hovered */
+}
+
+/* Icons button design */
+.custom-button-icon {
+  border: 1px solid $umami-white;
+  border-radius: 4px;
+  color: $umami-white;
+  display: inline-block;
+  font-weight: bold;
+  margin: 0 5px;
+  padding: 8px 16px;
+  transition: transform 0.3s; /* Add a smooth transition */
+}
+
+.custom-button-icon:hover {
+  transform: scale(1.03); /* Scale the button by 3% when hovered */
+}
+
+/* Styles for edit/delete/edit buttons */
+.delete-recipe {
+  background-color: $umami-danger;
+}
+.edit-recipe {
+  background-color: $umami-success;
+}
+.show-recipe {
+  background-color: $umami-yellow-dark;
+}

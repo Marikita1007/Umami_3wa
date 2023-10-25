@@ -16,7 +16,7 @@
             {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.user.displayName is not same as(app.user.email) %}
                 <a href="{{ path('logout') }}" class="menu-item">Log Out</a>
                 {# TODO MARIKA Add Show user Name option here : https://symfonycasts.com/screencast/symfony-security/user-service#play               #}
-                <a href="{{ path('new_recipe.scss') }}" class="menu-item">Create New Recipe</a>
+                <a href="{{ path('list_recipes') }}" class="menu-item">About recipes</a>
                 <img
                         src="{{ app.user.avatarUri }}"
                         alt="{{ app.user.displayName }} Avatar">
@@ -44,15 +44,6 @@
     <div class="baseline">
         <img class="baseline-name text-center" src="{{ asset('images/umami-logos_white_half.png') }}" alt="UMAMI Logo">
         <span class="baseline-slogan">Savor the Flavor</span>
-    </div>
-    <div>
-        {# MARIKA When ths email is verified; this message shows : https://symfonycasts.com/screencast/symfony-security/verify-email#codeblock-0bac7d3cc4#}
-        {% for flash in app.flashes('success') %}
-            <div class="alert alert-success">{{ flash }}</div>
-        {% endfor %}
-        {% for flash in app.flashes('error') %}
-            <div class="alert alert-danger">{{ flash }}</div>
-        {% endfor %}
     </div>
 </header>
 

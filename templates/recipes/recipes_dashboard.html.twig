@@ -1,0 +1,53 @@
+{#MARIKA TODO Write README about CRUD #}
+{% block title %}Dashboard{% endblock %}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <section class="recipes-dashboard">
+        <div class="dashboard-top">
+            <h1>Recipes List</h1>
+
+            <a href="{{ path("new_recipe") }}" class="custom-button-wide">Create New Recipe</a>
+        </div>
+
+        {% if recipes is empty %}
+            <div>You haven't created recipe.</div>
+        {% else %}
+            {# TODO MARIKA Add button od create new recipe   #}
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Image</th>
+                    <th>Descriptions</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {#  TODO MARIKA Make it if else           #}
+                {% for recipe in recipes %}
+                    <tr>
+                        <td>{{ recipe.id }}</td>
+                        <td>{{ recipe.name|capitalize }}</td>
+                        <td><img src="{{ asset('uploads/images/' ~ recipe.image) }}" alt="{{ recipe.name }}"></td>
+                        <td>{{ recipe.description|capitalize }}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <a href="{{ path("delete_recipe", {"id" : recipe.id}) }}" class="delete-recipe custom-button-icon"><i class="fas fa-trash-alt"></i></a>
+                                <a href="{{ path("edit_recipe", {"id" : recipe.id}) }}" class="edit-recipe custom-button-icon"><i class="fas fa-edit"></i> </a>
+                                <a href="{{ path("show_recipe", {"id" : recipe.id}) }}" class="show-recipe custom-button-icon"><i class="fas fa-eye"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </section>
+
+{% endblock %}
+
+{# Set route-data for scss #}
+{% set pageRoute = 'recipes_dashboard' %}

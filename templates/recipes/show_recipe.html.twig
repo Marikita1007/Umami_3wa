@@ -4,7 +4,6 @@
 
 {% block body %}
     <div class="row-recipe">
-
         <div class="leftcolumn">
             <div class="card">
                 <h3>About Recipe</h3>
@@ -37,7 +36,8 @@
                 <h5>{{ recipe.description }}</h5>
                 <time> <i class="fa fa-calendar"></i> {{ recipe.createdAt ? recipe.createdAt|date('Y-m-d H:i:s') : (recipe.updatedAt ? recipe.updatedAt|date('Y-m-d H:i:s') : '') }}</time>
 
-                <img class="recipe-img" src="{{ asset('images/' ~ recipe.image) }}" alt="{{ recipe.name }}">
+                <img class="recipe-img" src="{{ asset('uploads/images/' ~ recipe.image) }}" alt="{{ recipe.name }}">
+
                 <h3>Instructions</h3>
                 <p>{{ recipe.instructions }}</p>
             </div>
@@ -59,7 +59,5 @@
     {#    <a href="{{ path('app_recipes_edit', {'id': recipe.id}) }}">edit</a>#}
 
 {#    {{ include('recipes/_delete_form.html.twig') }}#}
-
-
 
 {% endblock %}

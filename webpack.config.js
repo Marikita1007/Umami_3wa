@@ -23,15 +23,17 @@ Encore
     .addEntry('app', './assets/app.js')
 
     // Added scss files
-    .addStyleEntry('base', './assets/styles/base.scss')
+    .addStyleEntry('base-styles', './assets/styles/base.scss')
     .addStyleEntry('header-styles', './assets/styles/header.scss')
     .addStyleEntry('footer-styles', './assets/styles/footer.scss')
     .addStyleEntry('home-styles', './assets/styles/home.scss')
-    .addStyleEntry('categories', './assets/styles/categories.scss')
-    .addStyleEntry('show_recipe', './assets/styles/recipes/show_recipe.scss')
-    .addStyleEntry('new_recipe', './assets/styles/recipes/new_recipe.scss')
-    .addStyleEntry('card', './assets/styles/components/card.scss')
-    .addStyleEntry('form', './assets/styles/components/form.scss')
+    .addStyleEntry('categories-styles', './assets/styles/categories.scss')
+    .addStyleEntry('show-recipe-styles', './assets/styles/recipes/show-recipe.scss')
+    .addStyleEntry('new-recipe-styles', './assets/styles/recipes/new-recipe.scss')
+    .addStyleEntry('recipes-dashboard-styles', './assets/styles/recipes/recipes-dashboard.scss')
+    .addStyleEntry('card-styles', './assets/styles/components/card.scss')
+    .addStyleEntry('form-styles', './assets/styles/components/form.scss')
+    .addStyleEntry('button-styles', './assets/styles/components/button.scss')
 
     // Added bootstrap CSS
     .addStyleEntry('bootstrap-css', './node_modules/bootstrap/dist/css/bootstrap.css')
