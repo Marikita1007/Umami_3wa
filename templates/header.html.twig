@@ -15,12 +15,13 @@
             {% endif %}
             {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.user.displayName is not same as(app.user.email) %}
                 <a href="{{ path('logout') }}" class="menu-item">Log Out</a>
-                {# TODO MARIKA Add Show user Name option here : https://symfonycasts.com/screencast/symfony-security/user-service#play               #}
                 <a href="{{ path('list_recipes') }}" class="menu-item">About recipes</a>
+                {# TODO MARIKA Add Show user Name option here : https://symfonycasts.com/screencast/symfony-security/user-service#play               #}
                 <img
                         src="{{ app.user.avatarUri }}"
                         alt="{{ app.user.displayName }} Avatar">
             {% elseif is_granted('IS_AUTHENTICATED_REMEMBERED') and app.user.displayName is same as (app.user.email)  %}
+                <a href="{{ path('list_recipes') }}" class="menu-item">About recipes</a>
                 <a href="{{ path('logout') }}" class="menu-item">Log Out</a>
                 <i class="fa-regular fa-user"></i>
             {% else %}

@@ -17,7 +17,7 @@
         <link rel="stylesheet" href="{{ asset('build/form-styles.css') }}">
         <link rel="stylesheet" href="{{ asset('build/button-styles.css') }}">
         <link rel="stylesheet" href="{{ asset('build/show-recipe-styles.css') }}">
-        <link rel="stylesheet" href="{{ asset('build/new-recipe-styles.css') }}">
+        <link rel="stylesheet" href="{{ asset('build/recipe-form-styles.css') }}">
         <link rel="stylesheet" href="{{ asset('build/recipes-dashboard-styles.css') }}">
         <link rel="stylesheet" href="{{ asset('fonts/fontawesome-free-6.4.2-web/css/all.css') }}" title="Font Awesome Icons">
 
@@ -33,7 +33,6 @@
     <body data-route="{{ pageRoute }}">
         {% include 'header.html.twig' %}
         <main>
-            {# TODO MARIKA Change the design !!   #}
             {# MARIKA When ths email is verified; this message shows : https://symfonycasts.com/screencast/symfony-security/verify-email#codeblock-0bac7d3cc4#}
             {% for flash in app.flashes('success') %}
                 <div class="alert-succes-message">{{ flash }}</div>
@@ -42,11 +41,11 @@
                 <div class="alert-danger-message">{{ flash }}</div>
             {% endfor %}
             {#  success message when the new/edit recipe is created #}
-            {#        {% if app.flashes('success') is not empty %}#}
-            {#            <div class="alert-success-recipe">#}
-            {#                {{ app.flashes('success')[0] }}#}
-            {#            </div>#}
-            {#        {% endif %}#}
+{#                    {% if app.flashes('success') is not empty %}#}
+{#                        <div class="alert-success-recipe">#}
+{#                            {{ app.flashes('success')[0] }}#}
+{#                        </div>#}
+{#                    {% endif %}#}
             {% block body %}
             {% endblock %}
         </main>

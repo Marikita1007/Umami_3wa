@@ -3,6 +3,7 @@
 {% block title %}Recipes{% endblock %}
 
 {% block body %}
+
     <div class="row-recipe">
         <div class="leftcolumn">
             <div class="card">
@@ -15,12 +16,10 @@
             </div>
             <div class="card">
                 <h3>Ingredients</h3>
-                {#  TODO CREATE ingredients table #}
-                <ul>
-                    <li>Coffee</li>
-                    <li>Tea</li>
-                    <li>Milk</li>
-                </ul>
+                {% for ingredient in recipe.ingredients %}
+                    <p>Ingredient : {{ ingredient.name }}</p>
+                    <p>Quantity : {{ ingredient.amount }}</p>
+                {% endfor %}
             </div>
             <div class="card">
                 <h3>You maybe also like</h3>
@@ -31,6 +30,7 @@
             </div>
         </div>
         <div class="rightcolumn">
+            <a href="{{ path('list_recipes') }}" class="return-list-button">back to list</a>
             <div class="card">
                 <h2>{{ recipe.name }}</h2>
                 <h5>{{ recipe.description }}</h5>
@@ -42,22 +42,8 @@
                 <p>{{ recipe.instructions }}</p>
             </div>
         </div>
-
     </div>
 
-
-    {#    MARIKA TODO bring delete_form inside #}
-{#    <a href="{{ path('app_recipes_index') }}">back to list</a>#}
-
-{#    <a href="{{ path('app_recipes_edit', {'id': recipe.id}) }}">edit</a>#}
-
-{#    {{ include('recipes/_delete_form.html.twig') }}#}
-
-
-    {#    <a href="{{ path('app_recipes_index') }}">back to list</a>#}
-
-    {#    <a href="{{ path('app_recipes_edit', {'id': recipe.id}) }}">edit</a>#}
-
-{#    {{ include('recipes/_delete_form.html.twig') }}#}
-
 {% endblock %}
+
+

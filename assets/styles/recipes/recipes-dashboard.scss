@@ -1,10 +1,5 @@
 @import '../base';
 
-// TODO Color needs to have variable
-// TODO Make it alphabetics order
-// TODO Make comments on to nth-child
-
-
 body[data-route="recipes_dashboard"] {
 
   .recipes-dashboard {
@@ -62,6 +57,45 @@ body[data-route="recipes_dashboard"] {
       td:first-child, td:nth-child(2) {
         text-align: center; // Centered ID and name of recipes table
       }
+
+      // TODO MARIKA Change responsive title design !!!
+      @media (max-width: 600px) {
+        display: block;
+
+        img {
+          max-width: 100%;
+          text-align: center;
+        }
+
+        th, td {
+          display: block;
+          width: 100%;
+          text-align: left;
+        }
+
+        th {
+          text-align: left;
+        }
+
+        .dashboard-top {
+          display: block;
+        }
+
+        tr {
+          margin-bottom: 15px;
+          display: block;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+
+        td:first-child, td:nth-child(2) {
+          text-align: left;
+        }
+
+      }
     }
   }
 }
+

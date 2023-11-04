@@ -3,45 +3,98 @@
 {% block title %}Create a New Recipe{% endblock %}
 
 {% block body %}
+    {# TODO MARIKA Change japanese to english #}
     <h1>Create a New Recipe</h1>
 
     {{ form_start(form) }}
+    {{ form_errors(form) }}
+    {{ form_row(form.recipe) }}
 
-    {{ form_row(form.name) }}
-    {{ form_row(form.description) }}
-    {{ form_row(form.image) }}
-    {{ form_row(form.instructions) }}
-    {{ form_row(form.servings) }}
-    {{ form_row(form.prep_time) }}
-    {{ form_row(form.cook_time) }}
-    {{ form_row(form.calories) }}
-    {{ form_row(form.difficulty) }}
+{#    <div id="ingredient-container">#}
+{#        <ul class="ingredients" data-index="{{ form.ingredients|length }}">#}
+{#            {{ form_widget(form.ingredients.vars.prototype) }}#}
+{#        </ul>#}
+{#    </div>#}
 
-    <button type="submit" class="">Create Recipe</button>
 
-    {{ form_end(form) }}
+{#    {{ form_widget(form.ingredients.vars.prototype) }}#}
 
-{#    MARIKA TODO Adjust this design to form make sure rename the class and get rid of un useful details change scss according to it too #}
-    <div class="form-style-3">
-        <form>
-            <fieldset><legend>Personal</legend>
-                <label for="field1"><span>Name <span class="required">*</span></span><input type="text" class="input-field" name="field1" value="" /></label>
-                <label for="field2"><span>Email <span class="required">*</span></span><input type="email" class="input-field" name="field2" value="" /></label>
-                <label for="field3"><span>Phone <span class="required">*</span></span><input type="text" class="input-field" name="field3" value="" /></label>
-                <label for="field4"><span>Subject</span><select name="field4" class="select-field">
-                        <option value="Appointment">Appointment</option>
-                        <option value="Interview">Interview</option>
-                        <option value="Regarding a post">Regarding a post</option>
-                    </select></label>
-            </fieldset>
-            <fieldset><legend>Message</legend>
-                <label for="field6"><span>Message <span class="required">*</span></span><textarea name="field6" class="textarea-field"></textarea></label>
-                <label><span> </span><input type="submit" value="Submit" /></label>
-            </fieldset>
-        </form>
-    </div>
+{#    <button type="button" class="add-item-link-js custom-button-small" data-collection-holder-class="ingredients" aria-label="add ingredients">Add ingredients</button>#}
+{#    <button type="submit" class="custom-button-wide" aria-label="create recipe">Create Recipe</button>#}
+
+{#    {{ form_row(form._token) }}#}{#  This renders csrf token row have not yet been rendered for the given form  #}
+{#    {{ form_end(form, {'render_rest': false}) }}#}
+
+    <ul id="ingredient-fields-list"
+        data-prototype="{{ form_widget(form.ingredients.vars.prototype)|e }}"
+        data-widget-tags="{{ '<li></li>' }}"
+        data-widget-counter="{{ form.ingredients|length }}">
+        {% for ingredient in form.ingredients %}
+            <li>
+                {{ form_errors(ingredient) }}
+                {{ form_row(ingredient.name) }}
+                {{ form_row(ingredient.amount) }}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <button type="button"
+            class="add-another-collection-widget custom-button-small"
+            data-list-selector="#ingredient-fields-list"
+            aria-label="add ingredients">Add another ingredient</button>
+    <button type="submit" class="custom-button-wide" aria-label="create recipe">Create Recipe</button>
+
+    {{ form_row(form._token) }}  {# This renders csrf token row have not yet been rendered for the given form  #}
+    {{ form_end(form, {'render_rest': false}) }}
+
+
 {% endblock %}
 
+{% block javascripts %}
+{#    {{ parent() }}#}
+{#    <script src="{{ asset('build/recipe-form.js') }}"></script>#}
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        jQuery(document).ready(function () {
+            jQuery('.add-another-collection-widget').click(function (e) {
+                var list = jQuery(jQuery(this).attr('data-list-selector'));
+                var counter = list.data('widget-counter') || list.children().length;
+                var newWidget = list.attr('data-prototype');
 
+                newWidget = newWidget.replace(/__name__/g, counter);
 
+                counter++;
+                list.data('widget-counter', counter);
+
+                var newElem = jQuery(list.attr('data-widget-tags')).html(newWidget);
+                newElem.find('input').each(function() {
+                    // Update the field names to match the new input
+                    var newName = jQuery(this).attr('name').replace(/__name__/g, counter);
+                    jQuery(this).attr('name', newName);
+                });
+
+                newElem.appendTo(list);
+                addIngredientFormDeleteLink(newElem);
+            });
+
+            $('ul.ingredients li').each(function () {
+                addIngredientFormDeleteLink($(this));
+            });
+
+            function addIngredientFormDeleteLink(item) {
+                var removeFormButton = $('<button class="custom-button-small">Delete this Ingredient</button>');
+                item.append(removeFormButton);
+
+                removeFormButton.on('click', function (e) {
+                    e.preventDefault();
+                    item.remove();
+                });
+            }
+        });
+
+    </script>
+{% endblock %}
+
+{# Set route-data for scss #}
+{% set pageRoute = 'recipe-form' %}

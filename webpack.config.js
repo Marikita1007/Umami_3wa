@@ -21,6 +21,7 @@ Encore
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
     .addEntry('app', './assets/app.js')
+    .addEntry('recipe-form', './assets/js/recipe-form.js')
 
     // Added scss files
     .addStyleEntry('base-styles', './assets/styles/base.scss')
@@ -29,7 +30,7 @@ Encore
     .addStyleEntry('home-styles', './assets/styles/home.scss')
     .addStyleEntry('categories-styles', './assets/styles/categories.scss')
     .addStyleEntry('show-recipe-styles', './assets/styles/recipes/show-recipe.scss')
-    .addStyleEntry('new-recipe-styles', './assets/styles/recipes/new-recipe.scss')
+    .addStyleEntry('recipe-form-styles', './assets/styles/recipes/recipe-form.scss')
     .addStyleEntry('recipes-dashboard-styles', './assets/styles/recipes/recipes-dashboard.scss')
     .addStyleEntry('card-styles', './assets/styles/components/card.scss')
     .addStyleEntry('form-styles', './assets/styles/components/form.scss')

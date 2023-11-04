@@ -96,7 +96,7 @@
                 <a href="" class="more">See more</a>
             </div>
         </article>
-{#        //MARIKA : Question : block-left and block-right　交互に使いたい#}
+{#        //TODO MARIKA : Question : block-left and block-right　交互に使いたい  IF THIS IS NOT USED DELET IT #}
 {#        // Sample array of image URLs from the database#}
 {#        $imageUrls = [#}
 {#        'image1.jpg',#}
@@ -136,27 +136,23 @@
         </div>
 
         {% if jsonDataSpoonacular is defined and jsonDataSpoonacular.recipes is defined %}
-            <div class="container">
-                <div class="row">
+{#            TODO MARIKA この部分　bootstrap入っていないようにする。　動くように変更加える。#}
                 {% for key, recipe in jsonDataSpoonacular.recipes %}
                     {% if key % 3 == 0 %}
                         </div></div><div class="container"><div class="row">
                     {% endif %}
-
-                    <article class="col-md-4 card m-2 block-card">
+                {% endfor %}
+                <figure class="card">
+                    <div class="card-container">
                         {% if recipe.image is defined %}
                             <img src="{{ recipe.image }}" alt="{{ recipe.title }}">
                         {% else %}
-                            <img src="{{ asset('images/no-image.png') }}" alt="No Food Image Available">
+                            <i class="fa-solid fa-image-slash" aria-label="No image available"></i>
                         {% endif %}
-                        <div class="card-body">
-                            <h3 class="card-title">{{ recipe.title }}</h3>
-                            <p>Cooking Time: {{ recipe.readyInMinutes }} minutes</p>
-                        </div>
-                    </article>
-                {% endfor %}
-                </div>
-            </div>
+                        <h3>{{ recipe.title }}</h3>
+                        <p>Cooking Time: {{ recipe.readyInMinutes }} minutes</p>
+                    </div>
+                </figure>
 {#  MARIKA TODO DELETE THIS IF its not useable !!! #}
 {#        {% elseif  %}#}
 {#            MARIKA This is for my own API data #}
@@ -172,13 +168,19 @@
 {#                </div>#}
 {#            {% endfor %}#}
         {% else %}
+
+{#  TODO MARIKA NOW what we see if this else delete above if it's not used !!!!!!!!!!#}
             <div class="container-small flex-content">
                 <ul class="card-container" role="list">
                     {% for recipe in sixRecipes %}
-                        <li class="card-component" role="listitem">
+                        <li class="card" role="listitem">
                             <a href="{{ path('show_recipe', {id: recipe.id}) }}">
                                 <figure>
-                                    <img src="{{ asset('images/' ~ recipe.image) }}" alt="{{ recipe.name }}">
+                                    {% if recipe.image %}
+                                        <img src="{{ asset('uploads/images/' ~ recipe.image) }}" alt="{{ recipe.name }}">
+                                    {% else %}
+                                        <i class="fa-solid fa-eye-slash fa-2xl" aria-label="No image available"></i>
+                                    {% endif %}
                                     <figcaption>
                                         <h4>
                                             <b>{{ recipe.name }}</b>

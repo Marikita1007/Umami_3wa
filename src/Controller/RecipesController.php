@@ -2,9 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Ingredients;
 use App\Entity\Recipes;
+use App\Entity\User;
+use App\Form\IngredientRecipeType;
 use App\Form\RecipesType;
+use App\Repository\IngredientsRepository;
 use App\Repository\RecipesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\DBAL\Types\IntegerType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -63,15 +69,16 @@ class RecipesController extends AbstractController
      */
     public function showRecipe(Recipes $recipe): Response
     {
-        return $this->render('recipes/show_recipe.html.twig', ['recipe' => $recipe]);
+        return $this->render('recipes/show_recipe.html.twig',
+            ['recipe' => $recipe]);
     }
 
     /**
+     * TODO MARIKA If edit both(recipes and ingredients) at same time is not a good solution, put this back
      * Controller method for creating a new recipe.
      *
      * - Authenticated users can create recipes via a recipe form.
      * - If not authenticated, it redirects to the login page with an error message.
-     *
      *
      * @Route("/new", name="new_recipe", methods={"GET", "POST"})
      * @Security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')")
@@ -124,42 +131,114 @@ class RecipesController extends AbstractController
     }
 
     /**
-     * @Route("/edit/{id}", name="edit_recipe", methods={"GET", "POST", "HEAD"})
+     * Controller method for creating a new recipe and a new ingredient.
+     *
+     * @Route("/new_recipe_ingredients", name="new_recipe", methods={"POST", "GET", "HEAD"})
+     * @Security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')")
      */
-    public function editRecipe(EntityManagerInterface $manager, Request $request, Recipes $recipe, SluggerInterface $slugger): Response
+    public function createNewRecipeAndIngredients(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
-        $form = $this->createForm(RecipesType::class, $recipe);
+        //TODO MARIKA This needs to be fixed. This Contorller is only inserting one ingredient. Ths problem comes from js. Evrytime I add a new ingredients field. it returns NaN or null as array number.
+
+        $recipe = new Recipes();
+
+        // create a form with Recipes and Ingredients entities
+        $form = $this->createForm(IngredientRecipeType::class, [
+            'recipe' => $recipe,
+        ]);
 
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()){
 
-            $imageFile = $form['image']->getData();
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Get the uploaded file from recipe form
+            $imageFile = $form['recipe']['image']->getData();
+
+            // Check if a file was uploaded
             if ($imageFile) {
                 $this->saveImage($imageFile, $slugger, $recipe);
             }
 
-            $manager->persist($recipe);
-            $manager->flush();
+            // Form handler to insert into Recipes and Ingredients tables
+            $data = $form->getData();
+            $recipe = $data['recipe'];
 
-            $this->addFlash('success', 'Your recipe is edited !');
+            // Iterate over ingredients and add each one to the recipe
+            $ingredients = $data['ingredients'];
+            foreach ($ingredients as $ingredient) {
+                $recipe->addIngredient($ingredient);
+                $entityManager->persist($ingredient);
+            }
+
+            $entityManager->persist($recipe);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'The new recipe with ingredients are created !');
+            return $this->redirectToRoute('list_recipes');
+        } else {
+
+            foreach ($form->getErrors(true, false) as $error) {
+                dump($error->getMessage());
+            }
+        }
+
+        return $this->render('recipes/new_recipe.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+
+    /**
+     * @Route("/edit/{id}", name="edit_recipe", methods={"GET", "POST", "HEAD"})
+     */
+    public function editRecipeAndIngredients(Request $request, EntityManagerInterface $entityManager, Recipes $recipe, IngredientsRepository $ingredientsRepository, SluggerInterface $slugger): Response
+    {
+        $ingredients = $ingredientsRepository->findBy(['recipe' => $recipe]);
+
+        $form = $this->createForm(IngredientRecipeType::class, [
+            'recipe' => $recipe,
+            'ingredients' => $ingredients,
+        ]);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()){
+
+            $imageFile = $form['recipe']['image']->getData();
+            if ($imageFile) {
+                $this->saveImage($imageFile, $slugger, $recipe);
+            }
+
+            // Form handler to insert into Recipes and Ingredients tables
+            $data = $form->getData();
+            $recipe = $data['recipe'];
+
+            // Iterate over ingredients and add each one to the recipe
+            $newIngredients = $data['ingredients'];
+
+            foreach ($newIngredients as $newIngredient) {
+                $recipe->addIngredient($newIngredient);
+                $entityManager->persist($newIngredient);
+            }
+
+            $entityManager->persist($recipe);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Recipe and ingredients have been updated.');
 
             return $this->redirectToRoute("show_recipe", ['id' => $recipe->getId()]);
         }
 
         return $this->render('recipes/edit.html.twig', [
             'form' => $form->createView(),
-            //update => true shows that we use update; check form.html.twig if else !
-            //'update'=> true,
         ]);
     }
 
     /**
      * @Route("/delete/{id}", name="delete_recipe")
      */
-    public function deleteRecipe(EntityManagerInterface $manager, Request $request, Recipes $recipe): Response
+    public function deleteRecipe(EntityManagerInterface $entityManager, Request $request, Recipes $recipe): Response
     {
-        $manager->remove($recipe);
-        $manager->flush();
+        $entityManager->remove($recipe);
+        $entityManager->flush();
         $this->addFlash('success', 'Your recipe was deleted');
         return $this->redirectToRoute("list_recipes");
     }
