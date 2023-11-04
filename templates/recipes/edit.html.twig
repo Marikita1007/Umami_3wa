@@ -1,13 +1,137 @@
+{# TODO MARIKA Commented codes are coeds before inserting JQeury #}
+{#{% extends 'base.html.twig' %}#}
+
+{#{% block title %}Edit Recipes{% endblock %}#}
+
+{#{% block body %}#}
+{#    <h1>Edit Recipes</h1>#}
+
+{#    TODO MARIKA if this page is not used delete this line#}
+{#    {{ include('recipes/_form.html.twig', {'button_label': 'Update Recipe'}) }}#}
+
+{#    {{ form_start(form) }}#}
+{#    {{ form_row(form.recipe) }}#}
+{#    {{ form_errors(form) }}#}
+
+{#    TODO MARIKA IMPORTANT MAke sure that added data will be inserted LOOK Controller !!!#}
+{#  フォームのインデックスの非表示と材料の表示をする。#}
+{#    <div id="ingredient-container">#}
+{#        <ul class="ingredients" data-index="{{ form.ingredients|length }}">#}
+{#            {{ form_widget(form.ingredients.vars.prototype) }} #}
+{#            {{ form_widget(form.ingredients, { 'full_name': 'form[ingredients][]' }) }}#}
+{#        </ul>#}
+{#    </div>#}
+
+
+{#    <div id="ingredient-container">#}
+{#        <ul class="ingredients" data-index="{{ form.ingredients|length }}">#}
+{#            {{ form_label(form.ingredients) }}#}
+{#            {{ form_widget(form.ingredients, { 'full_name': 'form[ingredients][]' }) }}#}
+{#            {{ form_errors(form.ingredients) }}#}
+{#        </ul>#}
+{#    </div>#}
+
+{#    <button type="button" class="add-item-link-js custom-button-small" data-collection-holder-class="ingredients" aria-label="Add an Ingredient">Add an Ingredient</button>#}
+{#    <button type="submit" class="custom-button-wide" aria-label="Edit Recipe">Edit Recipe</button>#}
+
+{#    {{ form_row(form._token) }}#}{#  This renders csrf token row have not yet been rendered for the given form  #}
+{#    {{ form_end(form, {'render_rest': false}) }}#}{# don't render unrendered fields #}
+
+{#{% endblock %}#}
+
+{#{% block javascripts %}#}
+{#    {{ parent() }}#}
+{#    <script src="{{ asset('build/recipe-form.js') }}"></script>#}
+{#{% endblock %}#}
+
+{# Set route-data for scss #}
+{#{% set pageRoute = 'recipe-form' %}#}
+
+
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Recipes{% endblock %}
+{% block title %}Create a New Recipe{% endblock %}
 
 {% block body %}
+
     <h1>Edit Recipes</h1>
 
-    {{ include('recipes/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+    {{ form_row(form.recipe) }}
 
-    <a href="{{ path('list_recipes') }}">back to list</a>
+    <ul id="ingredient-fields-list"
+        data-prototype="{{ form_widget(form.ingredients.vars.prototype)|e }}"
+        data-widget-tags="{{ '<li></li>' }}"
+        data-widget-counter="{{ form.ingredients|length }}">
+        {% for ingredient in form.ingredients %}
+            <li>
+                {{ form_errors(ingredient) }}
+                {{ form_row(ingredient.name) }}
+                {{ form_row(ingredient.amount) }}
+            </li>
+        {% endfor %}
+    </ul>
 
-    {{ include('recipes/_delete_form.html.twig') }}
+    <button type="button"
+            class="add-another-collection-widget custom-button-small"
+            data-list-selector="#ingredient-fields-list"
+            aria-label="add ingredients">Add another ingredient</button>
+    <button type="submit" class="custom-button-wide" aria-label="Edit Recipe">Edit Recipe</button>
+
+    {{ form_row(form._token) }}  {# This renders csrf token row have not yet been rendered for the given form  #}
+    {{ form_end(form, {'render_rest': false}) }}
+
+
 {% endblock %}
+
+{% block javascripts %}
+    {#    {{ parent() }}#}
+    {#    <script src="{{ asset('build/recipe-form.js') }}"></script>#}
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        jQuery(document).ready(function () {
+            jQuery('.add-another-collection-widget').click(function (e) {
+                console.log('clicked add ingredient button ');
+                var list = jQuery(jQuery(this).attr('data-list-selector'));
+                var counter = list.data('widget-counter') || list.children().length;
+                var newWidget = list.attr('data-prototype');
+
+                newWidget = newWidget.replace(/__name__/g, counter);
+
+                counter++;
+                list.data('widget-counter', counter);
+
+                var newElem = jQuery(list.attr('data-widget-tags')).html(newWidget);
+                newElem.find('input').each(function() {
+                    // Update the field names to match the new input
+                    var newName = jQuery(this).attr('name').replace(/__name__/g, counter);
+                    jQuery(this).attr('name', newName);
+                });
+
+                newElem.appendTo(list);
+                addIngredientFormDeleteLink(newElem);
+            });
+
+            $('ul.ingredients li').each(function () {
+                addIngredientFormDeleteLink($(this));
+            });
+
+            function addIngredientFormDeleteLink(item) {
+                var removeFormButton = $('<button class="custom-button-small">Delete this Ingredient</button>');
+                item.append(removeFormButton);
+
+                removeFormButton.on('click', function (e) {
+                    console.log('clicked delete button');
+                    e.preventDefault();
+                    item.remove();
+                });
+            }
+        });
+
+    </script>
+{% endblock %}
+
+{# Set route-data for scss #}
+{% set pageRoute = 'recipe-form' %}
