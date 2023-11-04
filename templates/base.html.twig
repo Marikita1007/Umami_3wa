@@ -40,15 +40,10 @@
             {% for flash in app.flashes('error') %}
                 <div class="alert-danger-message">{{ flash }}</div>
             {% endfor %}
-            {#  success message when the new/edit recipe is created #}
-{#                    {% if app.flashes('success') is not empty %}#}
-{#                        <div class="alert-success-recipe">#}
-{#                            {{ app.flashes('success')[0] }}#}
-{#                        </div>#}
-{#                    {% endif %}#}
             {% block body %}
             {% endblock %}
         </main>
         {% include 'footer.html.twig' %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     </body>
 </html>

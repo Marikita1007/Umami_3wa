@@ -3,27 +3,11 @@
 {% block title %}Create a New Recipe{% endblock %}
 
 {% block body %}
-    {# TODO MARIKA Change japanese to english #}
     <h1>Create a New Recipe</h1>
 
     {{ form_start(form) }}
     {{ form_errors(form) }}
     {{ form_row(form.recipe) }}
-
-{#    <div id="ingredient-container">#}
-{#        <ul class="ingredients" data-index="{{ form.ingredients|length }}">#}
-{#            {{ form_widget(form.ingredients.vars.prototype) }}#}
-{#        </ul>#}
-{#    </div>#}
-
-
-{#    {{ form_widget(form.ingredients.vars.prototype) }}#}
-
-{#    <button type="button" class="add-item-link-js custom-button-small" data-collection-holder-class="ingredients" aria-label="add ingredients">Add ingredients</button>#}
-{#    <button type="submit" class="custom-button-wide" aria-label="create recipe">Create Recipe</button>#}
-
-{#    {{ form_row(form._token) }}#}{#  This renders csrf token row have not yet been rendered for the given form  #}
-{#    {{ form_end(form, {'render_rest': false}) }}#}
 
     <ul id="ingredient-fields-list"
         data-prototype="{{ form_widget(form.ingredients.vars.prototype)|e }}"
@@ -51,49 +35,8 @@
 {% endblock %}
 
 {% block javascripts %}
-{#    {{ parent() }}#}
-{#    <script src="{{ asset('build/recipe-form.js') }}"></script>#}
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        jQuery(document).ready(function () {
-            jQuery('.add-another-collection-widget').click(function (e) {
-                var list = jQuery(jQuery(this).attr('data-list-selector'));
-                var counter = list.data('widget-counter') || list.children().length;
-                var newWidget = list.attr('data-prototype');
-
-                newWidget = newWidget.replace(/__name__/g, counter);
-
-                counter++;
-                list.data('widget-counter', counter);
-
-                var newElem = jQuery(list.attr('data-widget-tags')).html(newWidget);
-                newElem.find('input').each(function() {
-                    // Update the field names to match the new input
-                    var newName = jQuery(this).attr('name').replace(/__name__/g, counter);
-                    jQuery(this).attr('name', newName);
-                });
-
-                newElem.appendTo(list);
-                addIngredientFormDeleteLink(newElem);
-            });
-
-            $('ul.ingredients li').each(function () {
-                addIngredientFormDeleteLink($(this));
-            });
-
-            function addIngredientFormDeleteLink(item) {
-                var removeFormButton = $('<button class="custom-button-small">Delete this Ingredient</button>');
-                item.append(removeFormButton);
-
-                removeFormButton.on('click', function (e) {
-                    e.preventDefault();
-                    item.remove();
-                });
-            }
-        });
-
-    </script>
+    {{ parent() }}
+    <script src="{{ asset('build/recipe-form.js') }}"></script>
 {% endblock %}
 
 {# Set route-data for scss #}
