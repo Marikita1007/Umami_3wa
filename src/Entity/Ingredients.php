@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\IngredientsRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=IngredientsRepository::class)
@@ -17,7 +18,14 @@ class Ingredients
      */
     private $id;
 
+
     /**
+     * @Assert\NotBlank(message="Ingredient name is required")
+     * @Assert\Length(
+     *     min=2,
+     *     max=30,
+     *     minMessage="Ingredient name must be at least {{ limit }} characters long",
+     *     maxMessage="Ingredient name cannot be longer than {{ limit }} characters")
      * @ORM\Column(type="string", length=30)
      */
     private $name;
@@ -29,6 +37,12 @@ class Ingredients
     private $recipe;
 
     /**
+     * @Assert\NotBlank(message="Ingredient amount is required")
+     * @Assert\Length(
+     *     min=1,
+     *     max=100,
+     *     minMessage="Amount must not be empty",
+     *     maxMessage="Amount cannot be longer than {{ limit }} characters")
      * @ORM\Column(type="string", length=100)
      */
     private $amount;

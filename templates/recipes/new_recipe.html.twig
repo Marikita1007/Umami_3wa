@@ -6,29 +6,30 @@
     <h1>Create a New Recipe</h1>
 
     {{ form_start(form) }}
-    {{ form_errors(form) }}
+    {{ form_errors(form.recipe) }}
     {{ form_row(form.recipe) }}
 
-    <ul id="ingredient-fields-list"
-        data-prototype="{{ form_widget(form.ingredients.vars.prototype)|e }}"
-        data-widget-tags="{{ '<li></li>' }}"
-        data-widget-counter="{{ form.ingredients|length }}">
-        {% for ingredient in form.ingredients %}
-            <li>
-                {{ form_errors(ingredient) }}
-                {{ form_row(ingredient.name) }}
-                {{ form_row(ingredient.amount) }}
-            </li>
-        {% endfor %}
-    </ul>
+        <ul id="ingredient-fields-list"
+            data-prototype="{{ form_widget(form.ingredients.vars.prototype)|e }}"
+            data-widget-tags="{{ '<li></li>' }}"
+            data-widget-counter="{{ form.ingredients|length }}">
+            {% for ingredient in form.ingredients %}
+                <li>
+                    {{ form_errors(ingredient) }}
+                    {{ form_row(ingredient.name) }}
+                    {{ form_row(ingredient.amount) }}
+                </li>
+            {% endfor %}
+            <span id="js-ingredient-error-message" class="error-message"></span>
+        </ul>
 
-    <button type="button"
-            class="add-another-collection-widget custom-button-small"
-            data-list-selector="#ingredient-fields-list"
-            aria-label="add ingredients">Add another ingredient</button>
-    <button type="submit" class="custom-button-wide" aria-label="create recipe">Create Recipe</button>
+        <button type="button"
+                class="add-another-collection-widget custom-button-small"
+                data-list-selector="#ingredient-fields-list"
+                aria-label="add ingredients">Add ingredient</button>
+        <button type="submit" class="custom-button-wide" aria-label="create recipe">Create Recipe</button>
 
-    {{ form_row(form._token) }}  {# This renders csrf token row have not yet been rendered for the given form  #}
+        {{ form_row(form._token) }}  {# This renders csrf token row have not yet been rendered for the given form  #}
     {{ form_end(form, {'render_rest': false}) }}
 
 

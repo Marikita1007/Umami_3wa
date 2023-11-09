@@ -73,62 +73,62 @@ class RecipesController extends AbstractController
             ['recipe' => $recipe]);
     }
 
-    /**
-     * TODO MARIKA If edit both(recipes and ingredients) at same time is not a good solution, put this back
-     * Controller method for creating a new recipe.
-     *
-     * - Authenticated users can create recipes via a recipe form.
-     * - If not authenticated, it redirects to the login page with an error message.
-     *
-     * @Route("/new", name="new_recipe", methods={"GET", "POST"})
-     * @Security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')")
-     */
-    public function createNewRecipe(EntityManagerInterface $entityManager, Request $request, SluggerInterface $slugger): Response
-    {
-        // Create a new Recipe entity
-        $recipe = new Recipes();
-
-        // Set user id to logged in user id
-        $user = $this->getUser();
-
-        if (!empty($user)) {
-            $recipe->setUser($user); // set user entity
-        } else {
-            $this->addFlash('error', 'You must be logged in to create recipe.');
-            return $this->redirectToRoute('/login'); // redirect user to login form
-        }
-
-        // Create a form for the Recipe entity
-        $form = $this->createForm(RecipesType::class, $recipe);
-
-        // Handle form submission
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            // Get the uploaded file
-            $imageFile = $form['image']->getData();
-
-            // Check if a file was uploaded
-            if ($imageFile) {
-                $this->saveImage($imageFile, $slugger, $recipe);
-            }
-
-            // Persist the Recipe entity
-            $entityManager->persist($recipe);
-            $entityManager->flush();
-
-            // Show message of success
-            $this->addFlash('success', 'Your recipe was created successfully');
-
-            // Redirect to the recipe details page
-            return $this->redirectToRoute('show_recipe', ['id' => $recipe->getId()]);
-        }
-
-        return $this->render('recipes/new_recipe.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
+//    /**
+//     * TODO MARIKA If edit both(recipes and ingredients) at same time is not a good solution, put this back
+//     * Controller method for creating a new recipe.
+//     *
+//     * - Authenticated users can create recipes via a recipe form.
+//     * - If not authenticated, it redirects to the login page with an error message.
+//     *
+//     * @Route("/new", name="new_recipe", methods={"GET", "POST"})
+//     * @Security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')")
+//     */
+//    public function createNewRecipe(EntityManagerInterface $entityManager, Request $request, SluggerInterface $slugger): Response
+//    {
+//        // Create a new Recipe entity
+//        $recipe = new Recipes();
+//
+//        // Set user id to logged in user id
+//        $user = $this->getUser();
+//
+//        if (!empty($user)) {
+//            $recipe->setUser($user); // set user entity
+//        } else {
+//            $this->addFlash('error', 'You must be logged in to create recipe.');
+//            return $this->redirectToRoute('/login'); // redirect user to login form
+//        }
+//
+//        // Create a form for the Recipe entity
+//        $form = $this->createForm(RecipesType::class, $recipe);
+//
+//        // Handle form submission
+//        $form->handleRequest($request);
+//
+//        if ($form->isSubmitted() && $form->isValid()) {
+//
+//            // Get the uploaded file
+//            $imageFile = $form['image']->getData();
+//
+//            // Check if a file was uploaded
+//            if ($imageFile) {
+//                $this->saveImage($imageFile, $slugger, $recipe);
+//            }
+//
+//            // Persist the Recipe entity
+//            $entityManager->persist($recipe);
+//            $entityManager->flush();
+//
+//            // Show message of success
+//            $this->addFlash('success', 'Your recipe was created successfully');
+//
+//            // Redirect to the recipe details page
+//            return $this->redirectToRoute('show_recipe', ['id' => $recipe->getId()]);
+//        }
+//
+//        return $this->render('recipes/new_recipe.html.twig', [
+//            'form' => $form->createView(),
+//        ]);
+//    }
 
     /**
      * Controller method for creating a new recipe and a new ingredient.
@@ -174,11 +174,6 @@ class RecipesController extends AbstractController
 
             $this->addFlash('success', 'The new recipe with ingredients are created !');
             return $this->redirectToRoute('list_recipes');
-        } else {
-
-            foreach ($form->getErrors(true, false) as $error) {
-                dump($error->getMessage());
-            }
         }
 
         return $this->render('recipes/new_recipe.html.twig', [

@@ -6,6 +6,7 @@ use App\Repository\RecipesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo; // MARIKA TODO This is for created_at updated_at
 
 /**
@@ -22,16 +23,32 @@ class Recipes
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *      min = 2,
+     *      minMessage = "Recipe name must be at least {{ limit }} characters long",
+     * )
      */
     private string $name;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="text")
+     * @Assert\Length(
+     *      min = 5,
+     *      max = 10000,
+     *      minMessage = "Recipe description must be at least {{ limit }} characters long",
+     *      maxMessage = "Recipe description cannot be longer than {{ limit }} characters"
+     * )
      */
     private ?string $description;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="text")
+     * @Assert\Length(
+     *      min = 5,
+     *      max = 10000,
+     *      minMessage = "Recipe description must be at least {{ limit }} characters long",
+     *      maxMessage = "Recipe description cannot be longer than {{ limit }} characters"
+     * )
      */
     private $instructions;
 
@@ -48,7 +65,8 @@ class Recipes
     private $updated_at;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Recipe image can not be blank.")
      */
     private $image;
 
@@ -63,7 +81,12 @@ class Recipes
     private $servings;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="Cook time can not be blank.")
+     * @Assert\Length(
+     *      min = 2,
+     *      minMessage = "Cook time must be at least {{ limit }} minutes long",
+     * )
      */
     private $cook_time;
 
@@ -75,6 +98,7 @@ class Recipes
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Difficulty")
      * @ORM\JoinColumn(name="difficulty_id", referencedColumnName="id", nullable=false)
+     * @Assert\NotBlank(message="Difficulty of the recipe can not be blank.")
      */
     private $difficulty;
 
