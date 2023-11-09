@@ -42,4 +42,15 @@ body[data-route="recipe-form"] {
       max-width: 100%;
     }
   }
+
+}
+
+/* TODO MARIKA This error message works, but I don't know if this is a best practice */
+/* Constraint Error messages */
+#ingredient_recipe_recipe, #ingredient-fields-list {
+  ul {
+    li {
+      color: red;
+    }
+  }
 }
