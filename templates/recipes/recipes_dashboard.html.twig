@@ -15,7 +15,7 @@
         {% if recipes is empty %}
             <div>You haven't created recipe.</div>
         {% else %}
-            {# TODO MARIKA Add button od create new recipe   #}
+            {# TODO MARIKA Add button of create new recipe   #}
             <table>
                 <thead>
                 <tr>
@@ -36,9 +36,9 @@
                         <td>{{ recipe.description|capitalize }}</td>
                         <td>
                             <div class="action-buttons">
-                                <a href="{{ path("delete_recipe", {"id" : recipe.id}) }}" class="delete-recipe custom-button-icon"><i class="fas fa-trash-alt"></i></a>
-                                <a href="{{ path("edit_recipe", {"id" : recipe.id}) }}" class="edit-recipe custom-button-icon"><i class="fas fa-edit"></i> </a>
-                                <a href="{{ path("show_recipe", {"id" : recipe.id}) }}" class="show-recipe custom-button-icon"><i class="fas fa-eye"></i></a>
+                                <a href="{{ path("delete_recipe", {"id" : recipe.id}) }}" class="delete-button custom-button-icon"><i class="fas fa-trash-alt"></i></a>
+                                <a href="{{ path("edit_recipe", {"id" : recipe.id}) }}" class="edit-button custom-button-icon"><i class="fas fa-edit"></i></a>
+                                <a href="{{ path("show_recipe", {"id" : recipe.id}) }}" class="show-button custom-button-icon"><i class="fas fa-eye"></i></a>
                             </div>
                         </td>
                     </tr>

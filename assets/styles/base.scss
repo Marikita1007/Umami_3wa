@@ -25,6 +25,10 @@ body {
     transition: color 0.3s;
   }
 
+  a:hover {
+    color: inherit;
+  }
+
   img {
     max-width: 100%;
     height: auto;
@@ -65,6 +69,7 @@ body {
   color: $umami-grey;
   padding: 10px;
   border-radius: 5px;
+  margin-bottom: 2vh;
 }
 
 // Alert error/danger message
@@ -73,11 +78,10 @@ body {
   color: $umami-grey;
   padding: 10px;
   border-radius: 5px;
+  margin-bottom: 2vh;
 }
 
 // error message by form constrains
 .error-message {
   color: $umami-red;
 }
-
-

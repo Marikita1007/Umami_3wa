@@ -15,6 +15,7 @@
 }
 
 .custom-button-wide:hover {
+  color: inherit;
   transform: scale(1.03); /* Scale the button by 3% when hovered */
 }
 
@@ -54,13 +55,13 @@
 }
 
 /* Styles for edit/delete/edit buttons */
-.delete-recipe {
+.delete-button {
   background-color: $umami-danger;
 }
-.edit-recipe {
+.edit-button {
   background-color: $umami-success;
 }
-.show-recipe {
+.show-button {
   background-color: $umami-yellow-dark;
 }
 
