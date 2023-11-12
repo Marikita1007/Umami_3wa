@@ -135,8 +135,8 @@
             </article>
         </div>
 
+        {# TODO MARIKA Delete this if it's not used #}
         {% if jsonDataSpoonacular is defined and jsonDataSpoonacular.recipes is defined %}
-{#            TODO MARIKA この部分　bootstrap入っていないようにする。　動くように変更加える。#}
                 {% for key, recipe in jsonDataSpoonacular.recipes %}
                     {% if key % 3 == 0 %}
                         </div></div><div class="container"><div class="row">
@@ -149,27 +149,11 @@
                         {% else %}
                             <i class="fa-solid fa-image-slash" aria-label="No image available"></i>
                         {% endif %}
-                        <h3>{{ recipe.title }}</h3>
+                        <h3>{{ recipe.title }}</h3>toto
                         <p>Cooking Time: {{ recipe.readyInMinutes }} minutes</p>
                     </div>
                 </figure>
-{#  MARIKA TODO DELETE THIS IF its not useable !!! #}
-{#        {% elseif  %}#}
-{#            MARIKA This is for my own API data #}
-{#            {% set recipes = data.recipes %}#}
-{#            {% set recipes = data.recipes %}#}
-
-{#            {% for recipe in recipes %}#}
-{#                <div class="recipe">#}
-{#                    <h2>{{ recipe.title }}</h2>#}
-{#                    <p>Vegetarian: {{ recipe.vegetarian ? 'Yes' : 'No' }}</p>#}
-{#                    <p>Vegan: {{ recipe.vegan ? 'Yes' : 'No' }}</p>#}
-{#                    <p>Gluten-Free: {{ recipe.glutenFree ? 'Yes' : 'No' }}</p>#}
-{#                </div>#}
-{#            {% endfor %}#}
         {% else %}
-
-{#  TODO MARIKA NOW what we see if this else delete above if it's not used !!!!!!!!!!#}
             <div class="container-small flex-content">
                 <ul class="card-container" role="list">
                     {% for recipe in sixRecipes %}
@@ -185,7 +169,7 @@
                                         <h4>
                                             <b>{{ recipe.name }}</b>
                                         </h4>
-                                        <p>{{ recipe.description }}</p>
+                                        <p>{{ recipe.description|slice(0, 50) }}...<a href="{{ path('show_recipe', {id: recipe.id}) }}"><b>See More</b></a></p>
                                     </figcaption>
                                 </figure>
                             </a>

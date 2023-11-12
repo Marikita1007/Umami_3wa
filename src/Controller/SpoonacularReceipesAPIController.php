@@ -83,6 +83,7 @@ class SpoonacularReceipesAPIController extends AbstractController
      */
     public function getCuisineCategories($cuisine)
     {
+        //TODO MARIKA $cuisine needs to come from Cuisine Entity
         // Make an API request to get cuisine categories from Spoonacular.
         $apiEndpoint = 'https://api.spoonacular.com/recipes/complexSearch';
 

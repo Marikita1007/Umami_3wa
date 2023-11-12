@@ -37,7 +37,7 @@ body[data-route="recipes_dashboard"] {
       }
 
       th {
-        background-color: $umami-whicte-background;/* Background color for th */
+        background-color: $umami-white-background;/* Background color for th */
         text-align: center;
       }
 
@@ -47,7 +47,7 @@ body[data-route="recipes_dashboard"] {
       }
 
       tr:nth-child(even) {
-        background-color: $umami-whicte-background;/* Background color for even rows */
+        background-color: $umami-white-background;/* Background color for even rows */
       }
 
       tr:nth-child(odd) {
