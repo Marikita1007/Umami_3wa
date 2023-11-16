@@ -2,21 +2,13 @@
 
 {% block title %}Create Cuisines{% endblock %}
 
-{# TODO MARIKA Get rid of all Bootstrap color etc create table like recipe #}
-{#{% block stylesheets %}#}
-{#    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.min.css">#}
-{#{% endblock %}#}
-
-{% block javascripts %}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-{% endblock %}
 
 {% block body %}
     <section class="cuisines-dashboard">
         <div class="dashboard-top">
             <h1 class="">Cuisine Names</h1>
-            <button class="custom-button-wide" onclick="createCuisines()">
-                Create New Project
+            <button class="custom-button-wide" id="createCuisinesButton">
+                Create New Cuisine
             </button>
         </div>
 
@@ -45,233 +37,15 @@
             <input type="hidden" name="update_id" id="update_id">
             <label for="name">Name</label>
             <input type="text" class="form-control" id="name" name="name">
-            <button type="submit" class="custom-button-wide" id="js-save-project-button">Save Project</button>
+            <button type="submit" class="custom-button-wide" id="js-save-cuisine-button">Save Cuisine</button>
         </form>
     </div>
 
-    <script type="text/javascript">
+{% endblock %}
 
-        showAllProjects();
-
-        /*
-            This function will get all the project records
-        */
-        function showAllProjects()
-        {
-
-            $.ajax({
-                url: "/cuisines/list",
-                method: "GET",
-                success: function(response) {
-                    $("#js-cuisines-table-body").html("");
-                    let cuisines = response;
-                    for (var i = 0; i < cuisines.length; i++)
-                    {
-                        let editBtn =  '<button ' +
-                            ' class="edit-button custom-button-icon" ' +
-                            ' onclick="editProject(' + cuisines[i].id + ')"><i class="fas fa-edit"></i>' +
-                            '</button> ';
-                        let deleteBtn =  '<button ' +
-                            ' class="delete-button custom-button-icon" ' +
-                            ' onclick="destroyProject(' + cuisines[i].id + ')"><i class="fas fa-trash-alt"></i>' +
-                            '</button>';
-
-                        let projectRow = '<tr>' +
-                            '<td>' + cuisines[i].id + '</td>' +
-                            '<td>' + cuisines[i].name + '</td>' +
-                            '<td>' + editBtn + deleteBtn + '</td>' +
-                            '</tr>';
-                        $("#js-cuisines-table-body").append(projectRow);
-                    }
-
-
-                },
-                error: function(response) {
-                    console.log(response.responseJSON)
-                }
-            });
-        }
-
-
-        /*
-            check if form submitted is for creating or updating
-        */
-        $("#js-save-project-button").click(function(event ){
-            event.preventDefault();
-            if($("#update_id").val() == null || $("#update_id").val() == "")
-            {
-                storeProject();
-            } else {
-                updateProject();
-            }
-        })
-
-        /*
-            show modal for creating a record and
-            empty the values of form and remove existing alerts
-        */
-        function createCuisines() {
-            $("#alert-div").html("");
-            $("#error-div").html("");
-            $("#update_id").val("");
-            $("#name").val("");
-            $("#form-modal").addClass("show");
-            $(".modal-overlay").addClass("show");
-        }
-
-        /* Add an event listener to close the modal when the close button is clicked */
-        $("#form-modal button[aria-label='Close']").click(function () {
-            $("#form-modal").removeClass("show");
-            $(".modal-overlay").removeClass("show");
-        });
-
-
-        /*
-            submit the form and will be stored to the database
-        */
-        function storeProject()
-        {
-            $("#js-save-project-button").prop('disabled', true);
-            let data = {
-                name: $("#name").val(),
-            };
-            $.ajax({
-                url: "/cuisines/new",
-                method: "POST",
-                data: data,
-                success: function(response) {
-                    $("#js-save-project-button").prop('disabled', false);
-                    let successHtml = '<div class="alert-succes-message" role="alert"><b>New Cuisine Name Created Successfully</b></div>';
-                    $("#alert-div").html(successHtml);
-                    $("#name").val("");
-                    showAllProjects();
-                    $("#form-modal").removeClass("show");
-                    $(".modal-overlay").removeClass("show");
-                },
-                error: function(response) {
-                    /*
-                    show validation error
-                    */
-                    console.log(response)
-                    $("#js-save-project-button").prop('disabled', false);
-                    if (typeof response.responseJSON.messages.errors !== 'undefined')
-                    {
-                        let errors = response.responseJSON.messages.errors;
-
-                        let nameValidation = "";
-                        if (typeof errors.name !== 'undefined')
-                        {
-                            nameValidation = '<li>' + errors.name + '</li>';
-                        }
-
-                        let errorHtml = '<div class="alert-danger-message" role="alert">' +
-                            '<b>Validation Error!</b>' +
-                            '</div>';
-                        $("#error-div").html(errorHtml);
-                    }
-                }
-            });
-        }
-
-
-        /*
-            edit record function
-            it will get the existing value and show the cuisine form
-        */
-        function editProject(id)
-        {
-            console.log("presesd")
-            $.ajax({
-                url: "/cuisines/show/" + id,
-                method: "GET",
-                success: function(response) {
-                    let project = response
-                    $("#alert-div").html("");
-                    $("#error-div").html("");
-
-                    // Set values in the form for editing
-                    $("#update_id").val(project.id);
-                    $("#name").val(project.name);
-
-                    // Show the modal
-                    $("#form-modal").addClass("show");
-                    $(".modal-overlay").addClass("show");
-                },
-                error: function(response) {
-                    console.log(response.responseJSON)
-                }
-            });
-        }
-
-        /*
-            sumbit the form and will update a record
-        */
-        function updateProject()
-        {
-            $("#js-save-project-button").prop('disabled', true);
-            let data = {
-                name: $("#name").val(),
-            };
-            $.ajax({
-                url: "/cuisines/edit/" + $("#update_id").val(),
-                method: "PUT",
-                data: data,
-                success: function(response) {
-                    $("#js-save-project-button").prop('disabled', false);
-                    let successHtml = '<div class="alert-succes-message" role="alert"><b>Cuisine Name Updated Successfully</b></div>';
-                    $("#alert-div").html(successHtml);
-                    $("#name").val("");
-                    showAllProjects();
-                    $("#form-modal").removeClass("show");
-                    $(".modal-overlay").removeClass("show");
-                },
-                error: function(response) {
-                    /*
-                    show validation error
-                    */
-                    console.log(response)
-                    $("#js-save-project-button").prop('disabled', false);
-                    if (typeof response.responseJSON.messages.errors !== 'undefined')
-                    {
-                        let errors = response.responseJSON.messages.errors;
-
-                        let nameValidation = "";
-                        if (typeof errors.name !== 'undefined')
-                        {
-                            nameValidation = '<li>' + errors.name + '</li>';
-                        }
-
-                        let errorHtml = '<div class="alert-danger-message" role="alert">' +
-                            '<b>Validation Error!</b>' +
-                            '<ul>' + nameValidation + '</ul>' +
-                            '</div>';
-                        $("#error-div").html(errorHtml);
-                    }
-                }
-            });
-        }
-
-        /*
-            delete record function
-        */
-        function destroyProject(id)
-        {
-            $.ajax({
-                url: "/cuisines/delete/" + id,
-                method: "DELETE",
-                success: function(response) {
-                    let successHtml = '<div class="alert-succes-message" role="alert"><b>Project Deleted Successfully</b></div>';
-                    $("#alert-div").html(successHtml);
-                    showAllProjects();
-                },
-                error: function(response) {
-                    console.log(response.responseJSON)
-                }
-            });
-        }
-
-    </script>
-
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('build/cuisines-form-ajax.js') }}"></script>
 {% endblock %}
 
 {# Set route-data for scss #}
