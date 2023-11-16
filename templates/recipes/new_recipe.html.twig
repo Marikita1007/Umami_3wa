@@ -32,12 +32,11 @@
         {{ form_row(form._token) }}  {# This renders csrf token row have not yet been rendered for the given form  #}
     {{ form_end(form, {'render_rest': false}) }}
 
-
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('build/recipe-form.js') }}"></script>
+    <script src="{{ asset('build/recipes-ingredients-form.js') }}"></script>
 {% endblock %}
 
 {# Set route-data for scss #}
