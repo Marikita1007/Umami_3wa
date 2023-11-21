@@ -56,9 +56,21 @@ class RecipesController extends AbstractController
      */
     public function listAll(): Response
     {
+        $user = $this->getUser();
+
+        // Check if the user has the ROLE_ADMIN role
+        if ($this->isGranted('ROLE_ADMIN')) {
+            // If the user is an admin, get all recipes
+            $recipes = $this->getDoctrine()->getRepository(Recipes::class)->findAll();
+        } else {
+            // If the user is not an admin, get only their own recipes
+            $recipes = $this->getDoctrine()->getRepository(Recipes::class)->findBy(['user' => $user]);
+        }
+
         return $this->render('recipes/recipes_dashboard.html.twig', [
-            'recipes' => $this->recipeRepository->findAll(),
+            'recipes' => $recipes,
         ]);
+
     }
 
     /**
@@ -139,8 +151,11 @@ class RecipesController extends AbstractController
     public function createNewRecipeAndIngredients(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
         //TODO MARIKA This needs to be fixed. This Contorller is only inserting one ingredient. Ths problem comes from js. Evrytime I add a new ingredients field. it returns NaN or null as array number.
-
         $recipe = new Recipes();
+
+        // Set the user association on the recipe
+        $user = $this->getUser();
+        $recipe->setUser($user);
 
         // create a form with Recipes and Ingredients entities
         $form = $this->createForm(IngredientRecipeType::class, [
@@ -184,9 +199,13 @@ class RecipesController extends AbstractController
 
     /**
      * @Route("/edit/{id}", name="edit_recipe", methods={"GET", "POST", "HEAD"})
+     * @Security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')")
      */
     public function editRecipeAndIngredients(Request $request, EntityManagerInterface $entityManager, Recipes $recipe, IngredientsRepository $ingredientsRepository, SluggerInterface $slugger): Response
     {
+        // TODO MARIKA アクセス権限の確認: ユーザーが作成したレシピであるか、またはROLE_ADMIN権限を持っているか確認
+        $this->denyAccessUnlessGranted('EDIT', $recipe);
+
         $ingredients = $ingredientsRepository->findBy(['recipe' => $recipe]);
 
         $form = $this->createForm(IngredientRecipeType::class, [
@@ -229,9 +248,12 @@ class RecipesController extends AbstractController
 
     /**
      * @Route("/delete/{id}", name="delete_recipe")
+     * @Security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')")
      */
     public function deleteRecipe(EntityManagerInterface $entityManager, Request $request, Recipes $recipe): Response
     {
+        $this->denyAccessUnlessGranted('DELETE', $recipe);
+
         $entityManager->remove($recipe);
         $entityManager->flush();
         $this->addFlash('success', 'Your recipe was deleted');
