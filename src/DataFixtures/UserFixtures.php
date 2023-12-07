@@ -12,12 +12,14 @@ class UserFixtures extends Fixture
         // Create test user admin with infos down below
         UsersFactory::createOne([
             'email' => 'umami_admin@example.com',
-            'roles' => ['ROLE_ADMIN']
+            'roles' => ['ROLE_ADMIN'],
+            'username' => 'admin'
         ]);
         // Create test user with ROLE_USER (default)
         UsersFactory::createOne([
             'email' => 'umami_user@example.com',
-            'roles' => ['ROLE_USER'] // Set status to ROLE_USER
+            'roles' => ['ROLE_USER'], // Set status to ROLE_USER
+            'username' => 'user1'
         ]);
 
         // Create 10 more users with ROLE_USER (default)
