@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+use Cassandra\Type\UserType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -23,6 +24,7 @@ class RegistrationFormType extends AbstractType
         $builder
             // 1) email
             ->add('email', EmailType::class)
+            ->add('username', TextType::class)
             // 2) plainPassword
             ->add('plainPassword', PasswordType::class, [
                 // Instead of being set onto the object directly,

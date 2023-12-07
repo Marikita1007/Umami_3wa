@@ -22,6 +22,16 @@
                         }
                     }) }}
 
+                    {{ form_row(registrationForm.username, {
+                        label: 'Username',
+                        label_attr: { class: 'visually-hidden' },
+                        attr: {
+                            class: 'input-text',
+                            placeholder: 'Username',
+                            required: 'required',
+                        }
+                    }) }}
+
                     {{ form_row(registrationForm.plainPassword, {
                         label: 'Password',
                         label_attr: { class: 'visually-hidden' },

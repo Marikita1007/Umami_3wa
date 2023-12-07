@@ -11,6 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity(fields="email", message="There is already an account with this email")
+ * @UniqueEntity(fields="username", message="This username is already taken")
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -39,20 +40,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     private $plainPassword;
 
+    /**
+     * @ORM\Column(type="string", length=50,  unique=true, nullable=false)
+     */
+    private $username;
+
 //    /**
 //     * @ORM\Column(type="boolean")
 //     */
 //    private $isVerified = false;
-
-    /**
-     * @ORM\Column(type="string", length=50, unique=false, nullable=true)
-     */
-    private string $firstName;
-
-    /**
-     * @ORM\Column(type="string", length=50, unique=false, nullable=true)
-     */
-    private string $lastName;
 
     public function getId(): ?int
     {
@@ -67,30 +63,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
-
-        return $this;
-    }
-
-    public function getFirstname()
-    {
-        return $this->firstName;
-    }
-
-    public function setFirstname(string $firstName): self
-    {
-        $this->firstName = $firstName;
-
-        return $this;
-    }
-
-    public function getLastname()
-    {
-        return $this->lastName;
-    }
-
-    public function setLastname(string $lastName): self
-    {
-        $this->lastName = $lastName;
 
         return $this;
     }
@@ -200,7 +172,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getDisplayName(): string
     {
-        return $this->firstName ?? $this->getEmail();
+        return $this->username ?? $this->getEmail();
     }
 
 //    public function getIsVerified(): ?bool
@@ -212,4 +184,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 //        $this->isVerified = $isVerified;
 //        return $this;
 //    }
+
+public function setUsername(string $username): self
+{
+    $this->username = $username;
+
+    return $this;
+}
 }
