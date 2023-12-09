@@ -8,6 +8,7 @@
         {% set pageRoute = pageRoute ?? null %}
 
         {# MARIKA TODO webpack.config.jsにSCSSファイルを追加する#}
+        {# MARIKA TODO Move This insde block stylesheets #}
         <link rel="stylesheet" href="{{ asset('build/base-styles.css') }}">
         <link rel="stylesheet" href="{{ asset('build/header-styles.css') }}">
         <link rel="stylesheet" href="{{ asset('build/footer-styles.css') }}">
@@ -40,10 +41,13 @@
         <main>
             {# MARIKA When ths email is verified; this message shows : https://symfonycasts.com/screencast/symfony-security/verify-email#codeblock-0bac7d3cc4#}
             {% for flash in app.flashes('success') %}
-                <div class="alert-success-message">{{ flash }}</div>
+                <div class="alert-success-message alert-flash">{{ flash }}</div>
             {% endfor %}
             {% for flash in app.flashes('error') %}
-                <div class="alert-danger-message">{{ flash }}</div>
+                <div class="alert-danger-message alert-flash">{{ flash }}</div>
+            {% endfor %}
+            {% for flash in app.flashes('warning') %}
+                <div class="alert-warning-message alert-flash">{{ flash }}</div>
             {% endfor %}
             {% block body %}
             {% endblock %}

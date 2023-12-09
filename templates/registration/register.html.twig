@@ -1,8 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register Form{% endblock %}
+{% block title %}Register{% endblock %}
 
 {% block body %}
+    {% for flash_error in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+
+{#    {{ form_start(registrationForm) }}#}
+{#        {{ form_row(registrationForm.email) }}#}
+{#        {{ form_row(registrationForm.username) }}#}
+{#        {{ form_row(registrationForm.plainPassword, {#}
+{#            label: 'Password'#}
+{#        }) }}#}
+{#        {{ form_row(registrationForm.agreeTerms) }}#}
+
+{#        <button type="submit" class="btn">Register</button>#}
+{#    {{ form_end(registrationForm) }}#}
+
     <section class="registration-section">
         <div class="page-content">
             <div class="form-content">
@@ -12,53 +27,21 @@
                 <form class="form-detail" action="#" method="post">
                     <h2>Register Form</h2>
 
-                    {{ form_row(registrationForm.email, {
-                        label: 'Email Address',
-                        label_attr: { class: 'visually-hidden' },
-                        attr: {
-                            class: 'input-text',
-                            placeholder: 'Email Address',
-                            required: 'required',
-                        }
-                    }) }}
+                    {{ form_row(registrationForm.email) }}
 
-                    {{ form_row(registrationForm.username, {
-                        label: 'Username',
-                        label_attr: { class: 'visually-hidden' },
-                        attr: {
-                            class: 'input-text',
-                            placeholder: 'Username',
-                            required: 'required',
-                        }
-                    }) }}
+                    {{ form_row(registrationForm.username) }}
 
-                    {{ form_row(registrationForm.plainPassword, {
-                        label: 'Password',
-                        label_attr: { class: 'visually-hidden' },
-                        attr: {
-                            class: 'input-text',
-                            placeholder: 'Password',
-                            required: 'required'
-                        }
-                    }) }}
+                    {{ form_row(registrationForm.plainPassword) }}
 
-                    {{ form_row(registrationForm.confirmPassword, {
-                        label: 'Confirm Password',
-                        label_attr: { class: 'visually-hidden' },
-                        attr: {
-                            class: 'input-text',
-                            placeholder: 'Confirm Password',
-                            required: 'required'
-                        }
-                    }) }}
+                    {{ form_row(registrationForm.confirmPassword) }}
 
-                    {# Check box for the term agreement #}
+                    {# Check box for the term agreement#}
                     {{ form_row(registrationForm.agreeTerms) }}
 
-                    {# Create valid CSRF token #}
+                    {# Create valid CSRF token#}
                     {{ form_row(registrationForm._token) }}
 
-                    {# form_rest renders all fields that have not yet been rendered for the given form #}
+                    {# form_rest renders all fields that have not yet been rendered for the given form#}
                     {{ form_rest(registrationForm) }}
                     <div class="btn-form">
                         <button type="submit" name="register" class="register">Register</button>
@@ -67,6 +50,4 @@
             </div>
         </div>
     </section>
-
 {% endblock %}
-
