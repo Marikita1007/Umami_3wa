@@ -62,23 +62,29 @@ body {
   }
 }
 
+.alert-flash {
+  border-radius: 5px;
+  margin-bottom: 2vh;
+  padding: 10px;
+  text-align: center;
+  font-weight: bolder;
+}
 
 // Alert success message
 .alert-success-message {
   background-color: $umami-success;
   color: $umami-grey;
-  padding: 10px;
-  border-radius: 5px;
-  margin-bottom: 2vh;
 }
 
 // Alert error/danger message
 .alert-danger-message {
   background-color: $umami-danger;
   color: $umami-grey;
-  padding: 10px;
-  border-radius: 5px;
-  margin-bottom: 2vh;
+}
+
+.alert-warning-message {
+  background-color: $umami-yellow;
+  color: $umami-grey;
 }
 
 // error message by form constrains

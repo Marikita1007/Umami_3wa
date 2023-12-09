@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Entity\User;
-use Cassandra\Type\UserType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -15,22 +14,38 @@ use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-//MARIKA 参照ページ : https://symfonycasts.com/screencast/symfony-security/registration-auth
-//MARIKA 参照ページ :　https://symfony.com/doc/4.0/doctrine/registration_form.html
 class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            // 1) email
-            ->add('email', EmailType::class)
-            ->add('username', TextType::class)
-            // 2) plainPassword
+            ->add('email', EmailType::class, [
+                'label' => 'Email:',
+                'attr' => [
+                    'class' => 'input-text',
+                    'placeholder' => 'Email Address',
+                    'required' => 'required',
+                ],
+            ])
+            ->add('username', TextType::class, [
+                'label' => 'Username:',
+                'attr' => [
+                    'class' => 'input-text',
+                    'placeholder' => 'Username',
+                    'required' => 'required',
+                ],
+            ])
             ->add('plainPassword', PasswordType::class, [
-                // Instead of being set onto the object directly,
+                // instead of being set onto the object directly,
                 // this is read and encoded in the controller
+                'label' => 'Password:',
                 'mapped' => false,
-                'attr' => ['autocomplete' => 'new-password'],
+                'attr' => [
+                    'class' => 'input-text',
+                    'placeholder' => 'Password',
+                    'required' => 'required',
+                    'autocomplete' => 'new-password',
+                ],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter a password',
@@ -43,18 +58,21 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            // 3) confirmPassword
             ->add('confirmPassword', PasswordType::class, [
                 'mapped' => false,
-                'label' => 'Confirm Password',
-                'attr' => ['autocomplete' => 'new-password'],
+                'label' => 'Confirm Password:',
+                'attr' => [
+                    'class' => 'input-text',
+                    'placeholder' => 'Confirm Password',
+                    'required' => 'required',
+                    'autocomplete' => 'new-password',
+                ],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please confirm your password',
                     ]),
                 ],
             ])
-            // 3) agreeTerms
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [

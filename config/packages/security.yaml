@@ -23,10 +23,11 @@ security:
             entry_point: form_login
             login_throttling: true
             form_login:
-                login_path: login
-                check_path: login
-                username_parameter: email
-                password_parameter: password
+                login_path: login #Route to login form
+                check_path: login #Symfony calls the same route for show the form and the line
+#                username_parameter: email TODO MARIKA 08122023 If Mailhog works, delete this
+#                password_parameter: password TODO MARIKA 08122023 If Mailhog works, delete this
+                default_target_path: home
                 enable_csrf: true
             custom_authenticator:
 #                - App\Security\LoginFormAuthenticator

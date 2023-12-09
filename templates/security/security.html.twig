@@ -19,7 +19,7 @@
                 <div class="form-left">
                     <img src="{{ asset('images/ramen.jpg') }}" alt="Login Form Image">
                 </div>
-                <form class="form-detail" method="post" action="">
+                <form action="{{ path('login') }}" method="post" class="form-detail">
                     <h2>Login Form</h2>
 
                     {% if error %}
@@ -27,24 +27,24 @@
                     {% endif %}
 
                     <div class="form-row">
-                        <label for="inputEmail" class="visually-hidden">Email:</label>
-                        <input type="email" name="email" id="inputEmail" class="input-text" value="{{ last_username }}" placeholder="Email Address" required autofocus>
+                        <label for="username">Email:</label>
+                        <input class="input-text" type="text" id="username" name="_username" value{{ last_username }}>
                     </div>
 
                     <div class="form-row">
-                        <label for="inputPassword" class="visually-hidden">Password</label>
-                        <input type="password" name="password" id="inputPassword" class="input-text" placeholder="Password" required>
+                        <label for="Password">Password</label>
+                        <input class="input-text" type="password" id="password" name="_password">
                     </div>
 
                     <input type="checkbox" name="_remember_me" id="rememberMe" aria-label="Remember me">
                     <label for="rememberMe" aria-hidden="true">Remember me</label>
 
                     <div class="btn-form">
-                        <button type="submit" name="signIn" value="signIn">Sign in</button>
+                        <button type="submit">Sign in</button>
                     </div>
 
                     {# ARIA attributes for CSRF token #}
-                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" aria-hidden="true" tabindex="-1">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
                     <p>Don't have an account yet? <a href="{{ path('register') }}">Sign up</a></p>
                 </form>

@@ -29,11 +29,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private string $email;
 
     /**
-     * @ORM\Column(type="json")
-     */
-    private array $roles = [];
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=false)
      */
     private string $password;
@@ -45,10 +40,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $username;
 
-//    /**
-//     * @ORM\Column(type="boolean")
-//     */
-//    private $isVerified = false;
+    /**
+     * @ORM\Column(type="json")
+     */
+    private array $roles = [];
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isVerified = false;
+
+    public function __construct() {
+        $this->roles = ['ROLE_USER'];
+    }
 
     public function getId(): ?int
     {
@@ -151,8 +155,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    //TODO This css needs to be moved to scss
-    //MARIKA https://symfonycasts.com/screencast/symfony-security/user-service#play User Avatar
     /**
      * This method generates the URI for the user's avatar using the ui-avatars.com service.
      * It allows specifying the display name and avatar size.
@@ -175,20 +177,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->username ?? $this->getEmail();
     }
 
-//    public function getIsVerified(): ?bool
-//    {
-//        return $this->isVerified;
-//    }
-//    public function setIsVerified(bool $isVerified): self
-//    {
-//        $this->isVerified = $isVerified;
-//        return $this;
-//    }
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
 
-public function setUsername(string $username): self
-{
-    $this->username = $username;
+        return $this;
+    }
 
-    return $this;
-}
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
+
+        return $this;
+    }
 }
