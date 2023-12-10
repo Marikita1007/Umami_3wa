@@ -1,5 +1,11 @@
 @import '../base';
 
+/* Button container */
+.custom-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 /* Button design to create a new Recipe */
 .custom-button-wide {

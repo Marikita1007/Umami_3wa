@@ -29,6 +29,7 @@
 
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
+            <link rel="stylesheet" href="{{ asset('build/notification-styles.css') }}">
         {% endblock %}
 
         {% block javascripts %}

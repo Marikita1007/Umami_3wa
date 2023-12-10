@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page not found exception !{% endblock %}
+
+{% block body %}
+    <section class="custom-container">
+        <h1>404 - Page Not Found</h1>
+        <img src="{{ asset('images/error-404.png') }}" alt="404 error image">
+        <p>Sorry, we can't find the page ! The requested page could not be found.</p>
+
+        <div class="custom-button-container">
+            <a href="{{ path('home') }}" class="custom-button-wide">Back to Homepage</a>
+        </div>
+    </section>
+{% endblock %}
+
+{# Set route-data for scss #}
+{% set pageRoute = 'notification' %}
