@@ -11,6 +11,7 @@ use Symfony\Component\Security\Http\Authenticator\Passport\UserPassportInterface
 use Symfony\Component\Security\Http\Event\CheckPassportEvent;
 use Symfony\Component\Security\Http\Event\LoginFailureEvent;
 
+//TODO MARIKA Check if I still use this
 class CheckVerifiedUserSubscriber implements EventSubscriberInterface
 {
     private RouterInterface $router;
@@ -54,7 +55,6 @@ class CheckVerifiedUserSubscriber implements EventSubscriberInterface
         // MARIKA : https://symfonycasts.com/screencast/symfony-security/security-subscriber#codeblock-ba66da6ebd
         // Thanks to this, the user will need to
         // enter a valid email and a valid password before our listener is called.
-        // Try it: go back to abraca_admin@example.com, password tada and... beautiful!
         return [
             CheckPassportEvent::class =>  ['onCheckPassport', -10],
             LoginFailureEvent::class => 'onLoginFailure',
