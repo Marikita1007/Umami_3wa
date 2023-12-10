@@ -2,26 +2,11 @@
 <html lang="{{ app.request.locale }}">
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}Umami{% endblock %}</title>
 
         {# data-route : Initialize the variable, defaulting to null if not set #}
         {% set pageRoute = pageRoute ?? null %}
-
-        {# MARIKA TODO webpack.config.jsにSCSSファイルを追加する#}
-        {# MARIKA TODO Move This insde block stylesheets #}
-        <link rel="stylesheet" href="{{ asset('build/base-styles.css') }}">
-        <link rel="stylesheet" href="{{ asset('build/header-styles.css') }}">
-        <link rel="stylesheet" href="{{ asset('build/footer-styles.css') }}">
-        <link rel="stylesheet" href="{{ asset('build/home-styles.css') }}">
-        <link rel="stylesheet" href="{{ asset('build/categories-styles.css') }}">
-        <link rel="stylesheet" href="{{ asset('build/card-styles.css') }}">
-        <link rel="stylesheet" href="{{ asset('build/form-styles.css') }}">
-        <link rel="stylesheet" href="{{ asset('build/button-styles.css') }}">
-        <link rel="stylesheet" href="{{ asset('build/show-recipe-styles.css') }}">
-        <link rel="stylesheet" href="{{ asset('build/recipe-form-styles.css') }}">
-        <link rel="stylesheet" href="{{ asset('build/recipes-dashboard-styles.css') }}">
-        <link rel="stylesheet" href="{{ asset('build/cuisines-dashboard-styles.css') }}">
-        <link rel="stylesheet" href="{{ asset('fonts/fontawesome-free-6.4.2-web/css/all.css') }}" title="Font Awesome Icons">
 
         {# TODO MARIKA Check if I need this. These are for cuisines Page        #}
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -29,7 +14,21 @@
 
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
+            {# MARIKA TODO webpack.config.jsにSCSSファイルを追加する#}
+            <link rel="stylesheet" href="{{ asset('build/base-styles.css') }}">
+            <link rel="stylesheet" href="{{ asset('build/header-styles.css') }}">
+            <link rel="stylesheet" href="{{ asset('build/footer-styles.css') }}">
+            <link rel="stylesheet" href="{{ asset('build/home-styles.css') }}">
             <link rel="stylesheet" href="{{ asset('build/notification-styles.css') }}">
+            <link rel="stylesheet" href="{{ asset('build/categories-styles.css') }}">
+            <link rel="stylesheet" href="{{ asset('build/card-styles.css') }}">
+            <link rel="stylesheet" href="{{ asset('build/form-styles.css') }}">
+            <link rel="stylesheet" href="{{ asset('build/button-styles.css') }}">
+            <link rel="stylesheet" href="{{ asset('build/show-recipe-styles.css') }}">
+            <link rel="stylesheet" href="{{ asset('build/recipe-form-styles.css') }}">
+            <link rel="stylesheet" href="{{ asset('build/recipes-dashboard-styles.css') }}">
+            <link rel="stylesheet" href="{{ asset('build/cuisines-dashboard-styles.css') }}">
+            <link rel="stylesheet" href="{{ asset('fonts/fontawesome-free-6.4.2-web/css/all.css') }}" title="Font Awesome Icons">
         {% endblock %}
 
         {% block javascripts %}
