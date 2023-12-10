@@ -9,14 +9,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
-/**
- * @IsGranted("ROLE_ADMIN")
- */
+#[IsGranted("ROLE_ADMIN")]
 class CuisinesController extends AbstractController
 {
-    /**
-     * @Route("/cuisines", name="cuisines", methods={"GET"})
-     */
+
+    #[Route("/cuisines", name: "cuisines", methods: ["GET"])]
     public function index(): Response
     {
         return $this->render('cuisines/cuisines.html.twig', [
@@ -24,9 +21,7 @@ class CuisinesController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/cuisines/list", name="cuisines_list", methods={"GET"})
-     */
+    #[Route("/cuisines/list", name: "cuisines_list", methods: ["GET"])]
     public function showAll(): Response
     {
         $products = $this->getDoctrine()
@@ -46,9 +41,7 @@ class CuisinesController extends AbstractController
         return $this->json($data);
     }
 
-    /**
-     * @Route("/cuisines/show/{id}", name="cuisines_show", methods={"GET"})
-     */
+    #[Route("/cuisines/show/{id}", name: "cuisines_show", methods: ["GET"])]
     public function show(int $id): Response
     {
         $cuisines = $this->getDoctrine()
@@ -68,9 +61,7 @@ class CuisinesController extends AbstractController
         return $this->json($data);
     }
 
-    /**
-     * @Route("/cuisines/new", name="cuisines_new", methods={"POST"})
-     */
+    #[Route("/cuisines/new", name: "cuisines_new", methods: ["POST"])]
     public function new(Request $request): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
@@ -84,9 +75,7 @@ class CuisinesController extends AbstractController
         return $this->json('Created new cuisines successfully with id ' . $cuisines->getId());
     }
 
-    /**
-     * @Route("/cuisines/edit/{id}", name="cuisines_edit", methods={"PUT"})
-     */
+    #[Route("/cuisines/edit/{id}", name: "cuisines_edit", methods: ["PUT"])]
     public function edit(Request $request, int $id): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
@@ -107,9 +96,7 @@ class CuisinesController extends AbstractController
         return $this->json($data);
     }
 
-    /**
-     * @Route("/cuisines/delete/{id}", name="cuisines_delete", methods={"DELETE"})
-     */
+    #[Route("/cuisines/delete/{id}", name: "cuisines_delete", methods: ["DELETE"])]
     public function delete(int $id): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
