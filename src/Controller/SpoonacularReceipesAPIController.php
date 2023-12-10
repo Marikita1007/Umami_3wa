@@ -18,9 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use App\TestData\ApiDataStorage;
 
-/**
- * @Route("/api", name="api_", methods={"GET"})
- */
+#[Route("/api", name: "api_",methods: ["GET"])]
 class SpoonacularReceipesAPIController extends AbstractController
 {
     private $spoonacularApiKey;
@@ -35,9 +33,7 @@ class SpoonacularReceipesAPIController extends AbstractController
         $this->httpClient = $httpClient;
     }
 
-    /**
-     * @Route("/get_spoonacular_recipe", name="get_spoonacular_recipe", methods={"GET"})
-     */
+    #[Route("/get_spoonacular_recipe", name: "get_spoonacular_recipe", methods: ["GET"])]
     public function getSpoonacularRandomRecipes()
     {
         // Check if cached data exists and return it if available.
@@ -78,9 +74,8 @@ class SpoonacularReceipesAPIController extends AbstractController
         }
     }
 
-    /**
-     * @Route("/get_cuisine_categories", name="get_cuisine_categories", methods={"GET"})
-     */
+//    TODO MARIKA cHECK IF THIS ROUTING UPDATE WORKS OR NOT BECAUSE UPDATED ONE IS SENDING {cuisine} 10122023
+    #[Route("/get_cuisine_categories/{cuisine}", name: "get_cuisine_categories", methods: ["GET"])]
     public function getCuisineCategories($cuisine)
     {
         //TODO MARIKA $cuisine needs to come from Cuisine Entity

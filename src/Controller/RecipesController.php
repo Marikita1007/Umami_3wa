@@ -26,11 +26,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 /**
- *
  * Controller used to manage recipes contents in the public site.
- *
- * @Route("/recipes")
  */
+#[Route("/recipes")]
 class RecipesController extends AbstractController
 {
     private RecipesRepository $recipeRepository;
@@ -51,9 +49,7 @@ class RecipesController extends AbstractController
         return $this->recipeRepository->findAll();
     }
 
-    /**
-     * @Route("/list", name="list_recipes")
-     */
+    #[Route("/list", name: "list_recipes", methods: ["GET"])]
     public function listAll(): Response
     {
         $user = $this->getUser();
@@ -75,10 +71,8 @@ class RecipesController extends AbstractController
 
     /**
      * Display a single recipe based on its unique identifier.
-     *
-     * @Route("/recipe/{id}", name="show_recipe", methods={"GET"})
-     *
      */
+    #[Route("/recipe/{id}", name: "show_recipe", methods: ["GET"])]
     public function showRecipe(Recipes $recipe): Response
     {
         return $this->render('recipes/show_recipe.html.twig',
@@ -144,10 +138,9 @@ class RecipesController extends AbstractController
 
     /**
      * Controller method for creating a new recipe and a new ingredient.
-     *
-     * @Route("/new_recipe_ingredients", name="new_recipe", methods={"POST", "GET", "HEAD"})
-     * @Security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')")
      */
+    #[Route("/new_recipe_ingredients", name: "new_recipe", methods: ["POST", "GET"])]
+    #[Security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')")]
     public function createNewRecipeAndIngredients(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
         //TODO MARIKA This needs to be fixed. This Contorller is only inserting one ingredient. Ths problem comes from js. Evrytime I add a new ingredients field. it returns NaN or null as array number.
@@ -196,11 +189,8 @@ class RecipesController extends AbstractController
         ]);
     }
 
-
-    /**
-     * @Route("/edit/{id}", name="edit_recipe", methods={"GET", "POST", "HEAD"})
-     * @Security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')")
-     */
+    #[Route("/edit/{id}", name: "edit_recipe", methods: ["GET", "POST"])]
+    #[Security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')")]
     public function editRecipeAndIngredients(Request $request, EntityManagerInterface $entityManager, Recipes $recipe, IngredientsRepository $ingredientsRepository, SluggerInterface $slugger): Response
     {
         // TODO MARIKA アクセス権限の確認: ユーザーが作成したレシピであるか、またはROLE_ADMIN権限を持っているか確認
@@ -246,10 +236,8 @@ class RecipesController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/delete/{id}", name="delete_recipe")
-     * @Security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')")
-     */
+    #[Route("/delete/{id}", name: "delete_recipe", methods: ['GET', 'POST'])]
+    #[Security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')")]
     public function deleteRecipe(EntityManagerInterface $entityManager, Request $request, Recipes $recipe): Response
     {
         $this->denyAccessUnlessGranted('DELETE', $recipe);

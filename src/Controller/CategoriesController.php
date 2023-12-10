@@ -20,9 +20,7 @@ class CategoriesController extends AbstractController
         $this->receipesAPIController = $receipesAPIController;
     }
 
-    /**
-     * @Route("/categories", name="categories", methods={"GET"})
-     */
+    #[Route('/categories', name: 'categories', methods: ['GET'])]
     public function index(): Response
     {
         // Render a Twig template for the "categories" route.
@@ -31,9 +29,7 @@ class CategoriesController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/category/{cuisine}", name="show_categories")
-     */
+    #[Route('/category/{cuisine}', name: 'show_categories')]
     public function show($cuisine)
     {
         // Call a method from the SpoonacularReceipesAPIController to get cuisine categories.

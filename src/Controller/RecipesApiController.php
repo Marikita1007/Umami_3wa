@@ -13,9 +13,8 @@ use App\Entity\Recipes;
 
 //MARIKA TODO : ADD SECURITY conditions / Comments codes / Fix comments of error handlings / FIx Updated At
 //MARIKA TODO I make CRUD for Recipes (RecipeController.php) so if this is not used(API), I delete this file.
-/**
- * @Route("/api", name="api_")
- */
+
+#[Route("/api", name: "api_")]
 class RecipesApiController extends AbstractController
 {
     private EntityManagerInterface $entityManager;
@@ -29,9 +28,7 @@ class RecipesApiController extends AbstractController
         $this->recipesRepository = $recipesRepository;
     }
 
-    /**
-     * @Route("/recipe", name="recipes_show", methods={"GET"})
-     */
+    #[Route("/recipe", name: "recipes_show", methods: ["GET"])]
     public function index(): Response
     {
         $recipes = $this->recipesRepository->findAll();
@@ -56,9 +53,7 @@ class RecipesApiController extends AbstractController
         return $this->json($data);
     }
 
-    /**
-     * @Route("/recipe", name="recipe_new", methods={"POST"})
-     */
+    #[Route("/recipe", name: "recipe_new", methods: ["POST"])]
     public function new(Request $request): Response
     {
         $setName = $request->request->get('name');
@@ -88,9 +83,7 @@ class RecipesApiController extends AbstractController
         return $this->json('successfully created new recipe with id ' . $recipe->getId());
     }
 
-    /**
-     * @Route("/recipe/{id}", name="recipe_detail", methods={"GET"})
-     */
+    #[Route("/recipe/{id}", name: "recipe_detail", methods: ["GET"])]
     public function show(int $id): Response
     {
         $recipe = $this->recipesRepository->find($id);
@@ -117,9 +110,7 @@ class RecipesApiController extends AbstractController
         return $this->json($data);
     }
 
-    /**
-     * @Route("/recipe/{id}", name="recipe_edit", methods={"PUT"})
-     */
+    #[Route("/recipe/{id}", name: "recipe_edit", methods: ["PUT"])]
     public function edit(Request $request, int $id): Response
     {
 //        dd($request->request);
@@ -181,9 +172,7 @@ class RecipesApiController extends AbstractController
         return $this->json($data);
     }
 
-    /**
-     * @Route("/recipe/{id}", name="recipe_delete", methods={"DELETE"})
-     */
+    #[Route("/recipe/{id}", name: "recipe_delete", methods: ["DELETE"])]
     public function delete(int $id): Response
     {
         $recipe = $this->recipesRepository->find($id);

@@ -17,9 +17,7 @@ class HomeController extends AbstractController
         $this->recipesController =$recipesController;
     }
 
-    /**
-     * @Route("/", name="home")
-     */
+    #[Route("/", name: "home")]
     public function index(): Response
     {
         $category = '';
