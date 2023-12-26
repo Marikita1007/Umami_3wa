@@ -10,10 +10,10 @@
 /* Button design to create a new Recipe */
 .custom-button-wide {
   align-items: center;
-  background-color: $umami-yellow-dark;
+  background-color: $umami-blue-dark;
   border: none;
   border-radius: 4px;
-  color: $umami-white;
+  color: $umami-grey;
   cursor: pointer;
   display: flex;
   margin-left: 10px;
@@ -24,6 +24,10 @@
 .custom-button-wide:hover {
   color: inherit;
   transform: scale(1.03); /* Scale the button by 3% when hovered */
+}
+
+.custom-button-wide > i {
+  margin-right: 1vw; /* Add space between icon and text */
 }
 
 /* Icons button design */
@@ -69,15 +73,16 @@
   background-color: $umami-success;
 }
 .show-button {
-  background-color: $umami-yellow-dark;
+  background-color: $umami-blue-dark;
 }
+
 
 /* Design for back to list */
 .return-list-button {
-  background-color: $umami-yellow-dark; /* Change the background color as desired */
+  background-color: $umami-grey-light; /* Change the background color as desired */
   border: none;
   border-radius: 5px;
-  color: $umami-white; /* Change the text color as desired */
+  color: $umami-grey; /* Change the text color as desired */
   cursor: pointer;
   display: inline-block;
   margin-top: 10px;

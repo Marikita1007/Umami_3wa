@@ -16,9 +16,11 @@
             {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.user.displayName is not same as(app.user.email) %}
                 <a href="{{ path('logout') }}" class="menu-item">Log Out</a>
                 <a href="{{ path('list_recipes') }}" class="menu-item">About recipes</a>
-                <img
-                        src="{{ app.user.avatarUri }}"
-                        alt="{{ app.user.displayName }} Avatar">
+                <a href="{{ path('user_edit') }}">
+                    <img
+                            src="{{ app.user.avatarUri }}"
+                            alt="{{ app.user.displayName }} Avatar">
+                </a>
             {% elseif is_granted('IS_AUTHENTICATED_REMEMBERED') and app.user.displayName is same as (app.user.email)  %}
                 <a href="{{ path('list_recipes') }}" class="menu-item">About recipes</a>
                 <a href="{{ path('logout') }}" class="menu-item">Log Out</a>

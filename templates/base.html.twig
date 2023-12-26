@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/jpg" href="{{ asset('images/favicon.ico') }}" />
         <title>{% block title %}Umami{% endblock %}</title>
 
         {# data-route : Initialize the variable, defaulting to null if not set #}
@@ -28,6 +29,7 @@
             <link rel="stylesheet" href="{{ asset('build/recipe-form-styles.css') }}">
             <link rel="stylesheet" href="{{ asset('build/recipes-dashboard-styles.css') }}">
             <link rel="stylesheet" href="{{ asset('build/cuisines-dashboard-styles.css') }}">
+            <link rel="stylesheet" href="{{ asset('build/user-profile.css') }}">
             <link rel="stylesheet" href="{{ asset('fonts/fontawesome-free-6.4.2-web/css/all.css') }}" title="Font Awesome Icons">
         {% endblock %}
 

@@ -7,6 +7,7 @@
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
 
+{#    MARIKA TODO Delete here id it's not used #}
 {#    {{ form_start(registrationForm) }}#}
 {#        {{ form_row(registrationForm.email) }}#}
 {#        {{ form_row(registrationForm.username) }}#}
@@ -29,6 +30,7 @@
 
                     {{ form_row(registrationForm.email) }}
 
+                    <p>Pick your username wisely – it's permanent!</p>
                     {{ form_row(registrationForm.username) }}
 
                     {{ form_row(registrationForm.plainPassword) }}

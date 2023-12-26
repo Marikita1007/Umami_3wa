@@ -38,7 +38,7 @@ body[data-route="home"] {
         right: 0;
         height: 1px;
         opacity: 0;
-        background: $umami-yellow-dark;
+        background: $umami-blue-dark;
         transition: .3s;
       }
 
@@ -84,7 +84,7 @@ body[data-route="home"] {
       //Price MARIKA
       .menu-summary-price {
         font-family: 'Pinyon Script', serif;
-        color: $umami-yellow-dark;
+        color: $umami-blue-dark;
         font-size: 2.5rem;
         line-height: 1;
       }
@@ -122,7 +122,7 @@ body[data-route="home"] {
     }
 
     .title {
-      color: $umami-yellow-dark;
+      color: $umami-blue-dark;
       font-size: 1.75rem;
       line-height: 1.1;
       letter-spacing: 2px;
@@ -133,68 +133,14 @@ body[data-route="home"] {
     }
 
     .title span {
-      font-family: $umami-yellow;
-      color: $umami-yellow-dark;
+      font-family: $umami-blue;
+      color: $umami-blue-dark;
       font-size: 2.5rem;
       display:block;
       text-transform: none;
     }
 
-    //The line on the title
-    //.title::before {
-    //  content: '';
-    //  display: inline-block;
-    //  width: 24px;
-    //  height: 2px;
-    //  background: $umami-yellow-dark;
-    //  margin-bottom: .5rem;
-    //}
-    ///* HEREEEEEE  MARIKA*/
-
   }
-
-  //MARIKA: This is needed, but it doesn't change even if I comment it. It needs to be checked
-  //@media only screen and (min-width: 600px) {
-  //  html {
-  //    font-size: 16px;
-  //  }
-  //
-  //  .logo {
-  //    margin-bottom: 10px;
-  //  }
-  //
-  //  .topbar {
-  //    display: flex;
-  //    align-items: center;
-  //    justify-content: space-between;
-  //    max-width: 1150px;
-  //    margin: 0 auto;
-  //  }
-  //
-  //  .baseline {
-  //    padding: 125px 0 230px;
-  //  }
-  //
-  //  .baseline-slogan {
-  //    font-size: 1.5rem;
-  //  }
-  //
-  //  .baseline-name {
-  //    font-size: 4.375rem;
-  //    letter-spacing: 12px;
-  //    padding-top: 8px;
-  //    padding-bottom: 18px;
-  //  }
-  //
-  //  .baseline-welcome {
-  //    font-size: 3.75rem;
-  //  }
-  //
-  //  .menu-button {
-  //    margin-top: 0;
-  //    margin-right: 0;
-  //  }
-  //}
 
   @media only screen and (min-width: 800px) {
 
@@ -226,7 +172,7 @@ body[data-route="home"] {
     .block-img::before {
       content: '';
       display: block;
-      border: solid 1px $umami-yellow-dark;
+      border: solid 1px $umami-blue-dark;
       position: absolute;
       top: -30px;
       left: -30px;
@@ -338,7 +284,7 @@ body[data-route="home"] {
       left: 50%;
       width: 420px;
       height: 420px;
-      border: solid 1px $umami-yellow-dark;
+      border: solid 1px $umami-blue-dark;
       transform: translate(-50%, -260px) rotate(45deg);
     }
 
