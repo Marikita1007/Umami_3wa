@@ -38,6 +38,7 @@ Encore
     .addStyleEntry('card-styles', './assets/styles/components/card.scss')
     .addStyleEntry('form-styles', './assets/styles/components/form.scss')
     .addStyleEntry('button-styles', './assets/styles/components/button.scss')
+    .addStyleEntry('user-profile', './assets/styles/profiles/user_profile.scss')
 
     // Added bootstrap CSS
     .addStyleEntry('bootstrap-css', './node_modules/bootstrap/dist/css/bootstrap.css')

@@ -35,7 +35,8 @@ body {
   }
 
   h1, h2, h3 {
-    color: $umami-yellow-dark;
+    border: black;
+    color: $umami-blue-dark-second;
     font-family: $umami-font-family;
   }
 
@@ -47,7 +48,7 @@ body {
     font-size: 1.75rem;
     line-height: 1.1;
     letter-spacing: 2px;
-    color: $umami-yellow-dark ;
+    color: $umami-blue-dark ;
     font-weight: bold;
     margin: 1rem 0 0 0;
   }
@@ -83,7 +84,7 @@ body {
 }
 
 .alert-warning-message {
-  background-color: $umami-yellow;
+  background-color: $umami-blue;
   color: $umami-grey;
 }
 

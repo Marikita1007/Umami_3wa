@@ -71,9 +71,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getUsername()
+    public function getUsername(): string
     {
-        return $this->email;
+        return $this->username;
     }
 
     /**
@@ -168,7 +168,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return 'https://ui-avatars.com/api/?' . http_build_query([
                 'name' => $this->getDisplayName(),
                 'size' => $size,
-                'background' => '#F2CE4C',
+                'background' => '#5eb5e0',
         ]);
     }
 

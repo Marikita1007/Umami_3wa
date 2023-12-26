@@ -34,6 +34,7 @@ class RegistrationFormType extends AbstractType
                     'placeholder' => 'Username',
                     'required' => 'required',
                 ],
+//                'help' => 'Pick your username wisely – it\'s permanent!',
             ])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
