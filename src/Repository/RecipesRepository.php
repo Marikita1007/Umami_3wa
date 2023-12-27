@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Cuisines;
 use App\Entity\Recipes;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -19,6 +20,29 @@ class RecipesRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Recipes::class);
+    }
+
+    public function findByCategory(Cuisines $cuisine)
+    {
+        return $this
+            ->createQueryBuilder('r')
+            ->join('r.cuisine', 'c')
+            ->where('c.name = :cuisineName')
+            ->setParameter('cuisineName', $cuisine->getName())
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function getByName(string $word)
+    {
+        return $this
+            ->createQueryBuilder('r')
+            ->where('r.name LIKE :word')
+            ->setParameter('word', '%'.$word.'%')
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
 //    /**

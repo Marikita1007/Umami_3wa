@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Ingredients;
 use App\Entity\Recipes;
 use App\Entity\User;
+use App\Form\CuisinesType;
+use App\Form\FilterSearchType;
 use App\Form\IngredientRecipeType;
 use App\Form\RecipesType;
 use App\Repository\IngredientsRepository;
@@ -246,6 +248,49 @@ class RecipesController extends AbstractController
         $entityManager->flush();
         $this->addFlash('success', 'Your recipe was deleted');
         return $this->redirectToRoute("list_recipes");
+    }
+
+    #[Route('/recipes_all_filters', name: 'app_recipes_all_filters', methods: ['GET', 'POST'])]
+    public function searchRecipesByFilters(
+        RecipesRepository $recipesRepository,
+        Request $request
+    ): Response
+    {
+        $formFilterSearch = $this->createForm(FilterSearchType::class);
+        $formFilterSearch->handleRequest($request);
+
+        $formCategories = $this->createForm(CuisinesType::class);
+        $formCategories->handleRequest($request);
+
+        if ($formFilterSearch->isSubmitted() && $formFilterSearch->isValid()){
+            $data = $formFilterSearch->getData();
+            $word = $data['word'];
+
+            $category = $formCategories->get('name')->getData();
+
+            return $this->render('recipes/recipes_filters.html.twig', [
+                'recipesByWord' => $recipesRepository->getByName($word),
+                'formFilterSearch' => $formFilterSearch->createView(),
+                'formCategories' => $formCategories->createView(),
+            ]);
+        }
+
+        if ($formCategories->isSubmitted() && $formCategories->isSubmitted() ){
+            $data = $formCategories->getData();
+            $category = $formCategories->get('name')->getData();
+
+            return $this->render('recipes/recipes_filters.html.twig', [
+                'recipesByCategory' => $recipesRepository->findByCategory($category),
+                'formCategories' => $formCategories->createView(),
+                'formFilterSearch' => $formFilterSearch->createView(),
+            ]);
+        }
+
+        return $this->render('recipes/recipes_filters.html.twig', [
+            'recipes' => $recipesRepository->findAll(),
+            'formFilterSearch' => $formFilterSearch->createView(),
+            'formCategories' => $formCategories->createView(),
+        ]);
     }
 
     private function saveImage(UploadedFile $imageFile, SluggerInterface $slugger, $recipe)

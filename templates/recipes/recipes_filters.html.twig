@@ -1,0 +1,156 @@
+{#{% extends 'base.html.twig' %}#}
+
+{#{% block body %}#}
+{#    <section>#}
+{#        <!-- Left Sidebar for Filters -->#}
+{#        <div class="">#}
+{#            <h2>Search Products by All Filters</h2>#}
+
+{#            {{ form_start(formFilterSearch) }}#}
+{#            {{ form_row(formFilterSearch.word) }}#}
+{#            <button type="submit" class="custom-button-wide">Search</button>#}
+{#            {{ form_end(formFilterSearch) }}#}
+
+{#            {{ form_start(formCategories) }}#}
+{#            {{ form_row(formCategories.name) }}#}
+{#            <button type="submit" class="custom-button-wide">Search</button>#}
+{#            {{ form_end(formCategories) }}#}
+
+{#        </div>#}
+
+{#        <!-- Right Content for Recipes -->#}
+{#        <div class="">#}
+{#            <h1 class="">Recipes Search Results</h1>#}
+
+{#            {% if recipesByWord is defined %}#}
+{#                {% for recipe in recipesByWord %}#}
+{#                    <div class="card-container">#}
+{#                        <h3 class="">{{ recipe.name }}</h3>#}
+{#                        <p class="">Description : {{ recipe.description }}</p>#}
+{#                        <p class="">Created Time : {{ recipe.createdAt|date('Y-m-d H:i:s') }}</p>#}
+{#                        <p class="">Updated Time : {{ recipe.updatedAt|date('Y-m-d H:i:s') }}</p>#}
+{#                    </div>#}
+{#                {% endfor %}#}
+{#            {% endif %}#}
+
+{#            {% if recipesByCategory is defined %}#}
+{#                {% for recipe in recipesByCategory %}#}
+{#                    <div class="">#}
+{#                        <div class="card-container">#}
+{#                            <h3 class="">{{ recipe.name }}</h3>#}
+{#                            <p class="">Description :{{ recipe.description }}</p>#}
+{#                            <p class="">Created Time : {{ recipe.createdAt|date('Y-m-d H:i:s') }}</p>#}
+{#                            <p class="">Updated Time : {{ recipe.updatedAt|date('Y-m-d H:i:s') }}</p>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                {% endfor %}#}
+{#            {% endif %}#}
+{#        </div>#}
+{#    </section>#}
+{#{% endblock %}#}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section class="flex-container">
+        <!-- Left Sidebar for Filters -->
+        <div class="left-sidebar">
+            <h2><i class="fa-solid fa-filter"></i>Recipes Filters</h2>
+
+            {{ form_start(formFilterSearch) }}
+            {{ form_row(formFilterSearch.word) }}
+            <button type="submit" class="custom-button-wide">Search</button>
+            {{ form_end(formFilterSearch) }}
+
+            {{ form_start(formCategories) }}
+            {{ form_row(formCategories.name) }}
+            <button type="submit" class="custom-button-wide">Search</button>
+            {{ form_end(formCategories) }}
+        </div>
+
+        <!-- Right Content for Recipes -->
+        <div class="right-content">
+            <h1>Recipes Search Results</h1>
+
+            {% if recipesByWord is defined and recipesByWord|length > 0 %}
+                <div class="flex-content">
+                    <ul class="card-container" role="list">
+                        {% for recipe in recipesByWord %}
+                            <li class="card" role="listitem">
+                                <a href="{{ path('show_recipe', {id: recipe.id}) }}">
+                                    <figure>
+                                        {% if recipe.image %}
+                                            <img src="{{ asset('uploads/images/' ~ recipe.image) }}" alt="{{ recipe.name }}">
+                                        {% else %}
+                                            <i class="fa-solid fa-eye-slash fa-2xl" aria-label="No image available"></i>
+                                        {% endif %}
+                                        <figcaption>
+                                            <h4>
+                                                <b>{{ recipe.name }}</b>
+                                            </h4>
+                                            <p>{{ recipe.description|slice(0, 50) }}...<a href="{{ path('show_recipe', {id: recipe.id}) }}"><b>See More</b></a></p>
+                                        </figcaption>
+                                    </figure>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% elseif recipesByCategory is defined and recipesByCategory|length > 0 %}
+                <div class="flex-content">
+                    <ul class="card-container" role="list">
+                        {% for recipe in recipesByCategory %}
+                            <li class="card" role="listitem">
+                                <a href="{{ path('show_recipe', {id: recipe.id}) }}">
+                                    <figure>
+                                        {% if recipe.image %}
+                                            <img src="{{ asset('uploads/images/' ~ recipe.image) }}" alt="{{ recipe.name }}">
+                                        {% else %}
+                                            <i class="fa-solid fa-eye-slash fa-2xl" aria-label="No image available"></i>
+                                        {% endif %}
+                                        <figcaption>
+                                            <h4>
+                                                <b>{{ recipe.name }}</b>
+                                            </h4>
+                                            <p>{{ recipe.description|slice(0, 50) }}...<a href="{{ path('show_recipe', {id: recipe.id}) }}"><b>See More</b></a></p>
+                                        </figcaption>
+                                    </figure>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% elseif recipes is defined and recipes|length > 0 %}
+                <div class="flex-content">
+                    <ul class="card-container" role="list">
+                        {% for recipe in recipes %}
+                            <li class="card" role="listitem">
+                                <a href="{{ path('show_recipe', {id: recipe.id}) }}">
+                                    <figure>
+                                        {% if recipe.image %}
+                                            <img src="{{ asset('uploads/images/' ~ recipe.image) }}" alt="{{ recipe.name }}">
+                                        {% else %}
+                                            <i class="fa-solid fa-eye-slash fa-2xl" aria-label="No image available"></i>
+                                        {% endif %}
+                                        <figcaption>
+                                            <h4>
+                                                <b>{{ recipe.name }}</b>
+                                            </h4>
+                                            <p>{{ recipe.description|slice(0, 50) }}...<a href="{{ path('show_recipe', {id: recipe.id}) }}"><b>See More</b></a></p>
+                                        </figcaption>
+                                    </figure>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% else %}
+                <p>We couldn't find the recipes you're looking for. Sorry about that !</p>
+            {% endif %}
+
+        </div>
+    </section>
+{% endblock %}
+
+{# Set route-data for scss #}
+{% set pageRoute = 'recipes_filters' %}

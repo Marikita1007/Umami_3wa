@@ -1,0 +1,76 @@
+@import '../base';
+
+body[data-route="recipes_filters"] {
+
+  .flex-container {
+    display: flex;
+
+    .left-sidebar {
+      flex: 0 0 25%;
+      padding: 1.25em;
+      box-sizing: border-box;
+
+      h2 {
+        font-size: 1.2em;
+        font-weight: bold;
+
+        i {
+          padding-right: 0.3em;
+        }
+      }
+    }
+
+    .right-content {
+      flex: 1;
+      padding: 1.25em;
+      box-sizing: border-box;
+
+      h1 {
+        text-align: center;
+      }
+
+      /* Apply styles for the card container */
+      .card-container {
+        display: flex;
+        flex-wrap: wrap; /* Allow cards to wrap to the next row */
+        justify-content: center;
+        gap: 1.25em; /* Add spacing between cards */
+
+        /* Set a flex-basis or width for each card */
+        .card {
+          flex: 0 0 calc(28% - 1.25em); /* Three cards in a row with 20px gap */
+          min-width: 15em; /* Minimum width for each card */
+          margin-bottom: 1.25em; /* Add spacing between card containers */
+        }
+      }
+    }
+
+    /* Text when there is no recipe result  */
+    p {
+      font-weight: bold;
+      text-align: center;
+    }
+
+    @media (max-width: $layout-breakpoint-medium) {
+      flex-direction: column;
+
+      .left-sidebar, .right-content {
+        flex: 1;
+        order: initial; /* Reset the order for larger screens */
+
+        .card-container {
+          display: flex;
+          flex-wrap: nowrap;
+          gap: 0.5em; /* Add spacing between cards */
+
+          /* Set a flex-basis or width for each card */
+          .card {
+            flex: 0; /* Cards don't have unnecessary margin on bottom */
+            min-width: 15em; /* Minimum width for each card */
+            margin-bottom: 1.25em; /* Add spacing between card containers */
+          }
+        }
+      }
+    }
+  }
+}
