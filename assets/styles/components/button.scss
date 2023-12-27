@@ -16,8 +16,9 @@
   color: $umami-grey;
   cursor: pointer;
   display: flex;
+  font-weight: bold;
   margin-left: 10px;
-  padding: 10px 20px;
+  padding: 0.5em 1em;
   transition: transform 0.3s; /* Add a smooth transition */
 }
 
@@ -27,7 +28,7 @@
 }
 
 .custom-button-wide > i {
-  margin-right: 1vw; /* Add space between icon and text */
+  margin-right: 0.5em;
 }
 
 /* Icons button design */
@@ -37,8 +38,8 @@
   color: $umami-white;
   display: inline-block;
   font-weight: bold;
-  margin: 0 5px;
-  padding: 8px 16px;
+  margin: 0 0.25em;
+  padding: 0.8em 1.6em;
   transition: transform 0.3s; /* Add a smooth transition */
 }
 
@@ -56,8 +57,8 @@
   cursor: pointer;
   display: flex;
   font-weight: bold;
-  margin: 10px;
-  padding: 5px;
+  margin: 0.625em;
+  padding: 0.3125em;
   transition: transform 0.3s; /* Add a smooth transition */
 }
 
@@ -76,20 +77,20 @@
   background-color: $umami-blue-dark;
 }
 
-
 /* Design for back to list */
 .return-list-button {
-  background-color: $umami-grey-light; /* Change the background color as desired */
+  background-color: $umami-grey-light;
   border: none;
   border-radius: 5px;
-  color: $umami-grey; /* Change the text color as desired */
+  color: $umami-grey;
   cursor: pointer;
   display: inline-block;
-  margin-top: 10px;
-  padding: 10px 20px;
-  text-decoration: none; /* Remove underlines from links, you can also set it to none if it's not a link */
+  font-weight: bold;
+  margin-top: 1em;
+  padding: 1em 2em;
+  text-decoration: none;
 }
 
 .return-list-button:hover {
-  transform: scale(1.03); /* Change the background color for hover state as desired */
+  transform: scale(1.03);
 }

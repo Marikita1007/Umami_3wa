@@ -24,20 +24,18 @@ class CuisinesController extends AbstractController
     #[Route("/cuisines/list", name: "cuisines_list", methods: ["GET"])]
     public function showAll(): Response
     {
-        $products = $this->getDoctrine()
+        $cuisines = $this->getDoctrine()
             ->getRepository(Cuisines::class)
             ->findAll();
 
         $data = [];
 
-        foreach ($products as $product) {
+        foreach ($cuisines as $cuisine) {
             $data[] = [
-                'id' => $product->getId(),
-                'name' => $product->getName(),
+                'id' => $cuisine->getId(),
+                'name' => $cuisine->getName(),
             ];
         }
-
-
         return $this->json($data);
     }
 

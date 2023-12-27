@@ -34,6 +34,7 @@ Encore
     .addStyleEntry('show-recipe-styles', './assets/styles/recipes/show-recipe.scss')
     .addStyleEntry('recipe-form-styles', './assets/styles/recipes/recipe-form.scss')
     .addStyleEntry('recipes-dashboard-styles', './assets/styles/recipes/recipes-dashboard.scss')
+    .addStyleEntry('recipes-filters', './assets/styles/recipes/recipes-filters.scss')
     .addStyleEntry('cuisines-dashboard-styles', './assets/styles/cuisines/cuisines-dashboard.scss')
     .addStyleEntry('card-styles', './assets/styles/components/card.scss')
     .addStyleEntry('form-styles', './assets/styles/components/form.scss')
