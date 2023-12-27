@@ -39,7 +39,7 @@ body[data-route="recipes_filters"] {
         /* Set a flex-basis or width for each card */
         .card {
           flex: 0 0 calc(28% - 1.25em); /* Three cards in a row with 20px gap */
-          min-width: 15em; /* Minimum width for each card */
+          min-width: 18em; /* Minimum width for each card */
           margin-bottom: 1.25em; /* Add spacing between card containers */
         }
       }
