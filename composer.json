@@ -11,6 +11,7 @@
         "doctrine/doctrine-bundle": "^2.10",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.16",
+        "easycorp/easyadmin-bundle": "^4.8",
         "friendsofsymfony/rest-bundle": "^3.6",
         "jms/serializer-bundle": "^5.3",
         "phpdocumentor/reflection-docblock": "^5.3",
@@ -47,7 +48,7 @@
         "symfony/web-link": "5.4.*",
         "symfony/webpack-encore-bundle": "^1.17",
         "symfony/yaml": "5.4.*",
-        "symfonycasts/verify-email-bundle": "1.11.0",
+        "symfonycasts/verify-email-bundle": "^1.15.0",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0"
     },

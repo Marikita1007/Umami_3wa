@@ -46,7 +46,11 @@
                     {# ARIA attributes for CSRF token #}
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-                    <p>Don't have an account yet? <a href="{{ path('register') }}">Sign up</a></p>
+                    <div class="signup-button-container">
+                        <p>Don't have an account yet?</p>
+                        <a href="{{ path('register') }}" class="btn-form-small">Sign up</a>
+                    </div>
+
                 </form>
             </div>
         </div>
