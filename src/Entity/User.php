@@ -54,6 +54,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->roles = ['ROLE_USER'];
     }
 
+    public function __toString()
+    {
+        return $this->getUsername(); // return username
+    }
+
     public function getId(): ?int
     {
         return $this->id;
