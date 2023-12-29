@@ -168,7 +168,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      *
      * @return string The URI for the user's avatar image.
      */
-    public function getAvatarUri(int $size = 35): string
+    public function getAvatarUrl(int $size = 35): string
     {
         return 'https://ui-avatars.com/api/?' . http_build_query([
                 'name' => $this->getDisplayName(),
