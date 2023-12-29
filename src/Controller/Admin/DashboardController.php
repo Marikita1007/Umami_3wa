@@ -69,7 +69,7 @@ class DashboardController extends AbstractDashboardController
         }
 
         return parent::configureUserMenu($user)
-            ->setAvatarUrl($user->getAvatarUri())
+            ->setAvatarUrl($user->getAvatarUrl())
             ->setMenuItems([
                 MenuItem::LinkToUrl('My Profile', 'fas fa-user', $this->generateUrl(
                     'app_profile'
