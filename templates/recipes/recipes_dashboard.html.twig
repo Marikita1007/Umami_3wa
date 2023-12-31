@@ -17,7 +17,7 @@
                 <tr>
                     <th>ID</th>
                     {% if is_granted('ROLE_ADMIN') %}
-                    <th>Username</th>
+                        <th>Username</th>
                     {% endif %}
                     <th>Title</th>
                     <th>Image</th>
@@ -30,7 +30,7 @@
                 {% for recipe in recipes|reverse %}
                     <tr>
                         <td>{{ recipe.id }}
-                        {% if is_granted('ROLE_ADMIN') %}
+                            {% if is_granted('ROLE_ADMIN') %}
                         <td>{{ recipe.user }}</td>
                         {% endif %}
                         <td>{{ recipe.name }}</td>
@@ -48,6 +48,27 @@
                 </tbody>
             </table>
         {% endif %}
+
+        {% if page is defined and page is not null %}
+            {# Pagination links #}
+            <div class="pagination-container">
+                <a href="{{ path('list_recipes', {'page': page-1, 'perPage': perPage}) }}" class="custom-button-small">Previous</a>
+                <span>Page {{ page }}</span>
+                <a href="{{ path('list_recipes', {'page': page+1, 'perPage': perPage}) }}" class="custom-button-small">Next</a>
+            </div>
+
+            {# Form to change the number of recipes #}
+            <form action="{{ path('list_recipes') }}" method="get" class="pagination-form">
+                <label for="perPage">Recipes per page:</label>
+                <select name="perPage" id="perPage" onchange="this.form.submit()">
+                    <option value="10" {% if perPage == 10 %}selected{% endif %}>10</option>
+                    <option value="25" {% if perPage == 25 %}selected{% endif %}>25</option>
+                    <option value="50" {% if perPage == 50 %}selected{% endif %}>50</option>
+                    <option value="100" {% if perPage == 100 %}selected{% endif %}>100</option>
+                </select>
+            </form>
+        {% endif %}
+
     </section>
 
 {% endblock %}

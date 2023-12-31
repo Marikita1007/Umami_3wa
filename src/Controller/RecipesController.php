@@ -55,14 +55,29 @@ class RecipesController extends AbstractController
 
     #[Route("/list", name: "list_recipes", methods: ["GET"])]
     #[Security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')")]
-    public function listAll(): Response
+    public function listAll(Request $request, RecipesRepository $recipesRepository): Response
     {
         $user = $this->getUser();
 
         // Check if the user has the ROLE_ADMIN role
         if ($this->isGranted('ROLE_ADMIN')) {
+
+            $page = $request->query->getInt('page', 1); // Default page: 1
+            $perPage = $request->query->getInt('perPage', 10); // Default display count: 10
+
+//            TODO MARIKA TEST
             // If the user is an admin, get all recipes
-            $recipes = $this->getDoctrine()->getRepository(Recipes::class)->findAll();
+//            $recipes = $this->getDoctrine()->getRepository(Recipes::class)->findAll();
+
+            // Get recipe
+            $recipes = $recipesRepository->findBy([], [], $perPage, ($page - 1) * $perPage);
+
+            return $this->render('recipes/recipes_dashboard.html.twig', [
+                'recipes' => $recipes,
+                'page' => $page,
+                'perPage' => $perPage,
+            ]);
+
         } else {
             // If the user is not an admin, get only their own recipes
             $recipes = $this->getDoctrine()->getRepository(Recipes::class)->findBy(['user' => $user]);

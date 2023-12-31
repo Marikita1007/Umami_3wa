@@ -82,8 +82,8 @@ body[data-route="recipes_dashboard"] {
         }
 
         tr {
-          margin-bottom: 15px;
           display: block;
+          margin-bottom: 15px;
 
           &:last-child {
             margin-bottom: 0;
@@ -96,6 +96,37 @@ body[data-route="recipes_dashboard"] {
 
       }
     }
+
+    // Pagination
+    .pagination-container {
+      align-items: center;
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 20px;
+
+      span {
+        line-height: 36px;
+        margin: 0 5px;
+      }
+    }
+
+    /* Form for pagination */
+    .pagination-form {
+      margin-top: 20px;
+
+      label {
+        margin-right: 10px;
+      }
+
+      select {
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        padding: 8px;
+      }
+    }
+
   }
 }
 
