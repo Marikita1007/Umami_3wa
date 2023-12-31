@@ -2,9 +2,10 @@
 
 /* Button container */
 .custom-button-container {
+  align-items: center;
   display: flex;
   justify-content: center;
-  align-items: center;
+  margin: 1em;
 }
 
 /* Button design to create a new Recipe */
@@ -47,10 +48,9 @@
   transform: scale(1.03); /* Scale the button by 3% when hovered */
 }
 
-/* Button design for add/delete ingredient */
+/* Common styles for small buttons */
 .custom-button-small {
   align-items: center;
-  background-color: $umami-white;
   border: 1px solid $umami-grey-light;
   border-radius: 4px;
   color: $umami-grey;
@@ -62,7 +62,7 @@
   transition: transform 0.3s; /* Add a smooth transition */
 }
 
-.custom-button-small {
+.custom-button-small:hover {
   transform: scale(1.03); /* Scale the button by 3% when hovered */
 }
 
@@ -94,3 +94,22 @@
 .return-list-button:hover {
   transform: scale(1.03);
 }
+
+/* Button design for delete ingredients and extra Photos */
+.custom-delete-button {
+  background-color: $umami-danger;
+  border: 1px solid $umami-danger;
+  border-radius: 4px;
+  color: $umami-white;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: bold;
+  padding: 0.375rem 0.75rem;
+  transition: background-color 0.3s;
+}
+
+/* Style on hover */
+.custom-delete-button:hover {
+  transform: scale(1.03);
+}
+

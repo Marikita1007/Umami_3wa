@@ -7,30 +7,49 @@
 
     {{ form_start(form) }}
     {{ form_errors(form.recipe) }}
-    {{ form_row(form.recipe) }}
+    {{ form_row(form.recipe.name) }}
+    {{ form_row(form.recipe.description) }}
+    {{ form_row(form.recipe.instructions) }}
+    {{ form_row(form.recipe.image) }}
+    {{ form_row(form.recipe.prep_time) }}
+    {{ form_row(form.recipe.servings) }}
+    {{ form_row(form.recipe.cook_time) }}
+    {{ form_row(form.recipe.calories) }}
+    {{ form_row(form.recipe.difficulty) }}
+    {{ form_row(form.recipe.cuisine) }}
 
-        <ul id="ingredient-fields-list"
-            data-prototype="{{ form_widget(form.ingredients.vars.prototype)|e }}"
-            data-widget-tags="{{ '<li></li>' }}"
-            data-widget-counter="{{ form.ingredients|length }}">
-            {% for ingredient in form.ingredients %}
-                <li>
-                    {{ form_errors(ingredient) }}
-                    {{ form_row(ingredient.name) }}
-                    {{ form_row(ingredient.amount) }}
-                </li>
-            {% endfor %}
-            <span id="js-ingredient-error-message" class="error-message"></span>
-        </ul>
+    <ul id="ingredient-fields-list"
+        data-prototype="{{ form_widget(form.ingredients.vars.prototype)|e }}"
+        data-widget-tags="{{ '<li></li>' }}"
+        data-widget-counter="{{ form.ingredients|length }}">
+        {% for ingredient in form.ingredients %}
+            <li>
+                {{ form_errors(ingredient) }}
+                {{ form_row(ingredient.name) }}
+                {{ form_row(ingredient.amount) }}
+            </li>
+        {% endfor %}
+        <span id="js-ingredient-error-message" class="error-message"></span>
+    </ul>
 
+    <div id="photos"
+         data-index="{{ form.recipe.photos|length > 0 ? form.recipe.photos|last.vars.name + 1 : 0 }}"
+         data-prototype="{{ form_widget(form.recipe.photos.vars.prototype)|e('html_attr') }}">
+    </div>
+
+    <div class="custom-button-container">
         <button type="button"
-                class="add-another-collection-widget custom-button-small"
+                class="add-another-collection-widget custom-button-wide"
                 data-list-selector="#ingredient-fields-list"
                 aria-label="add ingredients">Add ingredient</button>
-        <button type="submit" class="custom-button-wide" aria-label="create recipe">Create Recipe</button>
+        <button type="button" class="js-btn-add custom-button-wide" data-collection="#photos">Add additional images</button>
+    </div>
 
-        {{ form_row(form._token) }}  {# This renders csrf token row have not yet been rendered for the given form  #}
+    <button type="submit" class="custom-button-wide" aria-label="create recipe">Create Recipe</button>
+
+    {{ form_row(form._token) }}
     {{ form_end(form, {'render_rest': false}) }}
+
 
 {% endblock %}
 

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Ingredients;
+use App\Entity\Photos;
 use App\Entity\Recipes;
 use App\Entity\User;
 use App\Form\CuisinesType;
@@ -10,7 +11,9 @@ use App\Form\FilterSearchType;
 use App\Form\IngredientRecipeType;
 use App\Form\RecipesType;
 use App\Repository\IngredientsRepository;
+use App\Repository\PhotosRepository;
 use App\Repository\RecipesRepository;
+use App\Services\SimpleUploadService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Types\IntegerType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -34,17 +37,16 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class RecipesController extends AbstractController
 {
     private RecipesRepository $recipeRepository;
+    private SimpleUploadService $simpleUploadService;
 
-    public function __construct(RecipesRepository $recipeRepository)
+    public function __construct(RecipesRepository $recipeRepository, SimpleUploadService $simpleUploadService)
     {
         $this->recipeRepository = $recipeRepository;
+        $this->simpleUploadService = $simpleUploadService;
     }
 
     /**
-     * TODO MARIKA FIX THIS or CREATE Another solution for showing cards !!!!
-     *
      * @return array An array of Recipe objects representing all available recipes.
-     *
      */
     public function showRecipes()
     {
@@ -52,6 +54,7 @@ class RecipesController extends AbstractController
     }
 
     #[Route("/list", name: "list_recipes", methods: ["GET"])]
+    #[Security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')")]
     public function listAll(): Response
     {
         $user = $this->getUser();
@@ -68,17 +71,18 @@ class RecipesController extends AbstractController
         return $this->render('recipes/recipes_dashboard.html.twig', [
             'recipes' => $recipes,
         ]);
-
     }
 
     /**
      * Display a single recipe based on its unique identifier.
      */
     #[Route("/recipe/{id}", name: "show_recipe", methods: ["GET"])]
-    public function showRecipe(Recipes $recipe): Response
+    public function showRecipe(Recipes $recipe, PhotosRepository $photosRepository): Response
     {
-        return $this->render('recipes/show_recipe.html.twig',
-            ['recipe' => $recipe]);
+        return $this->render('recipes/show_recipe.html.twig', [
+            'recipe' => $recipe,
+            'extraPhotos' => $photosRepository->findBy(['recipe' => $recipe]),
+        ]);
     }
 
 //    /**
@@ -143,9 +147,13 @@ class RecipesController extends AbstractController
      */
     #[Route("/new_recipe_ingredients", name: "new_recipe", methods: ["POST", "GET"])]
     #[Security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')")]
-    public function createNewRecipeAndIngredients(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
+    public function createNewRecipeAndIngredients(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        SluggerInterface $slugger,
+        SimpleUploadService $simpleUploadService,
+    ): Response
     {
-        //TODO MARIKA This needs to be fixed. This Contorller is only inserting one ingredient. Ths problem comes from js. Evrytime I add a new ingredients field. it returns NaN or null as array number.
         $recipe = new Recipes();
 
         // Set the user association on the recipe
@@ -179,22 +187,47 @@ class RecipesController extends AbstractController
                 $entityManager->persist($ingredient);
             }
 
+            // Get additional photos from Photos Entity
+            $photos = $request->files->all();
+
+            if ($photos == null){
+                //TODO Change this Later cause User already added one photo 29122023
+                $this->addFlash('danger', 'Each product must have at least one photo');
+                return $this->redirectToRoute('new_recipe');
+            } else {
+                $images = $photos['ingredient_recipe']['recipe']['photos'] ?? null;
+                if ($images) {
+                    $this->addExtraPhotos($images, $recipe);
+                }
+            }
+
             $entityManager->persist($recipe);
             $entityManager->flush();
 
-            $this->addFlash('success', 'The new recipe with ingredients are created !');
+            // Show flash message with recipe name
+            $this->addFlash('success', sprintf('The new recipe "%s" with ingredients is created!', $recipe->getName()));
+
             return $this->redirectToRoute('list_recipes');
         }
 
         return $this->render('recipes/new_recipe.html.twig', [
+            'recipe' => $recipe,
             'form' => $form->createView(),
         ]);
     }
 
     #[Route("/edit/{id}", name: "edit_recipe", methods: ["GET", "POST"])]
     #[Security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')")]
-    public function editRecipeAndIngredients(Request $request, EntityManagerInterface $entityManager, Recipes $recipe, IngredientsRepository $ingredientsRepository, SluggerInterface $slugger): Response
+    public function editRecipeAndIngredients(
+        Request $request,
+        Recipes $recipe,
+        EntityManagerInterface $entityManager,
+        IngredientsRepository $ingredientsRepository,
+        SluggerInterface $slugger,
+        SimpleUploadService $simpleUploadService,
+        PhotosRepository $photosRepository): Response
     {
+
         // TODO MARIKA アクセス権限の確認: ユーザーが作成したレシピであるか、またはROLE_ADMIN権限を持っているか確認
         $this->denyAccessUnlessGranted('EDIT', $recipe);
 
@@ -225,6 +258,20 @@ class RecipesController extends AbstractController
                 $entityManager->persist($newIngredient);
             }
 
+            //Get additional photos
+            $photos = $request->files->all();
+
+            if ($photos === null){
+                //TODO MARIKA Change here cause user already have one image
+                $this->addFlash('danger', 'Each product must have at least one photo');
+                return $this->redirectToRoute('edit_recipe' , ['id' => $recipe->getId()]);
+            } else {
+                $images = $photos['ingredient_recipe']['recipe']['photos'] ?? null;
+                if ($images !== null) {
+                    $this->addExtraPhotos($images, $recipe);
+                }
+            }
+
             $entityManager->persist($recipe);
             $entityManager->flush();
 
@@ -234,7 +281,9 @@ class RecipesController extends AbstractController
         }
 
         return $this->render('recipes/edit.html.twig', [
+            'recipe' => $recipe,
             'form' => $form->createView(),
+            'photos' => $photosRepository->findBy(['recipe' => $recipe]),
         ]);
     }
 
@@ -315,6 +364,62 @@ class RecipesController extends AbstractController
         // Update the 'image' property of your entity to store the file name
         // instead of its contents
         $recipe->setImage($newFilename);
+    }
+
+    #[Route('/recipe/{id}/delete-photo/{imageId}', name: 'app_delete_photo_recipe', methods: ['GET', 'POST'])]
+    public function deleteRecipePhoto(
+        Recipes $recipe,
+        EntityManagerInterface $entityManager,
+        int $imageId,
+        PhotosRepository $photosRepository): Response
+    {
+        $photoId = $photosRepository->find($imageId);
+        if ($photoId && $photoId->getrecipes() === $recipe)
+        {
+            $entityManager->remove($photoId);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Your photo is successfully deleted');
+
+            return $this->redirectToRoute('edit_recipe', ['id' => $recipe->getId()]);
+        } else {
+            $this->addFlash('danger', 'Error happened while deleting the photo ');
+            return $this->redirectToRoute('app.recipes');
+        }
+
+        //TODO MARIKA This is for AJAX call one 30122023 Add it later if needed
+//        $data = json_decode($request->getContent(), true);
+//
+//        if($this->isCsrfTokenValid("delete" . $photos->getId(), $data['_token']))
+//        {
+//            $photo_name = $photos->getName();
+//
+//            if($simpleUploadService->deleteImage($photo_name))
+//            {
+//                $entityManager->remove($photos);
+//
+//                $entityManager->flush();
+//
+//                $this->addFlash('success', 'Your photo is successfully deleted');
+//                return new JsonResponse(['success' => 'Your photo is successfully deleted'], 200);
+//            }
+//        }
+//        return new JsonResponse(['error' => 'Invalid Token'], 400);
+    }
+
+    //TODO MARIKA Use this method on CRUD new Photos too
+    // Private method to add extra photos
+    private function addExtraPhotos(array $images, Recipes $recipe): void
+    {
+        foreach ($images as $image) {
+            $new_photos = new Photos();
+            $image_new = $image['name'];
+            $new_photo = $this->simpleUploadService->uploadImage($image_new);
+            $new_photos->setName($new_photo);
+            // Set the bidirectional association
+//            $new_photos->setRecipes($recipe);
+            $recipe->addPhoto($new_photos);
+        }
     }
 }
 

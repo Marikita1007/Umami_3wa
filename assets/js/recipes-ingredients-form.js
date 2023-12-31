@@ -1,4 +1,3 @@
-
 $(document).ready(function(){
     jQuery('.add-another-collection-widget').click(function (e) {
         let list = jQuery(jQuery(this).attr('data-list-selector'));
@@ -27,7 +26,7 @@ $(document).ready(function(){
     });
 
     function addIngredientFormDeleteLink(item) {
-        let removeFormButton = $('<button class="custom-button-small">Delete this Ingredient</button>');
+        let removeFormButton = $('<button class="custom-delete-button">X</button>');
         item.append(removeFormButton);
 
         removeFormButton.on('click', function (e) {
@@ -54,5 +53,51 @@ $(document).ready(function(){
             $('#js-ingredient-error-message').text("Please insert at least one ingredient and its amount");
         }
     });
+
+
+    // This js is for adding multiple Recipe photos
+    const addFormToCollection = (e) => {
+        const collectionPhoto = document.querySelector(e.currentTarget.dataset.collection);
+
+        const item = document.createElement('div');
+        item.className = 'mt-3';
+
+        const label = document.createElement("h4");
+        label.innerHTML = "Photo " + (parseInt(collectionPhoto.dataset.index) + 1);
+        collectionPhoto.appendChild(label);
+
+        item.innerHTML = collectionPhoto
+            .dataset
+            .prototype
+            .replace(
+                /__name__/g,
+                collectionPhoto.dataset.index
+            );
+
+        let btnDelete = document.createElement('button');
+        btnDelete.className = 'custom-delete-button js-btn-delete';
+        btnDelete.innerHTML = 'X';
+
+        // Associate label with btnDelete
+        btnDelete.label = label;
+
+        btnDelete.addEventListener('click', (e) => {
+            e.currentTarget.parentElement.remove();
+            // When deleting, also delete the associated label
+            e.currentTarget.label.remove();
+        });
+
+        item.appendChild(btnDelete);
+
+        collectionPhoto.append(item);
+        collectionPhoto.dataset.index++;
+
+        document.querySelectorAll('.js-btn-delete').forEach(btn => btn.addEventListener('click', (e) =>
+            e.currentTarget.parentElement.remove()
+        ))
+    }
+
+
+    document.querySelectorAll('.js-btn-add').forEach(btn => btn.addEventListener('click', addFormToCollection));
 });
 
