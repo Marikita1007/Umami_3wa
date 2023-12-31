@@ -2,22 +2,20 @@
 
 namespace App\Form;
 
-use App\Entity\Cuisines;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Photos;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CuisinesType extends AbstractType
+class PhotosType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', EntityType::class, [
-                'label' => 'Search by Cuisine',
-                'class' => Cuisines::class,
-                'choice_label' => 'name'
+            ->add('name', FileType::class,[
+                'label' => false,
+                'help' => 'Enter extra photos if you have some.',
             ])
         ;
     }
@@ -25,7 +23,7 @@ class CuisinesType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Cuisines::class,
+            'data_class' => Photos::class,
         ]);
     }
 }

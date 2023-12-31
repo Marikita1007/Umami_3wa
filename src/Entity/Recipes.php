@@ -118,9 +118,15 @@ class Recipes
      */
     private $cuisine;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Photos::class, mappedBy="recipe", cascade={"persist", "remove"})
+     */
+    private Collection $photos;
+
     public function __construct()
     {
         $this->ingredients = new ArrayCollection();
+        $this->photos = new ArrayCollection();
     }
 
     public function __toString()
@@ -341,6 +347,37 @@ class Recipes
     public function setCuisine(?Cuisines $cuisine): self
     {
         $this->cuisine = $cuisine;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Photos>
+     */
+    public function getPhotos(): Collection
+    {
+        return $this->photos;
+    }
+
+    public function addPhoto(Photos $photo): self
+    {
+        if (!$this->photos->contains($photo)) {
+//            $this->photos[] = $photo;
+            $this->photos->add($photo);
+            $photo->setRecipes($this);
+        }
+
+        return $this;
+    }
+
+    public function removePhoto(Photos $photo): self
+    {
+        if ($this->photos->removeElement($photo)) {
+            // set the owning side to null (unless already changed)
+            if ($photo->getRecipes() === $this) {
+                $photo->setRecipes(null);
+            }
+        }
 
         return $this;
     }

@@ -31,7 +31,7 @@ class Ingredients
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Recipes::class, inversedBy="ingredients")
+     * @ORM\ManyToOne(targetEntity=Recipes::class, inversedBy="ingredients", cascade={"persist"})
      * @ORM\JoinColumn(name="recipe_id", nullable=false)
      */
     private $recipe;

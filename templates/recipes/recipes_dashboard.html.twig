@@ -1,5 +1,4 @@
-{#MARIKA TODO Write README about CRUD #}
-{% block title %}Dashboard{% endblock %}
+{% block title %}Recipes Dashboard{% endblock %}
 {% extends 'base.html.twig' %}
 
 {% block body %}
@@ -7,19 +6,19 @@
     <section class="recipes-dashboard">
         <div class="dashboard-top">
             <h1>Recipes List</h1>
-
             <a href="{{ path("new_recipe") }}" class="custom-button-wide">Create New Recipe</a>
-
         </div>
 
         {% if recipes is empty %}
             <div>You haven't created recipe.</div>
         {% else %}
-            {# TODO MARIKA Add button of create new recipe   #}
             <table>
                 <thead>
                 <tr>
                     <th>ID</th>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <th>Username</th>
+                    {% endif %}
                     <th>Title</th>
                     <th>Image</th>
                     <th>Descriptions</th>
@@ -27,18 +26,21 @@
                 </tr>
                 </thead>
                 <tbody>
-                {#  TODO MARIKA Make it if else           #}
-                {% for recipe in recipes %}
+                {# Reverse loop to display recipes in ascending order of ID #}
+                {% for recipe in recipes|reverse %}
                     <tr>
-                        <td>{{ recipe.id }}</td>
-                        <td>{{ recipe.name|capitalize }}</td>
+                        <td>{{ recipe.id }}
+                        {% if is_granted('ROLE_ADMIN') %}
+                        <td>{{ recipe.user }}</td>
+                        {% endif %}
+                        <td>{{ recipe.name }}</td>
                         <td><img src="{{ asset('uploads/images/' ~ recipe.image) }}" alt="{{ recipe.name }}"></td>
                         <td>{{ recipe.description|capitalize }}</td>
                         <td>
                             <div class="action-buttons">
-                                <a href="{{ path("delete_recipe", {"id" : recipe.id}) }}" class="delete-button custom-button-icon"><i class="fas fa-trash-alt"></i></a>
-                                <a href="{{ path("edit_recipe", {"id" : recipe.id}) }}" class="edit-button custom-button-icon"><i class="fas fa-edit"></i></a>
                                 <a href="{{ path("show_recipe", {"id" : recipe.id}) }}" class="show-button custom-button-icon"><i class="fas fa-eye"></i></a>
+                                <a href="{{ path("edit_recipe", {"id" : recipe.id}) }}" class="edit-button custom-button-icon"><i class="fas fa-edit"></i></a>
+                                <a href="{{ path("delete_recipe", {"id" : recipe.id}) }}" class="delete-button custom-button-icon"><i class="fas fa-trash-alt"></i></a>
                             </div>
                         </td>
                     </tr>

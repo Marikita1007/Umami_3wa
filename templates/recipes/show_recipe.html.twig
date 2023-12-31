@@ -13,12 +13,12 @@
                 <p>Cook Time: {{ recipe.cookTime }}</p>
                 <p>Calories: {{ recipe.calories }}</p>
                 <p>Difficulty: {{ recipe.difficulty }}</p>
+                <p>Cuisine: {{ recipe.cuisine }}</p>
             </div>
             <div class="card">
                 <h3>Ingredients</h3>
                 {% for ingredient in recipe.ingredients %}
-                    <p>Ingredient : {{ ingredient.name }}</p>
-                    <p>Quantity : {{ ingredient.amount }}</p>
+                    <p>{{ ingredient.name }} : {{ ingredient.amount }}</p>
                 {% endfor %}
             </div>
             <div class="card">
@@ -30,7 +30,10 @@
             </div>
         </div>
         <div class="rightcolumn">
-            <a href="{{ path('list_recipes') }}" class="return-list-button">back to list</a>
+            {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('list_recipes') }}" class="return-list-button">Back to list</a>
+            {% endif %}
+
             <div class="card">
                 <h2>{{ recipe.name }}</h2>
                 <h5>{{ recipe.description }}</h5>
@@ -38,12 +41,25 @@
 
                 <img class="recipe-img" src="{{ asset('uploads/images/' ~ recipe.image) }}" alt="{{ recipe.name }}">
 
+                <h3>Additional Photos</h3>
+                {% if extraPhotos is defined and extraPhotos is not null %}
+                    <div class="extra-img-container">
+                        {% for extraPhoto in extraPhotos %}
+                            <img src="{{ asset('uploads/images/' ~ extraPhoto) }}" alt="{{ recipe.name }}">
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
                 <h3>Instructions</h3>
                 <p>{{ recipe.instructions }}</p>
+
             </div>
         </div>
     </div>
 
 {% endblock %}
+
+{# Set route-data for scss #}
+{% set pageRoute = 'show_recipes' %}
 
 
