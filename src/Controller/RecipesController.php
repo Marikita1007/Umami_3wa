@@ -57,34 +57,24 @@ class RecipesController extends AbstractController
     #[Security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')")]
     public function listAll(Request $request, RecipesRepository $recipesRepository): Response
     {
-        $user = $this->getUser();
+        $page = $request->query->getInt('page', 1); // Default page: 1
+        $perPage = $request->query->getInt('perPage', 10); // Default display count: 10
 
-        // Check if the user has the ROLE_ADMIN role
-        if ($this->isGranted('ROLE_ADMIN')) {
+        // Get the current user and search the database for recipes related to that user.
+        $recipes = $recipesRepository->findBy(['user' => $this->getUser()], [], $perPage, ($page - 1) * $perPage);
 
-            $page = $request->query->getInt('page', 1); // Default page: 1
-            $perPage = $request->query->getInt('perPage', 10); // Default display count: 10
+        // Determine if there is a next page
+        $hasNextPage = count($recipesRepository->findBy(['user' => $this->getUser()], [], 1, $page * $perPage)) > 0;
 
-//            TODO MARIKA TEST
-            // If the user is an admin, get all recipes
-//            $recipes = $this->getDoctrine()->getRepository(Recipes::class)->findAll();
-
-            // Get recipe
-            $recipes = $recipesRepository->findBy([], [], $perPage, ($page - 1) * $perPage);
-
-            return $this->render('recipes/recipes_dashboard.html.twig', [
-                'recipes' => $recipes,
-                'page' => $page,
-                'perPage' => $perPage,
-            ]);
-
-        } else {
-            // If the user is not an admin, get only their own recipes
-            $recipes = $this->getDoctrine()->getRepository(Recipes::class)->findBy(['user' => $user]);
-        }
+        // Determine if there is a previous page
+        $hasPreviousPage = $page > 1;
 
         return $this->render('recipes/recipes_dashboard.html.twig', [
             'recipes' => $recipes,
+            'page' => $page,
+            'perPage' => $perPage,
+            'hasNextPage' => $hasNextPage,
+            'hasPreviousPage' => $hasPreviousPage,
         ]);
     }
 
