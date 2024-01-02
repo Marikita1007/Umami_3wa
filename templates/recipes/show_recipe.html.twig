@@ -4,7 +4,7 @@
 
 {% block body %}
 
-    <div class="row-recipe">
+    <section class="row-recipe">
         <div class="leftcolumn">
             <div class="card">
                 <h3>About Recipe</h3>
@@ -55,8 +55,32 @@
 
             </div>
         </div>
-    </div>
+    </section>
 
+    <section class="comment-section">
+        <h2>Comments</h2>
+
+        {{ form_start(form, {'attr' : {'class': 'comments'}, 'action': path('show_recipe', {'id' : recipe.id}), 'method' : 'POST'}) }}
+        {{ form_row(form.content) }}
+        {{ form_row(form._token) }}
+        <button class="custom-button-wide" type="submit">Add a comment</button>
+        {{ form_end(form) }}
+
+        <div id="comment-parent">
+            {% for comment in comments %}
+                {% if comment.getUser() is not null and comment.getUser() is defined %}
+                    <div class="comment-container">
+                        <h4>Name: {{ comment.getUser().getUsername() }}</h4>
+                        <p class="posted-info">Posted on {{ comment.datetime|date("F j, Y") }}</p>
+                        <p>{{ comment.content }}</p>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+    </section>
+
+    <script src="{{ asset('js/comments.js') }}" type="application/javascript"></script>
 {% endblock %}
 
 {# Set route-data for scss #}

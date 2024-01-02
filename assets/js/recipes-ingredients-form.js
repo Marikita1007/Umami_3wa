@@ -1,3 +1,4 @@
+
 $(document).ready(function(){
     jQuery('.add-another-collection-widget').click(function (e) {
         let list = jQuery(jQuery(this).attr('data-list-selector'));
@@ -96,7 +97,6 @@ $(document).ready(function(){
             e.currentTarget.parentElement.remove()
         ))
     }
-
 
     document.querySelectorAll('.js-btn-add').forEach(btn => btn.addEventListener('click', addFormToCollection));
 });

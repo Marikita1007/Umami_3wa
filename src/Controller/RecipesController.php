@@ -2,14 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\Comments;
 use App\Entity\Ingredients;
 use App\Entity\Photos;
 use App\Entity\Recipes;
 use App\Entity\User;
+use App\Form\CommentsType;
 use App\Form\CuisinesType;
 use App\Form\FilterSearchType;
 use App\Form\IngredientRecipeType;
 use App\Form\RecipesType;
+use App\Repository\CommentsRepository;
 use App\Repository\IngredientsRepository;
 use App\Repository\PhotosRepository;
 use App\Repository\RecipesRepository;
@@ -20,6 +23,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -81,12 +85,51 @@ class RecipesController extends AbstractController
     /**
      * Display a single recipe based on its unique identifier.
      */
-    #[Route("/recipe/{id}", name: "show_recipe", methods: ["GET"])]
-    public function showRecipe(Recipes $recipe, PhotosRepository $photosRepository): Response
+    #[Route("/recipe/{id}", name: "show_recipe", methods: ["GET", "POST"])]
+    public function showRecipe(
+        Recipes $recipe,
+        PhotosRepository $photosRepository,
+        int $id,
+        Request $request,
+        EntityManagerInterface $entityManager,
+        CommentsRepository $commentsRepository
+    ): Response
     {
+        //Add comments to the recipe
+        $comments = new Comments();
+
+        $form = $this->createForm(CommentsType::class, $comments);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+
+            // Set the user for the comment
+            $comments->setUser($this->getUser());
+
+            // Set the recipe for the comment
+            $comments->setRecipe($recipe);
+
+            $recipe->addComment($comments);
+            $entityManager->persist($comments);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Your comment is registered.');
+
+            // Include the comment content in the response
+            return new JsonResponse([
+                'success' => true,
+                'content' => $comments->getContent(),
+                'commentUsername' => $comments->getUser()->getUsername(),
+                'datetime' => $comments->getDatetime()->format('F j, Y'),
+            ]);
+        }
+
         return $this->render('recipes/show_recipe.html.twig', [
             'recipe' => $recipe,
             'extraPhotos' => $photosRepository->findBy(['recipe' => $recipe]),
+            'form' => $form->createView(),
+            // Fetch comments with associated user information
+            'comments' => $commentsRepository->findBy(['recipe' => $recipe], ['datetime' => 'ASC']),
         ]);
     }
 
