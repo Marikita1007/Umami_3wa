@@ -3,11 +3,12 @@
 {% block body %}
     <section class="home-section">
         <div class="container-small">
-            <article  class="block block-last">
+            <article class="block block-last">
                 <div class="block-body">
                     <h2 class="title">Popular Categories</h2>
                 </div>
             </article>
+            {#  TODO MARIKA Show Categories of Cuisine from our database           #}
             {% if getCuisineCategories is defined %}
                 <nav class="ingredients-menu">
                     <a href="{{ path('show_categories', {'cuisine': 'Italian'}) }}">Italian</a>

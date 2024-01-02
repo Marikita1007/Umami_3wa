@@ -23,6 +23,7 @@ Encore
     .addEntry('app', './assets/app.js')
     .addEntry('recipes-ingredients-form', './assets/js/recipes-ingredients-form.js')
     .addEntry('cuisines-form-ajax', './assets/js/cuisines-form-ajax.js')
+    .addEntry('comments', './assets/js/comments.js')
 
     // Added scss files
     .addStyleEntry('base-styles', './assets/styles/base.scss')

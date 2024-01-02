@@ -5,7 +5,6 @@
  * (and its CSS file) in your base layout (base.html.twig).
  */
 
-
 // start the Stimulus application
 import './bootstrap';
 import 'font-awesome/css/font-awesome.css';

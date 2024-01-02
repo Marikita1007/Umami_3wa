@@ -123,10 +123,16 @@ class Recipes
      */
     private Collection $photos;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="recipe")
+     */
+    private Collection $comments;
+
     public function __construct()
     {
         $this->ingredients = new ArrayCollection();
         $this->photos = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function __toString()
@@ -376,6 +382,36 @@ class Recipes
             // set the owning side to null (unless already changed)
             if ($photo->getRecipes() === $this) {
                 $photo->setRecipes(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Comments>
+     */
+    public function getComment(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comments $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comments $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getRecipe() === $this) {
+                $comment->setRecipe(null);
             }
         }
 
