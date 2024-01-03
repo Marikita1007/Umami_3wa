@@ -50,12 +50,12 @@ class Photos
         return $this;
     }
 
-    public function getRecipes(): ?Recipes
+    public function getRecipe(): ?Recipes
     {
         return $this->recipe;
     }
 
-    public function setRecipes(?Recipes $recipe): self
+    public function setRecipe(?Recipes $recipe): self
     {
         $this->recipe = $recipe;
 

@@ -117,7 +117,7 @@ class RecipesController extends AbstractController
             $entityManager->persist($comments);
             $entityManager->flush();
 
-//            TODO MARIKA FIX THIS and make sure that it appears while AJAX call
+            //TODO MARIKA FIX THIS and make sure that it appears while AJAX call
             $this->addFlash('success', 'Your comment is registered.');
 
             // Include the comment content in the response
@@ -427,7 +427,7 @@ class RecipesController extends AbstractController
         PhotosRepository $photosRepository): Response
     {
         $photoId = $photosRepository->find($imageId);
-        if ($photoId && $photoId->getrecipes() === $recipe)
+        if ($photoId && $photoId->getRecipe() === $recipe)
         {
             $entityManager->remove($photoId);
             $entityManager->flush();

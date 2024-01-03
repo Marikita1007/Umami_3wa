@@ -370,7 +370,7 @@ class Recipes
         if (!$this->photos->contains($photo)) {
 //            $this->photos[] = $photo;
             $this->photos->add($photo);
-            $photo->setRecipes($this);
+            $photo->setRecipe($this);
         }
 
         return $this;
@@ -380,8 +380,8 @@ class Recipes
     {
         if ($this->photos->removeElement($photo)) {
             // set the owning side to null (unless already changed)
-            if ($photo->getRecipes() === $this) {
-                $photo->setRecipes(null);
+            if ($photo->getRecipe() === $this) {
+                $photo->setRecipe(null);
             }
         }
 
