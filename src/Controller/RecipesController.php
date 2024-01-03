@@ -65,8 +65,12 @@ class RecipesController extends AbstractController
         $perPage = $request->query->getInt('perPage', 10); // Default display count: 10
 
         // Get the current user and search the database for recipes related to that user.
-        $recipes = $recipesRepository->findBy(['user' => $this->getUser()], [], $perPage, ($page - 1) * $perPage);
-
+        $recipes = $recipesRepository->findBy(
+            ['user' => $this->getUser()],
+            ['created_at' => 'ASC'], // Order by creation date in descending order
+            $perPage,
+            ($page - 1) * $perPage
+        );
         // Determine if there is a next page
         $hasNextPage = count($recipesRepository->findBy(['user' => $this->getUser()], [], 1, $page * $perPage)) > 0;
 
@@ -113,6 +117,7 @@ class RecipesController extends AbstractController
             $entityManager->persist($comments);
             $entityManager->flush();
 
+//            TODO MARIKA FIX THIS and make sure that it appears while AJAX call
             $this->addFlash('success', 'Your comment is registered.');
 
             // Include the comment content in the response

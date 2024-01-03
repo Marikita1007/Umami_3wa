@@ -1,5 +1,3 @@
-console.log('This is comments js updated');
-
 // The parent <div> of the comment content
 const comment_parent = document.getElementById('comment-parent')
 

@@ -1,4 +1,3 @@
-
 $(document).ready(function(){
     jQuery('.add-another-collection-widget').click(function (e) {
         let list = jQuery(jQuery(this).attr('data-list-selector'));
