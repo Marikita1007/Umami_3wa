@@ -2,9 +2,11 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Comments;
 use App\Entity\Cuisines;
 use App\Entity\Difficulty;
 use App\Entity\Ingredients;
+use App\Entity\Photos;
 use App\Entity\Recipes;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
@@ -82,14 +84,14 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::LinkToCrud('Recipes', 'fa-solid fa-utensils', Recipes::class);
         yield MenuItem::LinkToCrud('Cuisines', 'fa-solid fa-earth-americas', Cuisines::class);
         yield MenuItem::LinkToCrud('Difficulties', 'fa-solid fa-ranking-star', Difficulty::class);
-//        yield MenuItem::LinkToCrud('Photos', 'fas fa-camera', Photos::class); TODO MARIKA Add this entity
+        yield MenuItem::LinkToCrud('Photos', 'fas fa-camera', Photos::class);
         yield MenuItem::LinkToCrud('Ingredients', 'fa-solid fa-bowl-food', Ingredients::class);
         yield MenuItem::LinkToCrud('User References', 'fas fa-user', User::class);
-//        yield MenuItem::LinkToCrud('Comments References', 'fas fa-comment', Comments::class); TODO MARIKA Add this entity
+        yield MenuItem::LinkToCrud('Comments References', 'fas fa-comment', Comments::class);
         yield MenuItem::LinkToUrl('Homepage', 'fas fa-home', $this->generateUrl('home'));
     }
 
-    //This method allowed us to have a Show page option button on dashboard
+    //This method allowed us to have a "Show (details)" page option button on dashboard
     public function configureActions(): Actions
     {
         return parent::configureActions()

@@ -21,9 +21,9 @@ Encore
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
     .addEntry('app', './assets/app.js')
-    .addEntry('recipes-ingredients-form', './assets/js/recipes-ingredients-form.js')
-    .addEntry('cuisines-form-ajax', './assets/js/cuisines-form-ajax.js')
-    .addEntry('comments', './assets/js/comments.js')
+    .addEntry('recipes-ingredients-form', './public/js/recipes-ingredients-form.js')
+    .addEntry('cuisines-form-ajax', './public/js/cuisines-form-ajax.js')
+    .addEntry('comments', './public/js/comments.js')
 
     // Added scss files
     .addStyleEntry('base-styles', './assets/styles/base.scss')
