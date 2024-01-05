@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Categories;
 use App\Entity\Cuisines;
 use App\Entity\Difficulty;
 use App\Entity\Recipes;
@@ -66,6 +67,16 @@ class RecipesType extends AbstractType
                 'placeholder' => 'Select a Cuisine',
                 'choice_label' => 'name', // Display the 'name' property of the Cuisine entity
                 'help' => 'Choose Cuisine of your recipe. Leave it blank if if you can\'t find your Cuisine Country.' ,
+            ])
+            ->add('category', EntityType::class, [
+                'class' => Categories::class,
+                'placeholder' => 'Select Categories',
+                'choice_label' => 'name',
+                'multiple' => true, // Allow multiple selections
+                'expanded' => true, // Render as checkboxes (optional, depending on your UI preference)
+                'required' => false, // Make it optional if needed
+                'by_reference' => false, // Set to false to handle updates properly
+                'help' => 'Choose Categories for your recipe.',
             ])
             ->add('photos', CollectionType::class,[
                 'entry_type' => PhotosType::class,

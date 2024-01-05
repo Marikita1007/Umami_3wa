@@ -1,54 +1,3 @@
-{#{% extends 'base.html.twig' %}#}
-
-{#{% block body %}#}
-{#    <section>#}
-{#        <!-- Left Sidebar for Filters -->#}
-{#        <div class="">#}
-{#            <h2>Search Products by All Filters</h2>#}
-
-{#            {{ form_start(formFilterSearch) }}#}
-{#            {{ form_row(formFilterSearch.word) }}#}
-{#            <button type="submit" class="custom-button-wide">Search</button>#}
-{#            {{ form_end(formFilterSearch) }}#}
-
-{#            {{ form_start(formCategories) }}#}
-{#            {{ form_row(formCategories.name) }}#}
-{#            <button type="submit" class="custom-button-wide">Search</button>#}
-{#            {{ form_end(formCategories) }}#}
-
-{#        </div>#}
-
-{#        <!-- Right Content for Recipes -->#}
-{#        <div class="">#}
-{#            <h1 class="">Recipes Search Results</h1>#}
-
-{#            {% if recipesByWord is defined %}#}
-{#                {% for recipe in recipesByWord %}#}
-{#                    <div class="card-container">#}
-{#                        <h3 class="">{{ recipe.name }}</h3>#}
-{#                        <p class="">Description : {{ recipe.description }}</p>#}
-{#                        <p class="">Created Time : {{ recipe.createdAt|date('Y-m-d H:i:s') }}</p>#}
-{#                        <p class="">Updated Time : {{ recipe.updatedAt|date('Y-m-d H:i:s') }}</p>#}
-{#                    </div>#}
-{#                {% endfor %}#}
-{#            {% endif %}#}
-
-{#            {% if recipesByCategory is defined %}#}
-{#                {% for recipe in recipesByCategory %}#}
-{#                    <div class="">#}
-{#                        <div class="card-container">#}
-{#                            <h3 class="">{{ recipe.name }}</h3>#}
-{#                            <p class="">Description :{{ recipe.description }}</p>#}
-{#                            <p class="">Created Time : {{ recipe.createdAt|date('Y-m-d H:i:s') }}</p>#}
-{#                            <p class="">Updated Time : {{ recipe.updatedAt|date('Y-m-d H:i:s') }}</p>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                {% endfor %}#}
-{#            {% endif %}#}
-{#        </div>#}
-{#    </section>#}
-{#{% endblock %}#}
-
 {% extends 'base.html.twig' %}
 
 {% block body %}
@@ -62,10 +11,16 @@
             <button type="submit" class="custom-button-wide">Search</button>
             {{ form_end(formFilterSearch) }}
 
+            {{ form_start(formCuisines) }}
+            {{ form_row(formCuisines.name) }}
+            <button type="submit" class="custom-button-wide">Search</button>
+            {{ form_end(formCuisines) }}
+
             {{ form_start(formCategories) }}
             {{ form_row(formCategories.name) }}
-            <button type="submit" class="custom-button-wide">Search</button>
+            <button type="submit" class="custom-button-wide">Search bobo</button>
             {{ form_end(formCategories) }}
+
         </div>
 
         <!-- Right Content for Recipes -->
@@ -96,10 +51,10 @@
                         {% endfor %}
                     </ul>
                 </div>
-            {% elseif recipesByCategory is defined and recipesByCategory|length > 0 %}
+            {% elseif recipesByCuisine is defined and recipesByCuisine|length > 0 %}
                 <div class="flex-content">
                     <ul class="card-container" role="list">
-                        {% for recipe in recipesByCategory %}
+                        {% for recipe in recipesByCuisine %}
                             <li class="card" role="listitem">
                                 <a href="{{ path('show_recipe', {id: recipe.id}) }}">
                                     <figure>

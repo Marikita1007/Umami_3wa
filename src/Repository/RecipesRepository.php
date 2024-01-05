@@ -22,7 +22,7 @@ class RecipesRepository extends ServiceEntityRepository
         parent::__construct($registry, Recipes::class);
     }
 
-    public function findByCategory(Cuisines $cuisine)
+    public function findByCuisine(Cuisines $cuisine)
     {
         return $this
             ->createQueryBuilder('r')

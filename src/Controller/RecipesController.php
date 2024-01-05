@@ -7,11 +7,13 @@ use App\Entity\Ingredients;
 use App\Entity\Photos;
 use App\Entity\Recipes;
 use App\Entity\User;
+use App\Form\CategoriesType;
 use App\Form\CommentsType;
 use App\Form\CuisinesType;
 use App\Form\FilterSearchType;
 use App\Form\IngredientRecipeType;
 use App\Form\RecipesType;
+use App\Repository\CategoriesRepository;
 use App\Repository\CommentsRepository;
 use App\Repository\IngredientsRepository;
 use App\Repository\PhotosRepository;
@@ -96,7 +98,7 @@ class RecipesController extends AbstractController
         int $id,
         Request $request,
         EntityManagerInterface $entityManager,
-        CommentsRepository $commentsRepository
+        CommentsRepository $commentsRepository,
     ): Response
     {
         //Add comments to the recipe
@@ -106,7 +108,6 @@ class RecipesController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
-
             // Set the user for the comment
             $comments->setUser($this->getUser());
 
@@ -135,6 +136,7 @@ class RecipesController extends AbstractController
             'form' => $form->createView(),
             // Fetch comments with associated user information
             'comments' => $commentsRepository->findBy(['recipe' => $recipe], ['datetime' => 'ASC']),
+            'categories' => $recipe->getCategory(), // Fetch categories associated with the recipe
         ]);
     }
 
@@ -361,17 +363,33 @@ class RecipesController extends AbstractController
         $formFilterSearch = $this->createForm(FilterSearchType::class);
         $formFilterSearch->handleRequest($request);
 
-        $formCategories = $this->createForm(CuisinesType::class);
+        $formCuisines = $this->createForm(CuisinesType::class);
+        $formCuisines->handleRequest($request);
+
+        $formCategories = $this->createForm(CategoriesType::class);
         $formCategories->handleRequest($request);
 
         if ($formFilterSearch->isSubmitted() && $formFilterSearch->isValid()){
             $data = $formFilterSearch->getData();
             $word = $data['word'];
 
-            $category = $formCategories->get('name')->getData();
+            $category = $formCuisines->get('name')->getData();
 
             return $this->render('recipes/recipes_filters.html.twig', [
                 'recipesByWord' => $recipesRepository->getByName($word),
+                'formFilterSearch' => $formFilterSearch->createView(),
+                'formCuisines' => $formCuisines->createView(),
+                'formCategories' => $formCategories->createView(),
+            ]);
+        }
+
+        if ($formCuisines->isSubmitted() && $formCuisines->isSubmitted() ){
+            $data = $formCuisines->getData();
+            $category = $formCuisines->get('name')->getData();
+
+            return $this->render('recipes/recipes_filters.html.twig', [
+                'recipesByCuisine' => $recipesRepository->findByCuisine($category),
+                'formCuisines' => $formCuisines->createView(),
                 'formFilterSearch' => $formFilterSearch->createView(),
                 'formCategories' => $formCategories->createView(),
             ]);
@@ -382,7 +400,7 @@ class RecipesController extends AbstractController
             $category = $formCategories->get('name')->getData();
 
             return $this->render('recipes/recipes_filters.html.twig', [
-                'recipesByCategory' => $recipesRepository->findByCategory($category),
+                'formCuisines' => $formCuisines->createView(),
                 'formCategories' => $formCategories->createView(),
                 'formFilterSearch' => $formFilterSearch->createView(),
             ]);
@@ -391,6 +409,7 @@ class RecipesController extends AbstractController
         return $this->render('recipes/recipes_filters.html.twig', [
             'recipes' => $recipesRepository->findAll(),
             'formFilterSearch' => $formFilterSearch->createView(),
+            'formCuisines' => $formCuisines->createView(),
             'formCategories' => $formCategories->createView(),
         ]);
     }
