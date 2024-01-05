@@ -2,47 +2,60 @@
 
 body[data-route="recipe-form"] {
 
-  h1 {
-    margin-bottom: 10px;
-    text-align: center;
-  }
-
   form {
-    max-width: 700px;
-    margin: 0 auto;
-    padding: 20px;
     background-color: $umami-blue;
     border: 1px solid $umami-grey-light;
     border-radius: 5px;
+    margin: 0 auto;
+    max-width: 700px;
+    padding: 20px;
+
+    @media (max-width: 768px) {
+      max-width: 100%;
+    }
+
+    input, select, textarea {
+      border: 1px solid $umami-grey-light;
+      border-radius: 5px;
+      margin: 8px 0;
+      padding: 10px;
+      width: 100%;
+      background-color: $umami-white;
+      font-size: 16px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
 
     li {
       list-style: none;
     }
 
-    input, select, textarea {
-      width: 100%;
-      padding: 10px;
-      margin: 8px 0;
-      border: 1px solid $umami-grey-light;
-      border-radius: 5px;
+    .form-check {
+      align-items: center;
+      display: flex;
     }
 
-    input[type="text"], select, textarea {
-      font-size: 16px;
-      background-color: $umami-white;
+    /* Style for the checkbox list */
+    .form-group {
+      display: flex;
+      flex-wrap: wrap;
     }
 
-    label {
-      display: block; /* Ensure labels are on their own line */
-      font-weight: bold; /* Make labels bold for emphasis */
-      margin-bottom: 5px; /* Space between labels */
-    }
-
-    @media (max-width: 768px) {
-      max-width: 100%;
+    /* Style for the checkbox list */
+    input[type="checkbox"] {
+      margin-right: 5px;
+      max-width: 10px;
     }
   }
 
+  h1 {
+    margin-bottom: 10px;
+    text-align: center;
+  }
 }
 
 /* Constraint Error messages */

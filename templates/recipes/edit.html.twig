@@ -18,6 +18,7 @@
     {{ form_row(form.recipe.calories) }}
     {{ form_row(form.recipe.difficulty) }}
     {{ form_row(form.recipe.cuisine) }}
+    {{ form_row(form.recipe.category) }}
 
     <ul id="ingredient-fields-list"
         data-prototype="{{ form_widget(form.ingredients.vars.prototype)|e }}"

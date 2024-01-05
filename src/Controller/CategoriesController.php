@@ -9,6 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 // Import the SpoonacularReceipesAPIController for API calls.
 use App\Controller\SpoonacularReceipesAPIController;
 
+//TODO MARIKA If I don't use Spooncular, delete this !!!!!
 class CategoriesController extends AbstractController
 {
     // Dependency injection: Inject the SpoonacularReceipesAPIController into the controller.
@@ -16,7 +17,7 @@ class CategoriesController extends AbstractController
 
     public function __construct(SpoonacularReceipesAPIController $receipesAPIController)
     {
-        // Initialize the API controller through dependency injection.
+        // MARIKA TODO Think If I use Soonacular or not Initialize the API controller through dependency injection.
         $this->receipesAPIController = $receipesAPIController;
     }
 

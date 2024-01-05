@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Categories;
 use App\Entity\Comments;
 use App\Entity\Cuisines;
 use App\Entity\Difficulty;
@@ -83,6 +84,7 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::LinkToCrud('Recipes', 'fa-solid fa-utensils', Recipes::class);
         yield MenuItem::LinkToCrud('Cuisines', 'fa-solid fa-earth-americas', Cuisines::class);
+        yield MenuItem::LinkToCrud('Categories', 'fa-solid fa-list', Categories::class);
         yield MenuItem::LinkToCrud('Difficulties', 'fa-solid fa-ranking-star', Difficulty::class);
         yield MenuItem::LinkToCrud('Photos', 'fas fa-camera', Photos::class);
         yield MenuItem::LinkToCrud('Ingredients', 'fa-solid fa-bowl-food', Ingredients::class);

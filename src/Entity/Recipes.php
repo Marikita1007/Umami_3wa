@@ -128,11 +128,19 @@ class Recipes
      */
     private Collection $comments;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Categories::class, mappedBy="recipe")
+     */
+    private $category;
+
+
+
     public function __construct()
     {
         $this->ingredients = new ArrayCollection();
         $this->photos = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->category = new ArrayCollection();
     }
 
     public function __toString()
@@ -417,5 +425,34 @@ class Recipes
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Categories>
+     */
+    public function getCategory(): Collection
+    {
+        return $this->category;
+    }
+
+    public function addCategory(Categories $category): self
+    {
+        if (!$this->category->contains($category)) {
+            $this->category[] = $category;
+            $category->addRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Categories $category): self
+    {
+        if ($this->category->removeElement($category)) {
+            $category->removeRecipe($this);
+        }
+
+        return $this;
+    }
+
+
 
 }

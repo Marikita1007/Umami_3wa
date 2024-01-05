@@ -32,8 +32,8 @@ class RecipesCrudController extends AbstractCrudController
         return [
             IdField::new('id')
                 ->onlyOnIndex(),
-            TextField::new('name'),
-            ImageField::new('image', 'Image')
+            TextField::new('name', 'Name'),
+            ImageField::new('image', 'Thumbnail Image')
                 ->setBasePath('/uploads/images') // Base path when displaying images
                 ->setUploadDir('public/uploads/images'), // upload directory
             TextareaField::new('description', 'Description')
@@ -42,22 +42,29 @@ class RecipesCrudController extends AbstractCrudController
             TextareaField::new('instructions', 'Instructions')
                 ->renderAsHtml()
                 ->hideOnIndex(),
-            IntegerField::new('prep_time'),
-            IntegerField::new('servings')
+            IntegerField::new('prep_time', 'Preparation Time')
                 ->hideOnIndex(),
-            IntegerField::new('cook_time')
+            IntegerField::new('servings', 'Servings')
                 ->hideOnIndex(),
-            IntegerField::new('calories')
+            IntegerField::new('cook_time', 'Cooking Time'),
+            IntegerField::new('calories', 'Calories')
                 ->hideOnIndex(),
             DateTimeField::new('createdAt')
                 ->hideOnForm(),
             DateTimeField::new('updatedAt')//TODO MARIKA THIS updated at need to be updated autolatically
                 ->hideOnForm(),
-            AssociationField::new('cuisine')
+            AssociationField::new('cuisine', 'Cuisine')
                 ->autocomplete(),
-            AssociationField::new('difficulty')
+            // Use AssociationField for the ManyToMany relationship with Categories
+            AssociationField::new('category', 'Categories')
+                ->setRequired(true) // Adjust as needed
+                ->autocomplete() // Use autocomplete for a better user experience
+                ->setFormTypeOptions([
+                    'by_reference' => false, // Set to false to handle updates properly
+                ]),
+            AssociationField::new('difficulty', 'Difficulty of cooking')
                 ->autocomplete(),
-            AssociationField::new('user'),
+            AssociationField::new('user', 'Recipe Created User'),
         ];
     }
 }
