@@ -103,12 +103,6 @@ class Recipes
     private $difficulty;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     */
-    private $user;
-
-    /**
      * @ORM\OneToMany(targetEntity=Ingredients::class, mappedBy="recipe", orphanRemoval=true)
      */
     private $ingredients;
@@ -133,7 +127,11 @@ class Recipes
      */
     private $category;
 
-
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="recipes")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="SET NULL")
+     */
+    private $user;
 
     public function __construct()
     {
@@ -452,7 +450,5 @@ class Recipes
 
         return $this;
     }
-
-
 
 }

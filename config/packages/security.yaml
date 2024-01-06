@@ -1,4 +1,5 @@
 security:
+
     # https://symfonycasts.com/screencast/symfony-security/auth-errors#play MARIKA : Use it for Dossier Projet
     hide_user_not_found: false
     enable_authenticator_manager: true

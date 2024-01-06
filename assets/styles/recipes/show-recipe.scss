@@ -38,10 +38,10 @@ body[data-route="show_recipes"] {
       img {
         background-color: blue;
         flex-basis: 33.33333%; // Display 3 photos in a row.
-        height: auto; /* Maintain aspect ratio */
+        height: 100%; /* Keep the height of images */
         margin: 0.5rem; /* Add some margin between images */
-        max-width: 30%; /* Ensure images don't exceed their container width */
-        object-fit: cover; /* Ensure the entire container is covered, preserving aspect ratio */
+        max-width: 150px; /* Adjust the pixel value as needed */
+        object-fit: contain; /* Ensure the entire container is contained, preserving aspect ratio */
       }
     }
   }

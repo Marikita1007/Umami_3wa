@@ -25,11 +25,4 @@ class DifficultyCrudController extends AbstractCrudController
             TextField::new('name'),
         ];
     }
-
-    //This method overrides default method and do not show the Show derails button
-    public function configureActions(Actions $actions): Actions
-    {
-        return parent::configureActions($actions)
-            ->disable(Action::DETAIL);
-    }
 }

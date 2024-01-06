@@ -68,13 +68,6 @@ class UserCrudController extends AbstractCrudController
         return $fields;
     }
 
-    //This method overrides default method and do not show the Show derails button
-    public function configureActions(Actions $actions): Actions
-    {
-        return parent::configureActions($actions)
-            ->disable(Action::DETAIL);
-    }
-
     public function createNewFormBuilder(EntityDto $entityDto, KeyValueStore $formOptions, AdminContext $context): FormBuilderInterface
     {
         $formBuilder = parent::createNewFormBuilder($entityDto, $formOptions, $context);
