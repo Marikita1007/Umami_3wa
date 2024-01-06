@@ -53,13 +53,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $isVerified = false;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="user", cascade={"remove"})
      */
     private $comments;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Recipes::class, mappedBy="user")
+     */
+    private $recipes;
 
     public function __construct() {
         $this->roles = ['ROLE_USER'];
         $this->comments = new ArrayCollection();
+        $this->recipes = new ArrayCollection();
     }
 
     public function __toString()
@@ -233,6 +239,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($comment->getUser() === $this) {
                 $comment->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Recipes>
+     */
+    public function getRecipes(): Collection
+    {
+        return $this->recipes;
+    }
+
+    public function addRecipe(Recipes $recipe): self
+    {
+        if (!$this->recipes->contains($recipe)) {
+            $this->recipes[] = $recipe;
+            $recipe->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecipe(Recipes $recipe): self
+    {
+        if ($this->recipes->removeElement($recipe)) {
+            // set the owning side to null (unless already changed)
+            if ($recipe->getUser() === $this) {
+                $recipe->setUser(null);
             }
         }
 

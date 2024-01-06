@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Cuisines;
 use App\Entity\Recipes;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -44,6 +45,19 @@ class RecipesRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    public function findUserRecipes($user): array
+    {
+        return $this
+            ->createQueryBuilder('r')
+            ->andWhere('r.user = :user')
+            ->setParameter('user', $user)
+            ->orderBy('u.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
 
 //    /**
 //     * @return Recipes[] Returns an array of Recipes objects

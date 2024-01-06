@@ -19,7 +19,7 @@ class UserType extends AbstractType
     {
         $builder
             ->add('username', TextType::class,[
-                'label' => 'username',
+                'label' => 'Username',
                 'disabled' => true, //Users can't change username once it's chosen. TODO MARIKA Write warning on registration page
             ])
             ->addEventListener(FormEvents::PRE_SET_DATA, [$this, 'preFillUsername'])
@@ -27,18 +27,6 @@ class UserType extends AbstractType
                 'label' => 'Email',
             ])
             ->addEventListener(FormEvents::PRE_SET_DATA, [$this, 'preFillEmail'])
-            //TODO MARIKA For the security, create passwordtype form
-//            ->add('password', RepeatedType::class,[
-//                'type' => PasswordType::class,
-//                'first_options' => [
-//                    'label' => 'New password',
-////                    'hash_property_path' => 'password' TODO MARIKA This option attr is available from symfony 6.2
-//                ],
-//                'second_options' => [
-//                    'label' => 'Insert new password again',
-//                ],
-//                'mapped' => false
-//            ])
         ;
     }
 
