@@ -15,6 +15,7 @@ use App\Form\IngredientRecipeType;
 use App\Form\RecipesType;
 use App\Repository\CategoriesRepository;
 use App\Repository\CommentsRepository;
+use App\Repository\CuisinesRepository;
 use App\Repository\IngredientsRepository;
 use App\Repository\PhotosRepository;
 use App\Repository\RecipesRepository;
@@ -35,6 +36,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
  * Controller used to manage recipes contents in the public site.
@@ -88,6 +90,66 @@ class RecipesController extends AbstractController
         ]);
     }
 
+
+    /**
+     * Display a single recipe from The Meal DB API based on its unique identifier.
+     */
+    #[Route("/show-the-meal-db-recipe-details/{idMeal}", name: "show_the_meal_db_recipe", requirements: ['idMeal' => '\d+'], methods: ["GET", "POST"])]
+    public function showTheMealDbRecipeDetails(
+        int $idMeal,
+        Request $request,
+        TheMealDbAPIController $theMealDbAPIController,
+        CommentsRepository $commentsRepository,
+        HttpClientInterface $client): Response
+    {
+        $theMealdetails = $theMealDbAPIController->showCuisineDetails($idMeal, $client);
+        $decodedTheMealDbData = json_decode($theMealdetails->getContent(), true);
+
+        // Access to strCategory to get category of current meal from the Meal DB API
+        // Call sameCategoriesRecipe method to get the same category recipe from the meal DB API
+        $sameCategoryRecipes = $theMealDbAPIController->sameCategoryRecipes($decodedTheMealDbData['meals'][0]['strCategory']);
+
+        // Retrieve The Meal DB data id and convert it to int
+        $theMealDbId = (int)$decodedTheMealDbData['meals'][0]['idMeal'];
+
+        // Add comments to the recipe
+        $comments = new Comments();
+
+        $form = $this->createForm(CommentsType::class, $comments);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            // Set the user for the comment
+            $comments->setUser($this->getUser());
+
+            // Set the recipe for the comment (you may need to adjust this based on the API)
+            $comments->setTheMealDbId($theMealDbId);
+
+            // Persist the comment to your local database
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($comments);
+            $entityManager->flush();
+
+            // Include the comment content in the response
+            return new JsonResponse([
+                'success' => true,
+                'content' => $comments->getContent(),
+                'commentUsername' => $comments->getUser()->getUsername(),
+                'datetime' => $comments->getDatetime()->format('F j, Y'),
+                'flashMessage' => 'Your comment is registered.', //Json response containing the success flash message
+            ]);
+        }
+        return $this->render('recipes/the_meal_db_api/show_recipe.html.twig', [
+            'decodedTheMealDbData' => $decodedTheMealDbData,
+            'sameCategoryRecipes' => $sameCategoryRecipes,
+            'form' => $form->createView(),
+            // Fetch comments with associated The Meal DB id information
+            'comments' => $commentsRepository->findBy(['theMealDbId' => $theMealDbId], ['datetime' => 'ASC']),
+            'theMealDbId' => $theMealDbId,
+        ]);
+    }
+
     /**
      * Display a single recipe based on its unique identifier.
      */
@@ -99,7 +161,7 @@ class RecipesController extends AbstractController
         Request $request,
         EntityManagerInterface $entityManager,
         CommentsRepository $commentsRepository,
-    ): Response
+        RecipesRepository $recipesRepository ): Response
     {
         //Add comments to the recipe
         $comments = new Comments();
@@ -118,9 +180,6 @@ class RecipesController extends AbstractController
             $entityManager->persist($comments);
             $entityManager->flush();
 
-            //TODO MARIKA FIX THIS and make sure that it appears while AJAX call
-            $this->addFlash('success', 'Your comment is registered.');
-
             // Include the comment content in the response
             return new JsonResponse([
                 'success' => true,
@@ -137,6 +196,7 @@ class RecipesController extends AbstractController
             // Fetch comments with associated user information
             'comments' => $commentsRepository->findBy(['recipe' => $recipe], ['datetime' => 'ASC']),
             'categories' => $recipe->getCategory(), // Fetch categories associated with the recipe
+            'sameCategoriesRecipes' => $recipesRepository->getSameCategoriesRecipes($recipe->getCategory(), $recipe->getId()),
         ]);
     }
 
@@ -284,6 +344,7 @@ class RecipesController extends AbstractController
     {
 
         // TODO MARIKA アクセス権限の確認: ユーザーが作成したレシピであるか、またはROLE_ADMIN権限を持っているか確認
+        // TODO Marika Do I need this ?
         $this->denyAccessUnlessGranted('EDIT', $recipe);
 
         $ingredients = $ingredientsRepository->findBy(['recipe' => $recipe]);
@@ -357,7 +418,10 @@ class RecipesController extends AbstractController
     #[Route('/recipes_all_filters', name: 'app_recipes_all_filters', methods: ['GET', 'POST'])]
     public function searchRecipesByFilters(
         RecipesRepository $recipesRepository,
-        Request $request
+        CategoriesRepository $categoriesRepository,
+        Request $request,
+        TheMealDbAPIController $theMealDbAPIController,
+        HttpClientInterface $client,
     ): Response
     {
         $formFilterSearch = $this->createForm(FilterSearchType::class);
@@ -369,40 +433,92 @@ class RecipesController extends AbstractController
         $formCategories = $this->createForm(CategoriesType::class);
         $formCategories->handleRequest($request);
 
+        $cuisineId = $request->query->get('cuisineId');
+
+        // Response from the TheMealDbAPIController
+        $theMealDbRecipeResponse = $theMealDbAPIController->gettheMealDbRandomRecipes();
+
+        // Decode the JSON content
+        $theMealDbRecipeData = json_decode($theMealDbRecipeResponse->getContent(), true);
+
+
         if ($formFilterSearch->isSubmitted() && $formFilterSearch->isValid()){
             $data = $formFilterSearch->getData();
             $word = $data['word'];
 
+            // Check the number of letter and if it's a letter check call The Meal DB API search by a letter endpoint
+            if (strlen($word) === 1) {
+                $theMealDbMealsByLetter = $theMealDbAPIController->getTheMealDbMealsByLetter($word);
+            }
+
             $category = $formCuisines->get('name')->getData();
 
             return $this->render('recipes/recipes_filters.html.twig', [
-                'recipesByWord' => $recipesRepository->getByName($word),
+                'recipesByWord' => $recipesRepository->getByWord($word),
                 'formFilterSearch' => $formFilterSearch->createView(),
                 'formCuisines' => $formCuisines->createView(),
                 'formCategories' => $formCategories->createView(),
+                'recipesByCuisine' => $recipesRepository->findByCuisineId($cuisineId),
+                // Response from The MealDB API.
+                'theMealDbMealsByLetter' => $theMealDbMealsByLetter,
             ]);
         }
 
-        if ($formCuisines->isSubmitted() && $formCuisines->isSubmitted() ){
+        if ($formCuisines->isSubmitted() && $formCuisines->isValid()){
+
             $data = $formCuisines->getData();
-            $category = $formCuisines->get('name')->getData();
+            $cuisine = $formCuisines->get('name')->getData();
+
+            $sameCuisineMeals = $theMealDbAPIController->getSameCuisineMeals($cuisine->getName());
 
             return $this->render('recipes/recipes_filters.html.twig', [
-                'recipesByCuisine' => $recipesRepository->findByCuisine($category),
+                'recipesByCuisine' => $recipesRepository->findByCuisine($cuisine),
                 'formCuisines' => $formCuisines->createView(),
                 'formFilterSearch' => $formFilterSearch->createView(),
                 'formCategories' => $formCategories->createView(),
+                'theMealDbMealsByCuisine' => $sameCuisineMeals ?: [],
             ]);
         }
 
-        if ($formCategories->isSubmitted() && $formCategories->isSubmitted() ){
+        if ($formCategories->isSubmitted() && $formCategories->isValid()){
+
             $data = $formCategories->getData();
             $category = $formCategories->get('name')->getData();
+            $cuisine = $formCuisines->get('name')->getData();
+
+            $sameCategoryMeals = $theMealDbAPIController->getSameCategoryMeals($category->getName());
+
+            //TODO This is not priority so if there is no time, delete this code !!!!
+//            TODO MARIKA This verify the same category names
+//            $theMealDBCategories = $theMealDbAPIController->getAllCategories();
+//
+//            if ($theMealDBCategories) {
+//                $allCategories = $categoriesRepository->findAll();
+//
+//                $localCategoryNames = array_map(function ($category) {
+//                    return $category->getName();
+//                }, $allCategories);
+//
+//
+//                $apiCategoryNames = array_map(function ($theMealDBCategories) {
+//                    return $theMealDBCategories['strCategory'];
+//                }, $theMealDBCategories['categories']);
+//
+//
+//                // TODO MARIKA Check What I can do with the same name category !!!! This returns three categories for now
+//                // It contains the names of categories that exist both locally and in The Meal DB API.
+//                $commonCategoryNames = array_intersect($localCategoryNames, $apiCategoryNames);
+//
+//            }
 
             return $this->render('recipes/recipes_filters.html.twig', [
+                'recipesByCategories' => $recipesRepository->findByCategories($category),
                 'formCuisines' => $formCuisines->createView(),
                 'formCategories' => $formCategories->createView(),
                 'formFilterSearch' => $formFilterSearch->createView(),
+                'recipesByCuisineId' => $recipesRepository->findByCuisineId($cuisineId),
+                'recipesByCuisine' => $cuisine ? $recipesRepository->findByCuisine($cuisine) : [],
+                'theMealDbMealsByCategory' => $sameCategoryMeals ?: [],
             ]);
         }
 
@@ -411,31 +527,9 @@ class RecipesController extends AbstractController
             'formFilterSearch' => $formFilterSearch->createView(),
             'formCuisines' => $formCuisines->createView(),
             'formCategories' => $formCategories->createView(),
+            'recipesByCuisine' => $recipesRepository->findByCuisineId($cuisineId),
+            'theMealDbRecipe' => $theMealDbRecipeData,
         ]);
-    }
-
-    private function saveImage(UploadedFile $imageFile, SluggerInterface $slugger, $recipe)
-    {
-        // Get the original file name and extension
-        $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-        $fileExtension = $imageFile->getClientOriginalExtension();
-
-        // Generate a unique name for the file
-        $newFilename = $originalFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
-
-        // Move the file to the desired directory (you can configure this)
-        try {
-            $imageFile->move(
-                $this->getParameter('recipe_image_directory'),
-                $newFilename
-            );
-        } catch (FileException $e) {
-            throw new NotFoundHttpException('An error occurred while uploading the file.');
-        }
-
-        // Update the 'image' property of your entity to store the file name
-        // instead of its contents
-        $recipe->setImage($newFilename);
     }
 
     #[Route('/recipe/{id}/delete-photo/{imageId}', name: 'app_delete_photo_recipe', methods: ['GET', 'POST'])]
@@ -479,7 +573,30 @@ class RecipesController extends AbstractController
 //        return new JsonResponse(['error' => 'Invalid Token'], 400);
     }
 
-    //TODO MARIKA Use this method on CRUD new Photos too
+    private function saveImage(UploadedFile $imageFile, SluggerInterface $slugger, $recipe)
+    {
+        // Get the original file name and extension
+        $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+        $fileExtension = $imageFile->getClientOriginalExtension();
+
+        // Generate a unique name for the file
+        $newFilename = $originalFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+
+        // Move the file to the desired directory (you can configure this)
+        try {
+            $imageFile->move(
+                $this->getParameter('recipe_image_directory'),
+                $newFilename
+            );
+        } catch (FileException $e) {
+            throw new NotFoundHttpException('An error occurred while uploading the file.');
+        }
+
+        // Update the 'image' property of your entity to store the file name
+        // instead of its contents
+        $recipe->setImage($newFilename);
+    }
+
     // Private method to add extra photos
     private function addExtraPhotos(array $images, Recipes $recipe): void
     {
@@ -488,8 +605,6 @@ class RecipesController extends AbstractController
             $image_new = $image['name'];
             $new_photo = $this->simpleUploadService->uploadImage($image_new);
             $new_photos->setName($new_photo);
-            // Set the bidirectional association
-//            $new_photos->setRecipes($recipe);
             $recipe->addPhoto($new_photos);
         }
     }

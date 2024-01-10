@@ -6,19 +6,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpClient\HttpClient;
 //use Symfony\Component\HttpFoundation\JsonResponse;
 //use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\Routing\Annotation\Route;
-//MARIKA TODO Delete non used uses !!
-//use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
-//use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
-//use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
-//use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
-//use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use App\TestData\ApiDataStorage;
 
-#[Route("/api", name: "api_",methods: ["GET"])]
+
+// TODO MARIKA Delete this If I don't use this API !!!!!
+#[Route("/api-spoonacular", name: "api_",methods: ["GET"])]
 class SpoonacularReceipesAPIController extends AbstractController
 {
     private $spoonacularApiKey;
@@ -74,11 +71,9 @@ class SpoonacularReceipesAPIController extends AbstractController
         }
     }
 
-//    TODO MARIKA cHECK IF THIS ROUTING UPDATE WORKS OR NOT BECAUSE UPDATED ONE IS SENDING {cuisine} 10122023
     #[Route("/get_cuisine_categories/{cuisine}", name: "get_cuisine_categories", methods: ["GET"])]
     public function getCuisineCategories($cuisine)
     {
-        //TODO MARIKA $cuisine needs to come from Cuisine Entity
         // Make an API request to get cuisine categories from Spoonacular.
         $apiEndpoint = 'https://api.spoonacular.com/recipes/complexSearch';
 
@@ -106,6 +101,32 @@ class SpoonacularReceipesAPIController extends AbstractController
         } catch (HttpExceptionInterface $e) {
             // HTTP error handling
             return $this->json(['error' => 'An error occurred'], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    #[Route("/show_cuisine_detail/{id}", name: "show_cuisine_detail", methods: ["GET"])]
+    public function showCuisineDetails($id, HttpClientInterface $client): JsonResponse
+    {
+        $apiEndpoint = "https://api.spoonacular.com/recipes/{$id}/information";
+
+        try {
+            $response = $client->request('GET', $apiEndpoint, [
+                'query' => [
+                    'apiKey' => $this->getParameter('spoonacular_api_key'),
+                ],
+            ]);
+
+            // Check the HTTP status code and handle responses accordingly.
+            if ($response->getStatusCode() === Response::HTTP_OK) {
+                return new JsonResponse($response->toArray());
+            } elseif ($response->getStatusCode() === Response::HTTP_PAYMENT_REQUIRED) {
+                return new JsonResponse(['error' => 'Payment Required'], Response::HTTP_PAYMENT_REQUIRED);
+            } else {
+                return new JsonResponse(['error' => 'HTTP error'], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+        } catch (HttpExceptionInterface $e) {
+            // HTTP error handling
+            return new JsonResponse(['error' => 'An error occurred'], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 

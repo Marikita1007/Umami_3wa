@@ -1,0 +1,266 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recipes{% endblock %}
+
+{% block body %}
+
+
+    {% if decodedTheMealDbData is not empty and decodedTheMealDbData.meals is defined %}
+
+
+        <section class="row-recipe">
+            <div class="leftcolumn">
+                <div class="card-box">
+                    <h3>About Recipe</h3>
+                    <ul>
+                        {% if decodedTheMealDbData.meals[0].strCategory is not empty %}
+                            <p>Category : {{ decodedTheMealDbData.meals[0].strCategory }}</p>
+                        {% endif %}
+
+                        {% if decodedTheMealDbData.meals[0].strArea is not empty %}
+                            <p>Cuisine : {{ decodedTheMealDbData.meals[0].strArea }}</p>
+                        {% endif %}
+                    </ul>
+                </div>
+                <article class="card-box">
+                    <h3>Ingredients</h3>
+                    <ul>
+                        {% for i in 1..20 %}
+                            {% set ingredientKey = 'strIngredient' ~ i %}
+                            {% set measureKey = 'strMeasure' ~ i %}
+
+                            {% if decodedTheMealDbData.meals[0][ingredientKey] is not empty and decodedTheMealDbData.meals[0][measureKey] is not empty %}
+                                <li>{{ decodedTheMealDbData.meals[0][ingredientKey] }} : {{ decodedTheMealDbData.meals[0][measureKey] }}</li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </article>
+                {% if sameCategoryRecipes is not empty %}
+                    <article class="recommendation-recipes">
+                        <h3>You may also like</h3>
+                        {% for meal in sameCategoryRecipes.meals %}
+                            <a href="{{ path('show_the_meal_db_recipe', {idMeal: meal.idMeal}) }}">
+                                <h4>{{ meal.strMeal }}</h4>
+                                <img src="{{ asset(meal.strMealThumb) }}" alt="{{ meal.strMeal }}">
+                            </a>
+                        {% endfor %}
+                    </article>
+                {% endif %}
+            </div>
+            <div class="rightcolumn">
+                <div class="card-box">
+                    <h2>{{ decodedTheMealDbData.meals[0].strMeal }}</h2>
+                    <img class="recipe-img" src="{{ decodedTheMealDbData.meals[0].strMealThumb }}" alt="{{ decodedTheMealDbData.meals[0].strMeal }}">
+
+                    <h3>Instructions</h3>
+                    <p>{{ decodedTheMealDbData.meals[0].strInstructions }}</p>
+                </div>
+            </div>
+        </section>
+
+    {% endif %}
+
+    {#    <section class="row-recipe">#}
+    {#        <div class="leftcolumn">#}
+    {#            <div class="card-box">#}
+    {#                <h3>About Recipe</h3>#}
+    {#                <ul>#}
+    {#                    {% if theMealDbRecipeDetails.strCategory is not empty %}#}
+    {#                        <p>Category : {{ theMealDbRecipeDetails.strCategory }}</p>#}
+    {#                    {% endif %}#}
+
+    {#                    {% if theMealDbRecipeDetails.strArea is not empty %}#}
+    {#                        <p>Cuisine : {{ theMealDbRecipeDetails.strArea }}</p>#}
+    {#                    {% endif %}#}
+    {#                </ul>#}
+    {#            </div>#}
+    {#            <article class="card-box">#}
+    {#                {% if ingredientsDetails is not empty %}#}
+    {#                    <h3>Ingredients</h3>#}
+    {#                    {% for ingredient in ingredientsDetails %}#}
+    {#                        {% if ingredient.ingredient is not empty and ingredient.measure is not empty %}#}
+    {#                            <p>{{ ingredient.ingredient }} : {{ ingredient.measure }}</p>#}
+    {#                        {% endif %}#}
+    {#                    {% endfor %}#}
+    {#                {% endif %}#}
+    {#            </article>#}
+    {#            {% if sameCategoryRecipes is not empty %}#}
+    {#                <article class="recommendation-recipes">#}
+    {#                    <h3>You may also like</h3>#}
+    {#                    {% for meal in sameCategoryRecipes.meals %}#}
+    {#                        <a href="{{ path('show_the_meal_db_recipe', {idMeal: meal.idMeal}) }}">#}
+    {#                            <h4>{{ meal.strMeal }}</h4>#}
+    {#                            <img src="{{ asset(meal.strMealThumb) }}" alt="{{ meal.strMeal }}">#}
+    {#                        </a>#}
+    {#                    {% endfor %}#}
+    {#                </article>#}
+    {#            {% endif %}#}
+    {#        </div>#}
+    {#        <div class="rightcolumn">#}
+    {#            <div class="card-box">#}
+    {#                <h2>{{ theMealDbRecipeDetails.strMeal }}</h2>#}
+    {#                <img class="recipe-img" src="{{ theMealDbRecipeDetails.strMealThumb }}" alt="{{ theMealDbRecipeDetails.strMeal }}">#}
+
+    {#                <h3>Instructions</h3>#}
+    {#                <p>{{ theMealDbRecipeDetails.strInstructions }}</p>#}
+
+    {#            </div>#}
+    {#        </div>#}
+    {#    </section>#}
+
+
+        <section class="comment-section">
+            <h2>Comments</h2>
+
+            {% if is_granted('ROLE_USER') %}
+                {{ form_start(form, {'attr' : {'class': 'comments'}, 'action': path('show_the_meal_db_recipe', {'idMeal' : theMealDbId}), 'method' : 'POST'}) }}
+                {{ form_row(form.content) }}
+                {{ form_row(form._token) }}
+                <button class="custom-button-wide" type="submit">Add a comment</button>
+                {{ form_end(form) }}
+            {% else %}
+                 Display a message or other content for non-authenticated users
+                <p>Please log in to leave a comment.</p>
+            {% endif %}
+
+            <div id="comment-parent">
+                {% for comment in comments %}
+                    {% if comment.getUser() is not null and comment.getUser() is defined %}
+                        <div class="comment-container">
+                            <h4>Name: {{ comment.getUser().getUsername() }}</h4>
+                            <p class="posted-info">Posted on {{ comment.datetime|date("F j, Y") }}</p>
+                            <p>{{ comment.content }}</p>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </section>
+
+{#        <script>#}
+{#            console.log('Coucou the-meal-db-api.js');#}
+
+{#            // Check if recipe details are stored in local storage#}
+{#            var storedRecipeDetails = localStorage.getItem('recipeDetails_{{ theMealDbRecipeDetails.idMeal }}');#}
+
+{#            // If not, make an API request and store the details in local storage#}
+{#            if (!storedRecipeDetails) {#}
+{#                fetch('/show-the-meal-db-recipe-details/{{ theMealDbRecipeDetails.idMeal }}')#}
+{#                    .then(response => response.json())#}
+{#                    .then(data => {#}
+{#                        // Store the recipe details in local storage#}
+{#                        localStorage.setItem('recipeDetails_{{ theMealDbRecipeDetails.idMeal }}', JSON.stringify(data));#}
+{#                    });#}
+{#            }#}
+{#        </script>#}
+
+
+
+
+
+
+
+    {#    <p id="category"></p>#}
+    {#    <p id="cuisine"></p>#}
+
+{#    <script>#}
+
+        {#// Check if recipe details are stored in local storage#}
+        {#var storedRecipeDetails = localStorage.getItem('recipeDetails_{{ theMealDbRecipeDetails.idMeal }}');#}
+
+        {#// If not, make an API request and store the details in local storage#}
+        {#if (!storedRecipeDetails) {#}
+        {#    fetch('/show-the-meal-db-recipe-details/{{ theMealDbRecipeDetails.idMeal }}')#}
+        {#        .then(response => response.json())#}
+        {#        .then(data => {#}
+        {#            // Store the recipe details in local storage#}
+        {#            localStorage.setItem('recipeDetails_{{ theMealDbRecipeDetails.idMeal }}', JSON.stringify(data));#}
+
+        {#            // Now, make another API request for same category recipes#}
+        {#            fetch('/same-category-recipes/{{ theMealDbRecipeDetails.strCategory }}')#}
+        {#                .then(response => response.json())#}
+        {#                .then(sameCategoryData => {#}
+        {#                    // Update the DOM with the same category recipes#}
+        {#                    updateSameCategoryRecipes(sameCategoryData);#}
+        {#                });#}
+        {#        });#}
+        {#} else {#}
+        {#    // Recipe details are already in local storage, no need to make an API request#}
+        {#    // Make an API request for same category recipes#}
+        {#    fetch('/same-category-recipes/{{ theMealDbRecipeDetails.strCategory }}')#}
+        {#        .then(response => response.json())#}
+        {#        .then(sameCategoryData => {#}
+        {#            // Update the DOM with the same category recipes#}
+        {#            updateSameCategoryRecipes(sameCategoryData);#}
+        {#        });#}
+        {#}#}
+
+        {#function updateSameCategoryRecipes(sameCategoryData) {#}
+        {#    // Update the DOM with the same category recipes#}
+        {#    var sameCategoryRecipesElement = document.querySelector('.recommendation-recipes');#}
+
+        {#    if (sameCategoryData && sameCategoryData.meals) {#}
+        {#        sameCategoryRecipesElement.innerHTML = '<h3>You may also like</h3>';#}
+
+        {#        sameCategoryData.meals.forEach(function (meal) {#}
+        {#            var recipeLink = document.createElement('a');#}
+        {#            recipeLink.setAttribute('href', '/show-the-meal-db-recipe-details/' + meal.idMeal);#}
+
+        {#            var recipeTitle = document.createElement('h4');#}
+        {#            recipeTitle.textContent = meal.strMeal;#}
+
+        {#            var recipeImage = document.createElement('img');#}
+        {#            recipeImage.setAttribute('src', '{{ asset(meal.strMealThumb) }}');#}
+        {#            recipeImage.setAttribute('alt', meal.strMeal);#}
+
+        {#            recipeLink.appendChild(recipeTitle);#}
+        {#            recipeLink.appendChild(recipeImage);#}
+
+        {#            sameCategoryRecipesElement.appendChild(recipeLink);#}
+        {#        });#}
+        {#    }#}
+        {#}#}
+
+
+{#        // Get the recipe ID from the URL#}
+{#        // const recipeId = window.location.pathname.split('/').pop();#}
+{#        //#}
+{#        // // Check if recipe details are stored in local storage#}
+{#        // var storedRecipeDetails = localStorage.getItem(`recipeDetails_${recipeId}`);#}
+{#        //#}
+{#        // // If not, make an API request and store the details in local storage#}
+{#        // if (!storedRecipeDetails) {#}
+{#        //     fetch(`/show-the-meal-db-recipe-details/${recipeId}`)#}
+{#        //         .then(response => response.json())#}
+{#        //         .then(data => {#}
+{#        //             // Store the recipe details in local storage#}
+{#        //             localStorage.setItem(`recipeDetails_${recipeId}`, JSON.stringify(data));#}
+{#        //#}
+{#        //             // Update the DOM with the recipe details#}
+{#        //             updateRecipeDetails(data);#}
+{#        //         });#}
+{#        // } else {#}
+{#        //     // If details are already in local storage, update the DOM#}
+{#        //     updateRecipeDetails(JSON.parse(storedRecipeDetails));#}
+{#        // }#}
+{#        //#}
+{#        // function updateRecipeDetails(recipeDetails) {#}
+{#        //     // Your logic to update the DOM with recipe details#}
+{#        //     console.log('Recipe Details:', recipeDetails);#}
+{#        //#}
+{#        //     // Example: Update the category and cuisine in the DOM#}
+{#        //     document.getElementById('category').innerText = `Category: ${recipeDetails.strCategory}`;#}
+{#        //     document.getElementById('cuisine').innerText = `Cuisine: ${recipeDetails.strArea}`;#}
+{#        //#}
+{#        //     // Add more logic to update other parts of the DOM as needed#}
+{#        // }#}
+
+{#    </script>#}
+
+{#    <script src="{{ asset('js/the-meal-db-api.js') }}" type="application/javascript"></script>/#}
+    <script src="{{ asset('js/comments.js') }}" type="application/javascript"></script>
+{% endblock %}
+
+{# Set route-data for scss #}
+{% set pageRoute = 'show_recipes' %}
+
+

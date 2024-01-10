@@ -14,11 +14,8 @@ class FilterSearchType extends AbstractType
     {
         $builder
             ->add('word', SearchType::class,[
-                'label' => "Search Recipes by word"
+                'label' => "Search Recipes by word or a letter",
             ])
-//            ->add('submit', SubmitType::class,[
-//                'label' => 'Search',
-//            ])
         ;
     }
 

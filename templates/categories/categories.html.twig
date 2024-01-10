@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
+{# TODO MARIKA DELETE THIS twig if it's not used #}
 
+{#  TODO MARIKA change card to custom card if it's used #}
 {% block body %}
-    MARIKAAAAAAAAAAAAAAAA
-{#　MARIKA categories-section のcssを加える。 #}
     <section class="categories-section">
         <div  class="container-small">
             <article  class="block block-last">
@@ -16,15 +16,16 @@
                 {% for key, recipe in getCuisineCategories.results|batch(3) %}
                     <div class="recipe-row">
                         {% for item in recipe %}
-                            <article class="recipe-card m-2">
+                            <article class="recipe-card">
                                 {% if item.image is defined %}
+                                <a href="{{ spoonaCularURL }}" target="_blank">
                                     <img src="{{ item.image }}" alt="{{ item.title }}">
+                                </a>
                                 {% else %}
                                     <img src="{{ asset('images/no-image.png') }}" alt="No Food Image Available">
                                 {% endif %}
                                 <div class="recipe-card-body">
                                     <h3 class="recipe-card-title">{{ item.title }}</h3>
-                                    <!-- Add any additional recipe information here -->
                                 </div>
                             </article>
                         {% endfor %}

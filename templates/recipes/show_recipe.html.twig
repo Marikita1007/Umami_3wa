@@ -5,11 +5,11 @@
 {% block body %}
     <section class="row-recipe">
         <div class="leftcolumn">
-            <div class="card">
+            <div class="card-box">
                 <h3>About Recipe</h3>
-                <p>Preparation Time : {{ recipe.prepTime }}</p>
-                <p>Servings : {{ recipe.servings }}</p>
-                <p>Cook Time: {{ recipe.cookTime }}</p>
+                <p>Preparation Time : {{ recipe.prepTime }} minutes</p>
+                <p>Servings : {{ recipe.servings }} people</p>
+                <p>Cook Time: {{ recipe.cookTime }} minutes</p>
                 {% if recipe.calories is not empty %}
                     <p>Calories: {{ recipe.calories }}</p>
                 {% endif %}
@@ -19,7 +19,7 @@
                     <p>Cuisine: {{ recipe.cuisine }}</p>
                 {% endif %}
 
-                {% if categories is not empty %}
+                {% if categories is not empty%}
                     <p>Categories:</p>
                     <ul>
                         {% for category in categories %}
@@ -27,27 +27,43 @@
                         {% endfor %}
                     </ul>
                 {% endif %}
+
+                {# if user land the page from searchRecipesByFilters and $formCategories  #}
+                {% if recipesByCategories is defined %}
+                    <p>Categories:</p>
+                    <ul>
+                        {% for category in recipesByCategories %}
+                            <li>{{ category.name }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
             </div>
-            <div class="card">
+            <article class="card-box">
                 <h3>Ingredients</h3>
-                {% for ingredient in recipe.ingredients %}
-                    <p>{{ ingredient.name }} : {{ ingredient.amount }}</p>
-                {% endfor %}
-            </div>
-            <div class="card">
-                <h3>You maybe also like</h3>
-                {#  TODO MARIKA Show semilar recipes #}
-                <div class="fakeimg">Image</div>
-                <div class="fakeimg">Image</div>
-                <div class="fakeimg">Image</div>
-            </div>
+                <ul>
+                    {% for ingredient in recipe.ingredients %}
+                        <li>{{ ingredient.name }} : {{ ingredient.amount }}</li>
+                    {% endfor %}
+                </ul>
+            </article>
+            {% if sameCategoriesRecipes is defined %}
+                <article class="recommendation-recipes">
+                    <h3>You maybe also like</h3>
+                    {% for sameCategoriesRecipe in sameCategoriesRecipes %}
+                        <a href="{{ path('show_recipe', {'id': sameCategoriesRecipe.id}) }}">
+                            <h4>{{ sameCategoriesRecipe.name }}</h4>
+                            <img src="{{ asset('uploads/images/' ~ sameCategoriesRecipe.image) }}" alt="{{ sameCategoriesRecipe.name }}">
+                        </a>
+                    {% endfor %}
+                </article>
+            {% endif %}
         </div>
         <div class="rightcolumn">
             {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN') %}
                 <a href="{{ path('list_recipes') }}" class="return-list-button">Back to list</a>
             {% endif %}
 
-            <div class="card">
+            <div class="card-box">
                 <h2>{{ recipe.name }}</h2>
                 <h5>{{ recipe.description }}</h5>
                 <time> <i class="fa fa-calendar"></i> {{ recipe.createdAt ? recipe.createdAt|date('Y-m-d H:i:s') : (recipe.updatedAt ? recipe.updatedAt|date('Y-m-d H:i:s') : '') }}</time>

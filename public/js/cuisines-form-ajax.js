@@ -118,7 +118,7 @@ function storeCuisine()
         data: data,
         success: function(response) {
             $("#js-save-cuisine-button").prop('disabled', false);
-            let successHtml = '<div class="alert-success-message" role="alert"><b>New Cuisine Name Created Successfully</b></div>';
+            let successHtml = '<div class="alert-success-message" role="alert">New Cuisine Name Created Successfully</div>';
             $("#alert-div").html(successHtml);
             $("#name").val("");
             showAllCuisines();

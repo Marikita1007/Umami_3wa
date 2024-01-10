@@ -1,9 +1,11 @@
 @import '../base';
+@import '../components/card';
 
 body[data-route="recipes_filters"] {
 
   .flex-container {
     display: flex;
+    flex-wrap: wrap;
 
     .left-sidebar {
       flex: 0 0 25%;
@@ -21,27 +23,15 @@ body[data-route="recipes_filters"] {
     }
 
     .right-content {
-      flex: 1;
-      padding: 1.25em;
       box-sizing: border-box;
+      flex: 1;
+      margin: 0 auto;
+      max-width: 960px;
+      padding: 1.25em;
 
       h1 {
         text-align: center;
-      }
-
-      /* Apply styles for the card container */
-      .card-container {
-        display: flex;
-        flex-wrap: wrap; /* Allow cards to wrap to the next row */
-        justify-content: center;
-        gap: 1.25em; /* Add spacing between cards */
-
-        /* Set a flex-basis or width for each card */
-        .card {
-          flex: 0 0 calc(28% - 1.25em); /* Three cards in a row with 20px gap */
-          min-width: 18em; /* Minimum width for each card */
-          margin-bottom: 1.25em; /* Add spacing between card containers */
-        }
+        font-weight: bold;
       }
     }
 
@@ -57,19 +47,6 @@ body[data-route="recipes_filters"] {
       .left-sidebar, .right-content {
         flex: 1;
         order: initial; /* Reset the order for larger screens */
-
-        .card-container {
-          display: flex;
-          flex-wrap: nowrap;
-          gap: 0.5em; /* Add spacing between cards */
-
-          /* Set a flex-basis or width for each card */
-          .card {
-            flex: 0; /* Cards don't have unnecessary margin on bottom */
-            min-width: 15em; /* Minimum width for each card */
-            margin-bottom: 1.25em; /* Add spacing between card containers */
-          }
-        }
       }
     }
   }

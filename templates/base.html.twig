@@ -56,6 +56,13 @@
             {% for flash in app.flashes('warning') %}
                 <div class="alert-warning-message alert-flash">{{ flash }}</div>
             {% endfor %}
+
+            <div id="flash-message-container">
+                {% for flashMessage in app.flashes('success') %}
+                    <div class="alert-success-message alert-flash">{{ flashMessage }}</div>
+                {% endfor %}
+            </div>
+
             {% block body %}
             {% endblock %}
         </main>

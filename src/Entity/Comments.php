@@ -39,6 +39,11 @@ class Comments
      */
     private $user;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $theMealDbId;
+
     public function __construct()
     {
         $this->datetime = new \DateTimeImmutable();
@@ -93,6 +98,18 @@ class Comments
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getTheMealDbId(): ?int
+    {
+        return $this->theMealDbId ;
+    }
+
+    public function setTheMealDbId(?int $theMealDbId ): self
+    {
+        $this->theMealDbId  = $theMealDbId ;
 
         return $this;
     }

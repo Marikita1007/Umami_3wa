@@ -2,10 +2,12 @@
 
 namespace App\Repository;
 
+use App\Entity\Categories;
 use App\Entity\Cuisines;
 use App\Entity\Recipes;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -35,7 +37,19 @@ class RecipesRepository extends ServiceEntityRepository
         ;
     }
 
-    public function getByName(string $word)
+    public function findByCategories(Categories $category)
+    {
+        return $this
+            ->createQueryBuilder('r')
+            ->join('r.category', 'c')
+            ->where('c.name = :cuisineName')
+            ->setParameter('cuisineName', $category->getName())
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function getByWord(string $word)
     {
         return $this
             ->createQueryBuilder('r')
@@ -55,9 +69,61 @@ class RecipesRepository extends ServiceEntityRepository
             ->orderBy('u.id', 'ASC')
             ->getQuery()
             ->getResult()
-            ;
+        ;
     }
 
+    public function findByCuisineId($cuisineId): array
+    {
+        return $this
+            ->createQueryBuilder('r')
+            ->andWhere('r.cuisine = :cuisine')
+            ->setParameter('cuisine', $cuisineId)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @return recipes[] Returns an array of random 4 cuisines objects
+     */
+    public function differentCuisines(): array
+    {
+        // Native SQL query to select random rows from 'cuisines' table
+        $sql  = 'SELECT r.*, RAND() as rand
+                    FROM recipes r
+                    LEFT JOIN cuisines c ON c.id = r.cuisine_id
+                    GROUP BY r.id
+                    ORDER BY rand
+                    LIMIT 4';
+
+        // Create a ResultSetMapping (RSM) to map the result set to entities
+        $rsm = new ResultSetMapping();
+
+        // Add the main entity (Cuisines) to the ResultSetMapping
+        $rsm->addEntityResult($this->_entityName, 'c');
+
+        // Add field mappings for the 'id' field
+        $rsm->addFieldResult('c', 'id', 'id');
+
+        // Create a native query using EntityManager's createNativeQuery method
+        $query = $this->getEntityManager()->createNativeQuery($sql, $rsm);
+
+        // Execute the query and return the result
+        return $query->getResult();
+    }
+
+    public function getSameCategoriesRecipes($recipeCategories, $recipeId): array
+    {
+        $queryBuilder = $this->createQueryBuilder('r')
+            ->where(':categories MEMBER OF r.category')
+            ->setParameter('categories', $recipeCategories)
+            ->andWhere('r.id != :recipeId')
+            ->setParameter('recipeId', $recipeId)
+            ->orderBy('r.created_at', 'DESC') // Order by created_at in descending order
+            ->setMaxResults(3);
+
+        return $queryBuilder->getQuery()->getResult();
+    }
 
 //    /**
 //     * @return Recipes[] Returns an array of Recipes objects

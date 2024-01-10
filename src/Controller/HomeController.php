@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Repository\CuisinesRepository;
+use App\Repository\RecipesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,11 +20,11 @@ class HomeController extends AbstractController
     }
 
     #[Route("/", name: "home")]
-    public function index(): Response
+    public function index(CuisinesRepository $cuisinesRepository, RecipesRepository $recipesRepository): Response
     {
         $category = '';
 
-        $getSpoonacularRandomRecipes = $this->spoonacularReceipesAPIController->getSpoonacularRandomRecipes();
+//        $getSpoonacularRandomRecipes = $this->spoonacularReceipesAPIController->getSpoonacularRandomRecipes();
         $getCuisineCategories = $this->spoonacularReceipesAPIController->getCuisineCategories($category);
         $getRecipes = $this->recipesController->showRecipes(); // Call function to show recipes from database
 
@@ -31,9 +33,11 @@ class HomeController extends AbstractController
 
         return $this->render('home/home.html.twig', [
             'controller_name' => 'HomeController',
-            'jsonDataSpoonacular' => $getSpoonacularRandomRecipes,
+//            'jsonDataSpoonacular' => $getSpoonacularRandomRecipes,
             'getCuisineCategories' => $getCuisineCategories,
-            'sixRecipes' => $sixRecipes
+            'sixRecipes' => $sixRecipes,
+            'topSevenCuisines' => $cuisinesRepository->findTopSevenCuisines(),
+            'differentCuisines' => $recipesRepository->differentCuisines(),
         ]);
     }
 }

@@ -12,7 +12,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 #[IsGranted("ROLE_ADMIN")]
 class CuisinesController extends AbstractController
 {
-
     #[Route("/cuisines", name: "cuisines", methods: ["GET"])]
     public function index(): Response
     {
@@ -109,6 +108,4 @@ class CuisinesController extends AbstractController
 
         return $this->json('Deleted a cuisines successfully with id ' . $id);
     }
-
-
 }
