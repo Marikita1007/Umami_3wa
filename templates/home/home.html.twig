@@ -5,70 +5,38 @@
         <div class="container-small">
             <article class="block block-last">
                 <div class="block-body">
-                    <h2 class="title">Popular Categories</h2>
+                    <h2 class="title">Popular Cuisines</h2>
                 </div>
             </article>
-            {#  TODO MARIKA Show Categories of Cuisine from our database           #}
-            {% if getCuisineCategories is defined %}
+            {% if topSevenCuisines is not empty %}
                 <nav class="ingredients-menu">
-                    <a href="{{ path('show_categories', {'cuisine': 'Italian'}) }}">Italian</a>
-                    <a href="{{ path('show_categories', {'cuisine': 'American'}) }}">American</a>
-                    <a href="{{ path('show_categories', {'cuisine': 'African'}) }}">African</a>
-                    <a href="{{ path('show_categories', {'cuisine': 'Japanese'}) }}">Japanese</a>
-                    <a href="{{ path('show_categories', {'cuisine': 'French'}) }}">French</a>
-                    <a href="{{ path('show_categories', {'cuisine': 'Greek'}) }}">Greek</a>
-                    <a href="{{ path('show_categories', {'cuisine': 'Mexican'}) }}">Mexican</a>
+                    {% for cuisine in topSevenCuisines %}
+                        <a href="{{ path('app_recipes_all_filters', {'cuisineId': cuisine.id}) }}">{{ cuisine.name }}</a>
+                    {% endfor %}
                 </nav>
             {% endif %}
         </div>
-        <div class="container">
-            <div class="menu-summary" id="menu">
-                <article  class="menu-summary-item">
-                    <img src="{{ asset('images/crusted-chicken-square.jpg') }}" alt="" class="menu-summary-img">
-                    <h3 class="menu-summary-title">Amazing Crusted Chicken</h3>
-                    <p>Beryl Cook is one of Britain’s most talented and amusing artists .Beryl’s pictures feature women of all shapes and sizes enjoying themselves </p>
-                    <div class="menu-summary-price">$20</div>
-                </article >
-                <article class="menu-summary-item">
-                    <img src="{{ asset('images/bobun-light-square.jpg') }}" alt="" class="menu-summary-img">
-                    <h3 class="menu-summary-title">BoBun Light Odd</h3>
-                    <p>Beryl Cook is one of Britain’s most talented and amusing artists .Beryl’s pictures feature women of all shapes and sizes enjoying themselves </p>
-                    <div class="menu-summary-price">$20</div>
-                </article>
-                <article class="menu-summary-item">
-                    <img src="{{ asset('images/poisson-square.jpg') }}" alt="" class="menu-summary-img">
-                    <h3 class="menu-summary-title">Amazing Crusted Chicken</h3>
-                    <p>Beryl Cook is one of Britain’s most talented and amusing artists .Beryl’s pictures feature women of all shapes and sizes enjoying themselves </p>
-                    <div class="menu-summary-price">$20</div>
-                </article>
-                <article class="menu-summary-item">
-                    <img src="{{ asset('images/paella-square.jpg') }}" alt="" class="menu-summary-img">
-                    <h3 class="menu-summary-title">Spicy Egg Paella</h3>
-                    <p>Beryl Cook is one of Britain’s most talented and amusing artists .Beryl’s pictures feature women of all shapes and sizes enjoying themselves </p>
-                    <div class="menu-summary-price">$20</div>
-                </article>
+        {%  if differentCuisines is not empty %}
+            <div class="container">
+                <div class="menu-summary" id="menu">
+                    {% for differentCuisine in differentCuisines %}
+                        <article class="menu-summary-item">
+                            <img src="{{ asset('uploads/images/' ~ differentCuisine.image) }}" alt="{{ differentCuisine.name }}" class="menu-summary-img">
+                            <h3 class="menu-summary-title">{{ differentCuisine.name }}</h3>
+                            <p>{{ differentCuisine.description }}</p>
+                            <div class="menu-summary-infos">{{ differentCuisine.cuisine }}</div>
+                        </article>
+                    {% endfor %}
+                </div>
             </div>
-            {#  MARIKA  Once the data is inside database#}
-            {#                <div class="container">#}
-            {#                    <div class="menu-summary" id="menu">#}
-            {#                        {% for item in menuItems %}#}
-            {#                            <div class="menu-summary-item">#}
-            {#                                <img src="{{ item.image }}" alt="" class="menu-summary-img">#}
-            {#                                <h3 class="menu-summary-title">{{ item.title }}</h3>#}
-            {#                                <p>{{ item.description }}</p>#}
-            {#                                <div class="menu-summary-price">${{ item.price }}</div>#}
-            {#                            </div>#}
-            {#                        {% endfor %}#}
-            {#                    </div>#}
-            {#                </div>#}
-        </div>
+        {% endif %}
     </section>
 
     <section class="home-section">
         <div  class="container-small">
             <article  class="block block-last">
                 <div class="block-body">
-                    <h2 class="title">This week specials</h2>
+                    <h2 class="title">Top Picks: Delectable Recipes</h2>
                 </div>
             </article>
         </div>
@@ -78,7 +46,7 @@
                 <img src="{{ asset('images/burger.jpg') }}" alt="Delicious burger">
             </div>
             <div class="block-body">
-                <h2 class="title"><span>Discover</span> our gastronomy</h2>
+                <h2 class="title"><span>Discover</span> our top recipes</h2>
                 <p>
                     Attending a trade show can be a very effective method of promoting your company and its products. And one of the most effective ways to optimize your trade show display and increase traffic to your booth is through the use of banner stands.
                 </p>
@@ -90,7 +58,7 @@
                 <img src="{{ asset('images/crusted-chicken.jpg') }}" alt="Delicious crusted chicken">
             </div>
             <div class="block-body">
-                <h2 class="title"><span>Discover</span> our gastronomy</h2>
+                <h2 class="title"><span>Discover</span> our top recipes</h2>
                 <p>
                     Attending a trade show can be a very effective method of promoting your company and its products. And one of the most effective ways to optimize your trade show display and increase traffic to your booth is through the use of banner stands.
                 </p>
@@ -134,7 +102,6 @@
                     <h2 class="title">Menu Inspirations</h2>
                 </header>
             </article>
-        </div>
 
         {# TODO MARIKA Delete this if it's not used #}
         {% if jsonDataSpoonacular is defined and jsonDataSpoonacular.recipes is defined %}
@@ -143,7 +110,7 @@
                         </div></div><div class="container"><div class="row">
                     {% endif %}
                 {% endfor %}
-                <figure class="card">
+                <figure class="custom-card">
                     <div class="card-container">
                         {% if recipe.image is defined %}
                             <img src="{{ recipe.image }}" alt="{{ recipe.title }}">
@@ -158,7 +125,7 @@
             <div class="container-small flex-content">
                 <ul class="card-container" role="list">
                     {% for recipe in sixRecipes %}
-                        <li class="card" role="listitem">
+                        <li class="custom-card" role="listitem">
                             <a href="{{ path('show_recipe', {id: recipe.id}) }}">
                                 <figure>
                                     {% if recipe.image %}
@@ -167,9 +134,7 @@
                                         <i class="fa-solid fa-eye-slash fa-2xl" aria-label="No image available"></i>
                                     {% endif %}
                                     <figcaption>
-                                        <h4>
-                                            <b>{{ recipe.name }}</b>
-                                        </h4>
+                                        <h4>{{ recipe.name }}</h4>
                                         <p>{{ recipe.description|slice(0, 50) }}...<a href="{{ path('show_recipe', {id: recipe.id}) }}"><b>See More</b></a></p>
                                     </figcaption>
                                 </figure>

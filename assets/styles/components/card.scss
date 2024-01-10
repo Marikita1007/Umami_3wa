@@ -5,31 +5,40 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+}
 
-  .card-container {
-    display: flex;
-    flex-wrap: nowrap;
-    list-style: none; /* Remove default bullets */
-    padding: 0; /* Remove any default padding */
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none; /* Remove default bullets */
+  padding: 0; /* Remove any default padding */
+}
 
-    .card {
-      border-radius: 5px;
-      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-      margin: 10px; /* Add margin between cards */
-      transition: 0.3s;
-      width: 30%;
+.custom-card {
+  border-radius: 5px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  margin: 10px; /* Add margin between cards */
+  min-width: 230px;
+  overflow: hidden;
+  transition: 0.3s;
+  white-space: normal;
+  width: 30%;
+  word-wrap: break-word;
 
-      &:hover {
-        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-      }
+  &:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  }
 
-      img {
-        border-radius: 5px;
-        width: 100%;
-        height: 220px;
-        object-fit: fill; /* Maintain aspect ratio and crop to cover the container */
-      }
-    }
+  h4 {
+    font-weight: bold;
+    text-align: center;
+  }
+
+  img {
+    border-radius: 5px;
+    width: 100%;
+    height: 220px;
+    object-fit: fill; /* Maintain aspect ratio and crop to cover the container */
   }
 }
 
@@ -39,11 +48,11 @@
   .flex-content .card-container {
     align-items: center;
     flex-direction: column; /* Change to a vertical layout on small screens */
+  }
 
-    .card {
-      width: 80%; /* Occupy the full width of the container on small screens */
-      margin-bottom: 10px;
-    }
+  .custom-card {
+    width: 80%; /* Occupy the full width of the container on small screens */
+    margin-bottom: 10px;
   }
 }
 

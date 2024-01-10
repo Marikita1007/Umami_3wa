@@ -24,6 +24,7 @@ Encore
     .addEntry('recipes-ingredients-form', './public/js/recipes-ingredients-form.js')
     .addEntry('cuisines-form-ajax', './public/js/cuisines-form-ajax.js')
     .addEntry('comments', './public/js/comments.js')
+    .addEntry('the-meal-db-api', './public/js/the-meal-db-api.js')
 
     // Added scss files
     .addStyleEntry('base-styles', './assets/styles/base.scss')

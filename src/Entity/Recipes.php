@@ -72,6 +72,11 @@ class Recipes
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Regex(
+     *     pattern="/-/",
+     *     match=false,
+     *     message="The text cannot contain a minus."
+     * )
      */
     private $prep_time;
 

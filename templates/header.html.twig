@@ -7,7 +7,6 @@
         </div>
         <nav class="menu">
             <a href="{{ path('about_us') }}" class="menu-item">About Us</a>
-            <a href="{{ path('categories') }}" class="menu-item">Categories</a>
             <a href="#" class="menu-item">Contact</a>
             {% if is_granted('ROLE_ADMIN') %}
                 <a href="{{ path('admin_dashboard') }}" class="menu-item">Admin</a>

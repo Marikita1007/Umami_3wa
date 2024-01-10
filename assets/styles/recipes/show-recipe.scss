@@ -2,9 +2,20 @@
 
 body[data-route="show_recipes"] {
 
+  h2, h3 {
+    text-align: center;
+  }
+
+  p {
+    font-weight: bold;
+  }
+
   .row-recipe {
     display: flex;
     flex-wrap: wrap;
+    margin: 0 auto;
+    max-width: 1100px;
+    padding: 0 20px;
   }
 
   .rightcolumn {
@@ -18,25 +29,31 @@ body[data-route="show_recipes"] {
   }
 
   .recipe-img {
-    background-color: $umami-blue-dark;
     height: auto; /* Maintain aspect ratio */
+    max-width: 700px;
     object-fit: cover; /* Ensure the entire container is covered, preserving aspect ratio */
     padding: 20px;
     width: 100%;
   }
 
   /* Make the container flex and allow wrapping */
-  .card {
-    display: flex;
+  .card-box {
+    display: block;
     flex-wrap: wrap;
-    justify-content: space-between; /* Adjust as needed */
+    justify-content: space-between;
+    background-color: $umami-white;
+    padding: 20px;
+    margin-top: 20px;
+
+    ul {
+      padding-left: 0
+    }
 
     .extra-img-container {
       display: flex;
       flex-wrap: wrap;
 
       img {
-        background-color: blue;
         flex-basis: 33.33333%; // Display 3 photos in a row.
         height: 100%; /* Keep the height of images */
         margin: 0.5rem; /* Add some margin between images */
@@ -46,10 +63,19 @@ body[data-route="show_recipes"] {
     }
   }
 
-  .card {
+  .recommendation-recipes {
+
     background-color: $umami-white;
-    padding: 20px;
     margin-top: 20px;
+    padding: 20px;
+    text-align: center;
+
+    img {
+      border : 5px solid $umami-blue-dark;;
+      height: 100%; /* Keep the height of images */
+      max-width: 170px; /* Adjust the pixel value as needed */
+      object-fit: contain; /* Ensure the entire container is contained, preserving aspect ratio */
+    }
   }
 
   /* Carousel style */
@@ -135,7 +161,7 @@ body[data-route="show_recipes"] {
     background-color: $umami-white-background;
     border: 1px solid $umami-grey-light;
     border-radius: 8px;
-    margin: auto;
+    margin: 10px auto;
     max-width: 800px;
     padding: 20px;
 

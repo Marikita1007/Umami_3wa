@@ -10,26 +10,3 @@
 #get_cuisines:
 #  path: '/get_cuisines'
 #  controller: 'App\Controller\SpoonacularReceipesAPIController::showRecipesByCuisine'
-
-
-# TODO Check if I'm using this route if not delete them (The best practice is to use route annotations, but not this page to declaire the routes)
-#about_us:
-#  path: /about_us
-#  controller: App\Controller\AboutUsController::index
-#
-#get_cuisine_categories:
-#  path: /get_cuisine_categories/{cuisine}
-#  controller: App\Controller\YourController::getCuisineCategories
-#
-#categories:
-#  path: /categories
-#  controller: App\Controller\CategoriesController::index
-#
-#show_categories:
-#  path: /categories/{cuisine}
-#  controller: App\Controller\CategoriesController::show
-#
-#recipes_show:
-#  path: /recipes/show
-#  controller: App\Controller\RecipesController::showRecipes
-#  methods: ['GET']

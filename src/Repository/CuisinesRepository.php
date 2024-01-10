@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Cuisines;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -38,6 +39,19 @@ class CuisinesRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+    public function findTopSevenCuisines(): array
+    {
+        return $this->createQueryBuilder('c')
+            ->leftJoin('c.recipes', 'r')
+            ->groupBy('c.id')
+            ->orderBy('COUNT(r.id)', 'DESC')
+            ->setMaxResults(7)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 
 //    /**
 //     * @return cuisines[] Returns an array of cuisines objects
