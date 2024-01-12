@@ -1,12 +1,2 @@
-#MARIKA Not using this route yet
-#get_spoonacular_recipe:
-#  path: /api/get_spoonacular_recipe
-#  controller: App\Controller\RecipesAPIController::getSpoonacularRandomRecipe
+# config/routes.yaml
 
-#get_mealdb_recipe:
-#  path: /api/get_mealdb_recipe
-#  controller: App\Controller\RecipesAPIController::getTheMealDBRandomRecipe
-
-#get_cuisines:
-#  path: '/get_cuisines'
-#  controller: 'App\Controller\SpoonacularReceipesAPIController::showRecipesByCuisine'

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Comments;
+use App\Entity\Cuisines;
 use App\Entity\Ingredients;
 use App\Entity\Photos;
 use App\Entity\Recipes;
@@ -590,6 +591,14 @@ class RecipesController extends AbstractController
         // instead of its contents
         $recipe->setImage($newFilename);
     }
+
+    public function renderFooter(): Response
+    {
+        $cuisines = $this->getDoctrine()->getRepository(Cuisines::class)->findAll();
+
+        return $this->render('footer.html.twig', ['cuisines' => $cuisines]);
+    }
+
 
     // Private method to add extra photos
     private function addExtraPhotos(array $images, Recipes $recipe): void

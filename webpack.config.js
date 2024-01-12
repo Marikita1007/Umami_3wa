@@ -42,6 +42,7 @@ Encore
     .addStyleEntry('form-styles', './assets/styles/components/form.scss')
     .addStyleEntry('button-styles', './assets/styles/components/button.scss')
     .addStyleEntry('user-profile', './assets/styles/profiles/user_profile.scss')
+    .addStyleEntry('legal-pages','./assets/styles/legal-pages/legal-pages.scss')
 
     // Added bootstrap CSS
     .addStyleEntry('bootstrap-css', './node_modules/bootstrap/dist/css/bootstrap.css')

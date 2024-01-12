@@ -31,6 +31,8 @@ class HomeController extends AbstractController
         // Get only the first 6 recipes to pass to the template
         $sixRecipes = array_slice($getRecipes, 0, 6);
 
+
+
         return $this->render('home/home.html.twig', [
             'controller_name' => 'HomeController',
 //            'jsonDataSpoonacular' => $getSpoonacularRandomRecipes,
