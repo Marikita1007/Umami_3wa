@@ -160,14 +160,13 @@ class TheMealDbAPIController extends AbstractController
         }
     }
 
-
     /**
-     * Retrieve Meal from The MealDB API by a letter
+     * Retrieve Meals from The MealDB API by meal name
      */
-    public function getTheMealDbMealsByLetter($word)
+    public function getTheMealDbMealsByName($word)
     {
         // Make an API request to get cuisine categories from theMealDb.
-        $apiEndpoint = "https://www.themealdb.com/api/json/v1/1/search.php?f={$word}";
+        $apiEndpoint = "https://www.themealdb.com/api/json/v1/1/search.php?s={$word}";
 
         try {
             $client = HttpClient::create();

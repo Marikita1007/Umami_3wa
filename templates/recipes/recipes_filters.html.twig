@@ -26,11 +26,11 @@
         <div class="right-content">
             <h1>Recipes Search Results</h1>
 
-            {% if recipesByWord is defined and theMealDbMealsByLetter|length > 0 %}
+            {% if recipesByWord is defined and theMealDbMealsByName|length > 0 %}
                 <div class="flex-content">
                     <ul class="card-container" role="list">
-                        {% if theMealDbMealsByLetter is defined and theMealDbMealsByLetter|length > 0 %}
-                            {% for meal in theMealDbMealsByLetter.meals %}
+                        {% if theMealDbMealsByName is defined and theMealDbMealsByName|length > 0 %}
+                            {% for meal in theMealDbMealsByName.meals %}
                                 <li class="custom-card" role="listitem">
                                     <a href="{{ path('show_the_meal_db_recipe', {idMeal: meal.idMeal}) }}">
                                         <figure>
