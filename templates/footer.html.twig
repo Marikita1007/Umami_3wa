@@ -2,7 +2,9 @@
     <div class="container">
         <div class="footer-columns">
             <div class="footer-column">
-                <h3 class="footer-title">About Us</h3>
+                <a href="{{ path('home') }}" class="footer-title">
+                    <img src="{{ asset('images/umami-logos_white_half.png') }}" alt="Umami Logo">
+                </a>
                 <p>UMAMI: Where food lovers unite, sharing global recipes and passion for culinary excellence.</p>
             </div>
             <div class="footer-column">
@@ -14,14 +16,20 @@
                 </address>
             </div>
             <div class="footer-column">
-                <h3 class="footer-title">Recipes by Cuisines</h3>
-                <p>French</p>
-                <p>African</p>
-                <p>Mexican</p>
+                <h3 class="footer-title">About us</h3>
+                <a href="{{ path('privacy_policy') }}">
+                    <p>Privacy Policy</p>
+                </a>
+                <a href="{{ path('legal_notice') }}">
+                    <p>Legal Information</p>
+                </a>
+                <a href="{{ path('app_contact_us') }}">
+                    <p>Inquiries regarding services</p>
+                </a>
             </div>
         </div>
         <div class="footer-credits">
-            &copy; 2023 UMAMI. All rights reserved.
+            &copy; 2024 UMAMI. All rights reserved.
         </div>
     </div>
 </footer>
