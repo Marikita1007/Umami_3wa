@@ -441,15 +441,9 @@ class RecipesController extends AbstractController
         // Decode the JSON content
         $theMealDbRecipeData = json_decode($theMealDbRecipeResponse->getContent(), true);
 
-
         if ($formFilterSearch->isSubmitted() && $formFilterSearch->isValid()){
             $data = $formFilterSearch->getData();
             $word = $data['word'];
-
-            // Check the number of letter and if it's a letter check call The Meal DB API search by a letter endpoint
-            if (strlen($word) === 1) {
-                $theMealDbMealsByLetter = $theMealDbAPIController->getTheMealDbMealsByLetter($word);
-            }
 
             $category = $formCuisines->get('name')->getData();
 
@@ -460,7 +454,7 @@ class RecipesController extends AbstractController
                 'formCategories' => $formCategories->createView(),
                 'recipesByCuisine' => $recipesRepository->findByCuisineId($cuisineId),
                 // Response from The MealDB API.
-                'theMealDbMealsByLetter' => $theMealDbMealsByLetter,
+                'theMealDbMealsByName' => $theMealDbAPIController->getTheMealDbMealsByName($word),
             ]);
         }
 
