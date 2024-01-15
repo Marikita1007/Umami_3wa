@@ -7,95 +7,134 @@
 
 * {
   box-sizing: border-box;
-}
 
-html {
-  font-size: 16px;
-}
-
-body {
-  font-family: 'Source Sans Pro', sans-serif;
-  line-height: 1.625;
-  margin: 0;
-  color: #6F6F6F;
-
-  a {
-    color: inherit;
-    text-decoration: none;
-    transition: color 0.3s;
-  }
-
-  a:hover {
-    color: inherit;
-  }
-
-  img {
-    max-width: 100%;
-    height: auto;
-  }
-
-  h1, h2, h3 {
-    border: black;
-    color: $umami-blue-dark-second;
-    font-family: $umami-font-family;
-  }
-
-  h2 {
-    text-transform: uppercase;
-  }
-
-  label {
-    font-weight: bold;
-    margin-top: 10px;
-  }
-
-  .title {
-    font-size: 1.75rem;
-    line-height: 1.1;
-    letter-spacing: 2px;
-    color: $umami-blue-dark ;
-    font-weight: bold;
-    margin: 1rem 0 0 0;
-  }
-}
-
-@media (max-width: $layout-breakpoint-small) {
   html {
     font-size: 16px;
   }
-}
 
-.alert-flash {
-  border-radius: 5px;
-  margin-bottom: 2vh;
-  padding: 10px;
-  text-align: center;
-  font-weight: bolder;
-}
+  body {
+    font-family: 'Source Sans Pro', sans-serif;
+    line-height: 1.625;
+    margin: 0;
+    color: #6F6F6F;
 
-// Alert success message
-.alert-success-message {
-  background-color: $umami-success;
-  color: $umami-grey;
-}
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
 
-// Alert error/danger message
-.alert-danger-message {
-  background-color: $umami-danger;
-  color: $umami-grey;
-}
+    a:hover {
+      color: inherit;
+    }
 
-.alert-warning-message {
-  background-color: $umami-blue;
-  color: $umami-grey;
-}
+    img {
+      max-width: 100%;
+      height: auto;
+    }
 
-// error message by form constrains
-.error-message {
-  color: $umami-red;
-}
+    h1, h2, h3 {
+      border: black;
+      color: $umami-blue-dark-second;
+      font-family: $umami-font-family;
+    }
+
+    h2 {
+      text-transform: uppercase;
+    }
+
+    label {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .title {
+      font-size: 1.75rem;
+      line-height: 1.1;
+      letter-spacing: 2px;
+      color: $umami-blue-dark ;
+      font-weight: bold;
+      margin: 1rem 0 0 0;
+    }
+
+    .alert-flash {
+      border-radius: 5px;
+      margin-bottom: 2vh;
+      padding: 10px;
+      text-align: center;
+      font-weight: bolder;
+    }
+
+    // Alert success message
+    .alert-success-message {
+      background-color: $umami-success;
+      color: $umami-grey;
+    }
+
+    // Alert error/danger message
+    .alert-danger-message {
+      background-color: $umami-danger;
+      color: $umami-grey;
+    }
+
+    .alert-warning-message {
+      background-color: $umami-blue;
+      color: $umami-grey;
+    }
+
+    // error message by form constrains
+    .error-message {
+      color: $umami-red;
+    }
+
+    .font-weight-bold {
+      font-weight: bolder;
+    }
 
 
-.font-weight-bold {
-  font-weight: bolder;
+    /* JavaScript Event back-to-top arrow */
+    #back-to-top {
+      background-color: $umami-blue-dark;
+      border: 2px solid $umami-white ;
+      border-radius: 5%;
+      bottom: 40px;
+      color: $umami-white-third;
+      display: none;
+      font-size: 25px;
+      height: 40px;
+      position: fixed;
+      right: 20px;
+      text-align: center;
+      width: 50px;
+    }
+  }
+
+  @media (max-width: $layout-breakpoint-small) {
+    html {
+      font-size: 16px;
+    }
+  }
+
+  /* Dark theme styles */
+  .darktheme {
+    background-color: $umami-grey;
+    color: $umami-white;
+    border: 1px solid $umami-grey-light;
+
+    h1, h2, h3 {
+      border: $umami-white;
+      color: $umami-blue-dark;
+    }
+
+    a {
+      color: $umami-white;
+    }
+
+    .menu-summary-item {
+      h3, p {
+        background-color: $umami-grey;
+        color: $umami-white;
+      }
+    }
+  }
 }

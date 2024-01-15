@@ -187,7 +187,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return 'https://ui-avatars.com/api/?' . http_build_query([
                 'name' => $this->getDisplayName(),
                 'size' => $size,
-                'background' => '#5eb5e0',
         ]);
     }
 

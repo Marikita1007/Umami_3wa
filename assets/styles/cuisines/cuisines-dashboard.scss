@@ -97,6 +97,21 @@ body[data-route="cuisines_dashboard"] {
     }
   }
 
+  /* Dark theme styles for Cuisines table */
+  .darktheme .cuisines-dashboard  {
+    table {
+      th {
+        background-color: $umami-grey-medium;
+      }
 
+      tr:nth-child(even) {
+        background-color: $umami-grey-medium;
+      }
+
+      tr:nth-child(odd) {
+        background-color: $umami-grey;
+      }
+    }
+  }
 }
 

@@ -1,11 +1,12 @@
 @import 'base';
+@import 'variables';
 
 .footer {
   background: $umami-blue;
   color: $umami-grey;
   font-weight: 300;
-  margin-top: 1.875rem; // 30px
-  padding-top: 1.875rem; // 30px
+  margin-top: 1em;
+  padding-top: 1rem;
 
   &-columns {
     display: flex;

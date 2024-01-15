@@ -13,14 +13,13 @@ use Symfony\Component\Mailer\MailerInterface;
 
 class ContactController extends AbstractController
 {
-    #[Route('/contact/us', name: 'app_contact_us')]
+    #[Route('/contact/us', name: 'app_contact_us', methods: ['GET', 'POST'])]
     public function index(Request $request, MailerInterface $mailer): Response
     {
         $form = $this->createForm(ContactType::class);
 
         $form->handleRequest($request);
 
-        //TODO MARIKA Ask teacher or Jennifer why this contact is not working
         if($form->isSubmitted() && $form->isValid()) {
 
             // When the form is submitted and valid
@@ -29,9 +28,9 @@ class ContactController extends AbstractController
             $email = (new Email())
                 ->from($contactFormData['email'])
                 ->to('umami_admin@example.com')
-                ->subject('You got mail.')
+                ->subject('You got mail from UMAMI contact.')
                 ->text('Sender : '.$contactFormData['email'].\PHP_EOL.
-                    $contactFormData['Message'],
+                    $contactFormData['message'],
                     'text/plain');
 
             $mailer->send($email);

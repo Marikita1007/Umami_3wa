@@ -46,7 +46,7 @@
     {#  Use pageRoute to defined each page design path  #}
     <body data-route="{{ pageRoute }}">
         {% include 'header.html.twig' %}
-        <main>
+        <main id="mainContent">
             {# MARIKA When ths email is verified; this message shows : https://symfonycasts.com/screencast/symfony-security/verify-email#codeblock-0bac7d3cc4#}
             {% for flash in app.flashes('success') %}
                 <div class="alert-success-message alert-flash">{{ flash }}</div>
@@ -69,5 +69,6 @@
         </main>
         {% include 'footer.html.twig' %}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="{{ asset('js/base-functions.js') }}"></script>
     </body>
 </html>
