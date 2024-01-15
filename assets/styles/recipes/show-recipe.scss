@@ -64,7 +64,6 @@ body[data-route="show_recipes"] {
   }
 
   .recommendation-recipes {
-
     background-color: $umami-white;
     margin-top: 20px;
     padding: 20px;
@@ -231,4 +230,12 @@ body[data-route="show_recipes"] {
     }
   }
   /* Comments contents and username designs end */
+
+
+  /* Dark theme styles for table */
+  .darktheme {
+    .card-box, .recommendation-recipes, .comment-section {
+      background-color: $umami-grey-medium;
+    }
+  }
 }

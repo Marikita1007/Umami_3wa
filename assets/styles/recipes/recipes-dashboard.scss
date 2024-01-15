@@ -126,7 +126,23 @@ body[data-route="recipes_dashboard"] {
         padding: 8px;
       }
     }
+  }
 
+  /* Dark theme styles for table */
+  .darktheme .recipes-dashboard {
+    table {
+      th {
+        background-color: $umami-grey-medium; /* Background color for th */
+      }
+
+      tr:nth-child(even) {
+        background-color: $umami-grey; /* Background color for even rows */
+      }
+
+      tr:nth-child(odd) {
+        background-color: $umami-grey; /* Background color for odd rows */
+      }
+    }
   }
 }
 

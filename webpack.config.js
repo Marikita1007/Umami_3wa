@@ -1,5 +1,8 @@
 const Encore = require('@symfony/webpack-encore');
 
+// Check if it's Dark Mode
+const isDarkMode = process.env.DARK_MODE === 'true';
+
 // Manually configure the runtime environment if not already configured yet by the "encore" command.
 // It's useful when you use tools that rely on webpack.config.js file.
 if (!Encore.isRuntimeEnvironmentConfigured()) {
@@ -25,9 +28,10 @@ Encore
     .addEntry('cuisines-form-ajax', './public/js/cuisines-form-ajax.js')
     .addEntry('comments', './public/js/comments.js')
     .addEntry('the-meal-db-api', './public/js/the-meal-db-api.js')
+    .addEntry('base-functions', './public/js/base-functions.js')
 
     // Added scss files
-    .addStyleEntry('base-styles', './assets/styles/base.scss')
+    .addStyleEntry('base-styles', ['./assets/styles/base.scss'])
     .addStyleEntry('header-styles', './assets/styles/header.scss')
     .addStyleEntry('footer-styles', './assets/styles/footer.scss')
     .addStyleEntry('home-styles', './assets/styles/home.scss')

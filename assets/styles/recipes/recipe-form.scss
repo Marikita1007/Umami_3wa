@@ -56,6 +56,15 @@ body[data-route="recipe-form"] {
     margin-bottom: 10px;
     text-align: center;
   }
+
+  /* Dark theme styles for table */
+  .darktheme form {
+    background-color: $umami-grey-medium;
+
+    .help-text {
+      color: $umami-white;
+    }
+  }
 }
 
 /* Constraint Error messages */

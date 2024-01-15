@@ -1,35 +1,48 @@
-<footer class="footer">
+{# Scroll up arrow #}
+<a id="back-to-top" href="#top"><i class="fas fa-chevron-up"></i></a>
+
+<footer id="footerContent" class="footer">
     <div class="container">
         <div class="footer-columns">
+
+            {# Umami Logo and Description Column #}
             <div class="footer-column">
-                <a href="{{ path('home') }}" class="footer-title">
+                <h2 class="footer-title">Umami</h2>
+                <a href="{{ path('home') }}" class="footer-logo-link">
                     <img src="{{ asset('images/umami-logos_white_half.png') }}" alt="Umami Logo">
                 </a>
-                <p>UMAMI: Where food lovers unite, sharing global recipes and passion for culinary excellence.</p>
+                <p>Where food lovers unite, sharing global recipes and passion for culinary excellence.</p>
             </div>
+
+            {# Contact Information Column #}
             <div class="footer-column">
                 <h3 class="footer-title">Contact Information</h3>
                 <address>
                     <p>Address: Paris, FR</p>
                     <p>Phone:  (06) 12-34-56-78</p>
-                    <p>Email: customer_service@umami.com</p>
+                    <p>Email: <a href="mailto:customer_service@umami.com">customer_service@umami.com</a></p>
                 </address>
             </div>
+
+            {# About Us Column #}
             <div class="footer-column">
                 <h3 class="footer-title">About us</h3>
-                <a href="{{ path('privacy_policy') }}">
+                <a href="{{ path('privacy_policy') }}" class="footer-link">
                     <p>Privacy Policy</p>
                 </a>
-                <a href="{{ path('legal_notice') }}">
+                <a href="{{ path('legal_notice') }}" class="footer-link">
                     <p>Legal Information</p>
                 </a>
-                <a href="{{ path('app_contact_us') }}">
+                {# Contact Us Link #}
+                <a href="{{ path('app_contact_us') }}" class="footer-link">
                     <p>Inquiries regarding services</p>
                 </a>
             </div>
         </div>
+
         <div class="footer-credits">
-            &copy; 2024 UMAMI. All rights reserved.
+            <p>&copy; 2024 UMAMI. All rights reserved.</p>
         </div>
     </div>
 </footer>
+

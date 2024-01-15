@@ -11,62 +11,39 @@
                 </div>
             </article>
         </div>
-        {% if getCuisineCategories is defined and getCuisineCategories.results is defined %}
-            <div class="recipe-container">
-                {% for key, recipe in getCuisineCategories.results|batch(3) %}
-                    <div class="recipe-row">
-                        {% for item in recipe %}
-                            <article class="recipe-card">
-                                {% if item.image is defined %}
-                                <a href="{{ spoonaCularURL }}" target="_blank">
-                                    <img src="{{ item.image }}" alt="{{ item.title }}">
-                                </a>
-                                {% else %}
-                                    <img src="{{ asset('images/no-image.png') }}" alt="No Food Image Available">
-                                {% endif %}
-                                <div class="recipe-card-body">
-                                    <h3 class="recipe-card-title">{{ item.title }}</h3>
-                                </div>
-                            </article>
-                        {% endfor %}
-                    </div>
-                {% endfor %}
-            </div>
-        {% else %}
-            <div class="container-small flex-content">
-                <ul class="card-container" role="list">
-                    <li class="card-component" role="listitem">
-                        <figure>
-                            <img src="{{ asset('images/salad_fig.jpg') }}" alt="A photo of a delicious-looking salad featuring figs, Camembert cheese, tomatoes, and cucumbers">
-                            <figcaption>
-                                <h4><b>Delicious Recipe 1</b></h4>
-                                <p>Description of Recipe 1.</p>
-                            </figcaption>
-                        </figure>
-                    </li>
+        <div class="container-small flex-content">
+            <ul class="card-container" role="list">
+                <li class="card-component" role="listitem">
+                    <figure>
+                        <img src="{{ asset('images/salad_fig.jpg') }}" alt="A photo of a delicious-looking salad featuring figs, Camembert cheese, tomatoes, and cucumbers">
+                        <figcaption>
+                            <h4><b>Delicious Recipe 1</b></h4>
+                            <p>Description of Recipe 1.</p>
+                        </figcaption>
+                    </figure>
+                </li>
 
-                    <li class="card-component" role="listitem">
-                        <figure>
-                            <img src="{{ asset('images/salad_fig.jpg') }}" alt="A photo of a delicious-looking salad featuring figs, Camembert cheese, tomatoes, and cucumbers">
-                            <figcaption>
-                                <h4><b>Delicious Recipe 1</b></h4>
-                                <p>Description of Recipe 1.</p>
-                            </figcaption>
-                        </figure>
-                    </li>
+                <li class="card-component" role="listitem">
+                    <figure>
+                        <img src="{{ asset('images/salad_fig.jpg') }}" alt="A photo of a delicious-looking salad featuring figs, Camembert cheese, tomatoes, and cucumbers">
+                        <figcaption>
+                            <h4><b>Delicious Recipe 1</b></h4>
+                            <p>Description of Recipe 1.</p>
+                        </figcaption>
+                    </figure>
+                </li>
 
-                    <li class="card-component" role="listitem">
-                        <figure>
-                            <img src="{{ asset('images/salad_fig.jpg') }}" alt="A photo of a delicious-looking salad featuring figs, Camembert cheese, tomatoes, and cucumbers">
-                            <figcaption>
-                                <h4><b>Delicious Recipe 1</b></h4>
-                                <p>Description of Recipe 1.</p>
-                            </figcaption>
-                        </figure>
-                    </li>
-                </ul>
-            </div>
-        {% endif %}
+                <li class="card-component" role="listitem">
+                    <figure>
+                        <img src="{{ asset('images/salad_fig.jpg') }}" alt="A photo of a delicious-looking salad featuring figs, Camembert cheese, tomatoes, and cucumbers">
+                        <figcaption>
+                            <h4><b>Delicious Recipe 1</b></h4>
+                            <p>Description of Recipe 1.</p>
+                        </figcaption>
+                    </figure>
+                </li>
+            </ul>
+        </div>
     </section>
 {% endblock %}
 

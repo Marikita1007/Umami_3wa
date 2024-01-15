@@ -1,90 +1,131 @@
 @import 'base';
 
 .header {
-  background:
-          linear-gradient(180deg, rgba(0, 0, 0, 0.92), rgba(54, 54, 54, 0.5) 39.24%, rgba(28, 28, 28, 0.4)),
-          url(../../public/images/pancake_2.jpg) center 20% / cover no-repeat;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.92), rgba(54, 54, 54, 0.5) 39.24%, rgba(28, 28, 28, 0.4)),
+  url(../../public/images/pancake_2.jpg) center 20% / cover no-repeat;
   color: $umami-white;
 
   .baseline {
     line-height: 1;
-    padding: 50px 0 70px 0;
+    padding: 2.5em 0 3.5em 0; /* Adapted padding using em units */
     text-align: center;
 
     .baseline-name {
       height: auto;
-      padding-bottom: 10px;
-      width: 300px;
+      padding-bottom: 1em; /* Adapted padding using em units */
+      width: 18.75em; /* Fixed width using px units (300px) */
     }
 
     .baseline-slogan {
       color: $umami-white-third;
       display: block;
       font-family: $umami-font-family-cursive;
-      font-size: 2.5rem;
-      letter-spacing: 2px;
+      font-size: 2.5em;
+      letter-spacing: 0.125em; /* Adapted letter spacing using em units */
     }
   }
 
   .topbar {
-    font-size: .875rem;
+    font-size: 1.3em;
     padding: 18px 20px;
     text-align: center;
     text-transform: uppercase;
+  }
 
-    .menu {
-      margin-left: auto;
+  .topnav {
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
 
-      .menu-button {
-        background: transparent;
-        border: solid 1px $umami-blue;
+    .menu-button-box {
+      background: transparent;
+      border: solid 1px $umami-blue;
+      color: $umami-white;
+      transition-property: color, background-color;
+    }
+
+    .menu-button-box:hover {
+      background: $umami-blue-dark;
+
+      i {
         color: $umami-white;
-        margin-top: 5px;
-        padding: 7px 10px;
-        transition-property: color, background-color;
-      }
-
-      .menu-button:hover {
-        background: $umami-blue-dark;
-
-        i {
-          color: $umami-white;
-        }
-      }
-
-      .menu-item {
-        display: inline-block;
-        margin: 0 15px;
-      }
-
-      .menu-item:hover {
-        color: $umami-blue-dark;
       }
     }
-  }
-}
 
-@media (max-width: $layout-breakpoint-small) {
-  .baseline {
-    padding: 125px 0 230px;
+    .menu-item {
+      align-items: center;
+      cursor: pointer; /* Change to pointer when mouse is over button */
+      display: flex;
+      justify-content: center;
+      margin: 2px;
 
-    .baseline-name {
-      padding-bottom: 18px;
-      padding-top: 8px;
-      width: 130px;
+      img:hover {
+        background-color: $umami-blue;
+      }
     }
 
-    .baseline-slogan {
-      font-size: 1.5rem;
+    .menu-item:hover {
+      color: $umami-blue-dark;
     }
   }
 
-  .topbar {
-    flex-direction: column;
+  .topnav a {
+    display: block;
+    float: left;
+    font-size: 17px; /* Fixed font-size using px units */
+    padding: 0.875em 1em; /* Adapted padding using em units */
+    text-align: center;
+    text-decoration: none;
+  }
 
-    img {
-      margin-bottom: 12px;
-      width: 70px;
+  .topnav .icon {
+    display: none;
+  }
+
+  @media screen and (max-width: $layout-breakpoint-small) {
+
+    .topnav {
+      display: block; /* Override styles for screens smaller than $layout-breakpoint-small */
+      justify-content: initial; /* Override styles for screens smaller than $layout-breakpoint-small */
+    }
+    /* This is used to hide all navigation links except the first one for responsive*/
+    .topnav a:not(:first-child) {
+      border: none;
+      display: none;
+    }
+    .topnav a.icon {
+      float: right;
+      display: block;
+    }
+  }
+
+  @media screen and (max-width: $layout-breakpoint-small) {
+    .baseline {
+      padding: 7.8em 0 14.3em;
+
+      .baseline-name {
+        padding-bottom: 1.125em;
+        padding-top: 0.5em;
+        width: 7em;
+      }
+
+      .baseline-slogan {
+        font-size: 1.5em;
+      }
+    }
+
+    .topnav.responsive {
+      position: relative;
+    }
+    .topnav.responsive .icon {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+    .topnav.responsive a {
+      float: none;
+      display: block;
+      text-align: left;
     }
   }
 }

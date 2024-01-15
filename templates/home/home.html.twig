@@ -1,26 +1,65 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <section class="home-section">
+    {# This is before adding aria-labelledby TODO MARIKA DLETE after cleaning !!!   #}
+{#    <section class="home-section">#}
+{#        <div class="container-small">#}
+{#            <article class="block block-last">#}
+{#                <div class="block-body">#}
+{#                    <h2 class="title">Popular Cuisines</h2>#}
+{#                </div>#}
+{#            </article>#}
+{#            {% if topSevenCuisines is not empty %}#}
+{#                <nav class="ingredients-menu">#}
+{#                    {% for cuisine in topSevenCuisines %}#}
+{#                        <a href="{{ path('app_recipes_all_filters', {'cuisineId': cuisine.id}) }}">{{ cuisine.name }}</a>#}
+{#                    {% endfor %}#}
+{#                </nav>#}
+{#            {% endif %}#}
+{#        </div>#}
+{#        {%  if differentCuisines is not empty %}#}
+{#            <div class="container">#}
+{#                <div class="menu-summary" id="menu">#}
+{#                    {% for differentCuisine in differentCuisines %}#}
+{#                        <article class="menu-summary-item">#}
+{#                            <img src="{{ asset('uploads/images/' ~ differentCuisine.image) }}" alt="{{ differentCuisine.name }}" class="menu-summary-img">#}
+{#                            <h3 class="menu-summary-title">{{ differentCuisine.name }}</h3>#}
+{#                            <p>{{ differentCuisine.description }}</p>#}
+{#                            <div class="menu-summary-infos">{{ differentCuisine.cuisine }}</div>#}
+{#                        </article>#}
+{#                    {% endfor %}#}
+{#                </div>#}
+{#            </div>#}
+{#        {% endif %}#}
+{#    </section>#}
+
+
+   {#  aria-labelledby associates the section with name "popularCuisinesHeading"  #}
+    <section class="home-section" role="region" aria-labelledby="popularCuisinesHeading">
+        <!-- Section for Popular Cuisines -->
         <div class="container-small">
             <article class="block block-last">
                 <div class="block-body">
-                    <h2 class="title">Popular Cuisines</h2>
+                    <!-- Heading for Popular Cuisines Section -->
+                    <h2 class="title" id="popularCuisinesHeading">Popular Cuisines</h2>
                 </div>
             </article>
             {% if topSevenCuisines is not empty %}
-                <nav class="ingredients-menu">
+                <!-- Navigation Menu for Popular Cuisines -->
+                <nav class="ingredients-menu" role="navigation" aria-label="Popular Cuisines Menu">
                     {% for cuisine in topSevenCuisines %}
+                        <!-- Menu Item Link for Each Cuisine on top -->
                         <a href="{{ path('app_recipes_all_filters', {'cuisineId': cuisine.id}) }}">{{ cuisine.name }}</a>
                     {% endfor %}
                 </nav>
             {% endif %}
         </div>
-        {%  if differentCuisines is not empty %}
-            <div class="container">
-                <div class="menu-summary" id="menu">
+        {% if differentCuisines is not empty %}
+            <!-- Container for Different Cuisines -->
+            <div class="container" role="region">
+                <div class="menu-summary" id="menu" role="list">
                     {% for differentCuisine in differentCuisines %}
-                        <article class="menu-summary-item">
+                        <article class="menu-summary-item" role="listitem">
                             <img src="{{ asset('uploads/images/' ~ differentCuisine.image) }}" alt="{{ differentCuisine.name }}" class="menu-summary-img">
                             <h3 class="menu-summary-title">{{ differentCuisine.name }}</h3>
                             <p>{{ differentCuisine.description }}</p>
@@ -32,16 +71,53 @@
         {% endif %}
     </section>
 
-    <section class="home-section">
-        <div  class="container-small">
-            <article  class="block block-last">
+    {# This is before adding aria-labelledby TODO MARIKA DLETE after cleaning !!!   #}
+{#    <section class="home-section">#}
+{#        <div  class="container-small">#}
+{#            <article  class="block block-last">#}
+{#                <div class="block-body">#}
+{#                    <h2 class="title">Top Picks: Delectable Recipes</h2>#}
+{#                </div>#}
+{#            </article>#}
+{#        </div>#}
+
+{#        <article  class="block block-left">#}
+{#            <div class="block-img">#}
+{#                <img src="{{ asset('images/burger.jpg') }}" alt="Delicious burger">#}
+{#            </div>#}
+{#            <div class="block-body">#}
+{#                <h2 class="title"><span>Discover</span> our top recipes</h2>#}
+{#                <p>#}
+{#                    Attending a trade show can be a very effective method of promoting your company and its products. And one of the most effective ways to optimize your trade show display and increase traffic to your booth is through the use of banner stands.#}
+{#                </p>#}
+{#                <a href="" class="more">See more</a>#}
+{#            </div>#}
+{#        </article >#}
+{#        <article class="block block-right">#}
+{#            <div class="block-img">#}
+{#                <img src="{{ asset('images/crusted-chicken.jpg') }}" alt="Delicious crusted chicken">#}
+{#            </div>#}
+{#            <div class="block-body">#}
+{#                <h2 class="title"><span>Discover</span> our top recipes</h2>#}
+{#                <p>#}
+{#                    Attending a trade show can be a very effective method of promoting your company and its products. And one of the most effective ways to optimize your trade show display and increase traffic to your booth is through the use of banner stands.#}
+{#                </p>#}
+{#                <a href="" class="more">See more</a>#}
+{#            </div>#}
+{#        </article>#}
+{#    </section>#}
+
+    <section class="home-section" role="region" aria-labelledby="topPicksHeading">
+        <!-- Section for TOP PICKS Cuisines -->
+        <div class="container-small">
+            <article class="block block-last">
                 <div class="block-body">
-                    <h2 class="title">Top Picks: Delectable Recipes</h2>
+                    <h2 class="title" id="topPicksHeading">Top Picks: Delectable Recipes</h2>
                 </div>
             </article>
         </div>
 
-        <article  class="block block-left">
+        <article class="block block-left" role="article">
             <div class="block-img">
                 <img src="{{ asset('images/burger.jpg') }}" alt="Delicious burger">
             </div>
@@ -50,10 +126,11 @@
                 <p>
                     Attending a trade show can be a very effective method of promoting your company and its products. And one of the most effective ways to optimize your trade show display and increase traffic to your booth is through the use of banner stands.
                 </p>
-                <a href="" class="more">See more</a>
+                <a href="#" class="more" aria-label="See more about top burger recipes">See more</a>
             </div>
-        </article >
-        <article class="block block-right">
+        </article>
+
+        <article class="block block-right" role="article">
             <div class="block-img">
                 <img src="{{ asset('images/crusted-chicken.jpg') }}" alt="Delicious crusted chicken">
             </div>
@@ -62,66 +139,53 @@
                 <p>
                     Attending a trade show can be a very effective method of promoting your company and its products. And one of the most effective ways to optimize your trade show display and increase traffic to your booth is through the use of banner stands.
                 </p>
-                <a href="" class="more">See more</a>
+                <a href="#" class="more" aria-label="See more about top crusted chicken recipes">See more</a>
             </div>
         </article>
-{#        //TODO MARIKA : Question : block-left and block-right　交互に使いたい  IF THIS IS NOT USED DELET IT #}
-{#        // Sample array of image URLs from the database#}
-{#        $imageUrls = [#}
-{#        'image1.jpg',#}
-{#        'image2.jpg',#}
-{#        'image3.jpg',#}
-{#        'image4.jpg',#}
-{#        ];#}
-
-{#        // Loop through the image URLs and generate HTML#}
-{#        for ($i = 0; $i < count($imageUrls); $i++) {#}
-{#        $imageClass = $i % 2 === 0 ? 'block-left' : 'block-right';#}
-{#        $imageUrl = $imageUrls[$i];#}
-{#        ?>#}
-
-{#        <div class="block <?php echo $imageClass; ?>">#}
-{#            <div class="block-img">#}
-{#                <img src="<?php echo $imageUrl; ?>" alt="Image <?php echo $i + 1; ?>">#}
-{#            </div>#}
-{#            <div class="block-body">#}
-{#                <h2 class="title"><span>Discover</span> our gastronomy</h2>#}
-{#                <p>#}
-{#                    Attending a trade show can be a very effective method of promoting your company and its products. And one of the most effective ways to optimize your trade show display and increase traffic to your booth is through the use of banner stands.#}
-{#                </p>#}
-{#                <a href="#" class="more">See more</a>#}
-{#            </div>#}
-{#        </div>#}
-{#}#}
     </section>
 
-    <section class="home-section">
+{# This is before adding aria-labelledby TODO MARIKA DLETE after cleaning !!!   #}
+{#    <section class="home-section">#}
+{#        <div class="container-small">#}
+{#            <article class="block block-last">#}
+{#                <header>#}
+{#                    <h2 class="title">Menu Inspirations</h2>#}
+{#                </header>#}
+{#            </article>#}
+
+{#            <div class="container-small flex-content">#}
+{#                <ul class="card-container" role="list">#}
+{#                    {% for recipe in sixRecipes %}#}
+{#                        <li class="custom-card" role="listitem">#}
+{#                            <a href="{{ path('show_recipe', {id: recipe.id}) }}">#}
+{#                                <figure>#}
+{#                                    {% if recipe.image %}#}
+{#                                        <img src="{{ asset('uploads/images/' ~ recipe.image) }}" alt="{{ recipe.name }}">#}
+{#                                    {% else %}#}
+{#                                        <i class="fa-solid fa-eye-slash fa-2xl" aria-label="No image available"></i>#}
+{#                                    {% endif %}#}
+{#                                    <figcaption>#}
+{#                                        <h4>{{ recipe.name }}</h4>#}
+{#                                        <p>{{ recipe.description|slice(0, 50) }}...<a href="{{ path('show_recipe', {id: recipe.id}) }}"><b>See More</b></a></p>#}
+{#                                    </figcaption>#}
+{#                                </figure>#}
+{#                            </a>#}
+{#                        </li>#}
+{#                    {% endfor %}#}
+{#                </ul>#}
+{#            </div>#}
+{#        </div>#}
+{#    </section>#}
+
+    <section class="home-section" role="region" aria-labelledby="recipeInspirationsHeading">
+        <!-- Section for Cuisine Inspirations -->
         <div class="container-small">
             <article class="block block-last">
                 <header>
-                    <h2 class="title">Menu Inspirations</h2>
+                    <h2 class="title" id="recipeInspirationsHeading">Recipe Inspirations</h2>
                 </header>
             </article>
 
-        {# TODO MARIKA Delete this if it's not used #}
-        {% if jsonDataSpoonacular is defined and jsonDataSpoonacular.recipes is defined %}
-                {% for key, recipe in jsonDataSpoonacular.recipes %}
-                    {% if key % 3 == 0 %}
-                        </div></div><div class="container"><div class="row">
-                    {% endif %}
-                {% endfor %}
-                <figure class="custom-card">
-                    <div class="card-container">
-                        {% if recipe.image is defined %}
-                            <img src="{{ recipe.image }}" alt="{{ recipe.title }}">
-                        {% else %}
-                            <i class="fa-solid fa-image-slash" aria-label="No image available"></i>
-                        {% endif %}
-                        <h3>{{ recipe.title }}</h3>toto
-                        <p>Cooking Time: {{ recipe.readyInMinutes }} minutes</p>
-                    </div>
-                </figure>
-        {% else %}
             <div class="container-small flex-content">
                 <ul class="card-container" role="list">
                     {% for recipe in sixRecipes %}
@@ -143,8 +207,9 @@
                     {% endfor %}
                 </ul>
             </div>
-        {% endif %}
+        </div>
     </section>
+
 
 {% endblock %}
 

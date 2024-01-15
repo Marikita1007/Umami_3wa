@@ -215,12 +215,6 @@ body[data-route="home"] {
       margin-top: 1.3rem;
     }
 
-    .home-section {
-      background:
-              fixed top 95px right 0px url(../../public/images/oranges.jpg) no-repeat,
-              fixed top 640px left 0px url(../../public/images/spices.jpg) no-repeat;
-    }
-
     .ingredients-menu a {
       margin: 0 32px;
     }
@@ -320,6 +314,19 @@ body[data-route="home"] {
 
     .reservation .button {
       width: calc(33.33% - 20px);
+    }
+  }
+
+  /* Dark theme styles */
+  .darktheme .menu-summary .menu-summary-item {
+
+    h3 {
+      background-color: $umami-grey-medium;
+      color: $umami-white;
+    }
+
+    p {
+      background-color: $umami-grey-medium;
     }
   }
 }
