@@ -38,7 +38,7 @@ class CuisinesController extends AbstractController
         return $this->json($data);
     }
 
-    #[Route("/cuisines/show/{id}", name: "cuisines_show", methods: ["GET"])]
+    #[Route("/cuisines/show/{id}", name: "cuisines_show", methods: ["GET", "POST"])]
     public function show(int $id): Response
     {
         $cuisines = $this->getDoctrine()

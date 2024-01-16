@@ -3,6 +3,7 @@
 body[data-route="cuisines_dashboard"] {
 
   .cuisines-dashboard {
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -31,6 +32,11 @@ body[data-route="cuisines_dashboard"] {
         background-color: $umami-white;
       }
 
+      th:nth-child(1),
+      th:nth-child(3) {
+        width: 6.25em;
+      }
+
       tr:nth-child(even) {
         background-color: $umami-white-second;
       }
@@ -42,23 +48,22 @@ body[data-route="cuisines_dashboard"] {
   }
 
   #form-modal {
-    opacity: 0;
-    visibility: hidden;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    align-items: center;
     background-color: $umami-white;
-    padding: 20px;
     border: 1px solid $umami-grey-light;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 999;
-    max-width: 80vw;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
+    left: 50%;
+    opacity: 0;
+    padding: 20px;
+    position: fixed;
+    top: 50%;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    transform: translate(-50%, -50%);
+    visibility: hidden;
+    z-index: 999;
 
     &.show {
       opacity: 1;
@@ -97,6 +102,51 @@ body[data-route="cuisines_dashboard"] {
     }
   }
 
+  /* Confirmation styles for deleting a cuisine  */
+  #confirmation-modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: $umami-white;
+    border: 1px solid $umami-white-third;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .modal-content {
+    text-align: center;
+  }
+
+  .confirmation-message {
+    margin-bottom: 20px;
+  }
+
+  .modal-buttons {
+    display: flex;
+    justify-content: center;
+  }
+
+  .confirm-button,
+  .cancel-button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    cursor: pointer;
+  }
+
+  .confirm-button {
+    background-color: $umami-danger;
+    color: $umami-white;
+    border: none;
+  }
+
+  .cancel-button {
+    background-color: $umami-white-third;
+    border: none;
+  }
+
+
   /* Dark theme styles for Cuisines table */
   .darktheme .cuisines-dashboard  {
     table {
@@ -112,6 +162,14 @@ body[data-route="cuisines_dashboard"] {
         background-color: $umami-grey;
       }
     }
+  }
+
+  @media (max-width: $layout-breakpoint-medium) {
+
+    #form-modal {
+      min-width: 300px;
+    }
+
   }
 }
 

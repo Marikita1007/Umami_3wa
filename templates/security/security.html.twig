@@ -1,17 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{# Loop through flash messages of different types (e.g., success, error, info) #}
-{# MARIKA TODO I added this to show error message if non login user try to access to create new recipe page #}
-{% block messages %}
-    {% for type, messages in app.flashes %}
-        {% for message in messages %}
-            <div class="alert alert-{{ type }}">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endfor %}
-{% endblock %}
-
 {% block body %}
     <section class="login-section">
         <div class="page-content">
@@ -20,23 +8,25 @@
                     <img src="{{ asset('images/ramen.jpg') }}" alt="Login Form Image">
                 </div>
                 <form action="{{ path('login') }}" method="post" class="form-detail">
-                    <h2>Login Form</h2>
+
+                    <h2 id="login-heading">Login Form</h2>
 
                     {% if error %}
-                        <div role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        <div role="alert" aria-labelledby="login-heading">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                     {% endif %}
 
                     <div class="form-row">
                         <label for="username">Email:</label>
-                        <input class="input-text" type="text" id="username" name="_username" value{{ last_username }}>
+                        <input class="input-text" type="text" id="username" name="_username" value="{{ last_username }}" aria-required="true" aria-describedby="email-error">
                     </div>
 
                     <div class="form-row">
-                        <label for="Password">Password</label>
-                        <input class="input-text" type="password" id="password" name="_password">
+                        <label for="password">Password:</label>
+                        <input class="input-text" type="password" id="password" name="_password" aria-required="true" aria-describedby="password-error">
                     </div>
 
                     <input type="checkbox" name="_remember_me" id="rememberMe" aria-label="Remember me">
+
                     <label for="rememberMe" aria-hidden="true">Remember me</label>
 
                     <div class="btn-form">
@@ -44,7 +34,7 @@
                     </div>
 
                     {# ARIA attributes for CSRF token #}
-                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" aria-hidden="true">
 
                     <div class="signup-button-container">
                         <p>Don't have an account yet?</p>
@@ -56,5 +46,6 @@
         </div>
     </section>
 {% endblock %}
+
 
 {% set pageRoute = 'login' %}

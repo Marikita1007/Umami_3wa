@@ -60,7 +60,9 @@
         </div>
         <div class="rightcolumn">
             {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN') %}
-                <a href="{{ path('list_recipes') }}" class="return-list-button">Back to list</a>
+                <a href="{{ path('list_recipes') }}" class="return-list-button">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </a>
             {% endif %}
 
             <div class="card-box">

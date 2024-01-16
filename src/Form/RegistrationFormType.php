@@ -28,7 +28,7 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('username', TextType::class, [
-                'label' => 'Username:',
+                'label' => 'Username: (Username can\'t be changed)',
                 'attr' => [
                     'class' => 'input-text',
                     'placeholder' => 'Username',

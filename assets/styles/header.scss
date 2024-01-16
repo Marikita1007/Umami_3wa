@@ -7,13 +7,13 @@
 
   .baseline {
     line-height: 1;
-    padding: 2.5em 0 3.5em 0; /* Adapted padding using em units */
+    padding: 2.5em 0 3.5em 0;
     text-align: center;
 
     .baseline-name {
       height: auto;
-      padding-bottom: 1em; /* Adapted padding using em units */
-      width: 18.75em; /* Fixed width using px units (300px) */
+      padding-bottom: 1em;
+      width: 18.75em;
     }
 
     .baseline-slogan {
@@ -21,7 +21,7 @@
       display: block;
       font-family: $umami-font-family-cursive;
       font-size: 2.5em;
-      letter-spacing: 0.125em; /* Adapted letter spacing using em units */
+      letter-spacing: 0.125em;
     }
   }
 
@@ -72,8 +72,8 @@
   .topnav a {
     display: block;
     float: left;
-    font-size: 17px; /* Fixed font-size using px units */
-    padding: 0.875em 1em; /* Adapted padding using em units */
+    font-size: 0.6em;
+    padding: 0.875em 1em;
     text-align: center;
     text-decoration: none;
   }
@@ -82,50 +82,64 @@
     display: none;
   }
 
+
   @media screen and (max-width: $layout-breakpoint-small) {
 
     .topnav {
       display: block; /* Override styles for screens smaller than $layout-breakpoint-small */
       justify-content: initial; /* Override styles for screens smaller than $layout-breakpoint-small */
+
+      .menu-item {
+        display: none;
+      }
     }
-    /* This is used to hide all navigation links except the first one for responsive*/
+
+    .topnav a {
+      font-size: 0.6em;
+    }
+
+    /* This is used to hide all navigation links except the first one for responsiveness */
     .topnav a:not(:first-child) {
       border: none;
       display: none;
     }
+
     .topnav a.icon {
-      float: right;
       display: block;
+      float: right;
     }
   }
 
   @media screen and (max-width: $layout-breakpoint-small) {
+
     .baseline {
       padding: 7.8em 0 14.3em;
 
       .baseline-name {
-        padding-bottom: 1.125em;
-        padding-top: 0.5em;
-        width: 7em;
+        padding-bottom: 0.3em;
+        width: 8em;
       }
 
       .baseline-slogan {
-        font-size: 1.5em;
+        font-size: 1em;
       }
     }
 
     .topnav.responsive {
       position: relative;
     }
+
     .topnav.responsive .icon {
       position: absolute;
       right: 0;
       top: 0;
     }
+
     .topnav.responsive a {
-      float: none;
       display: block;
+      float: none;
       text-align: left;
     }
   }
+
 }
