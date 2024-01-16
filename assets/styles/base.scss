@@ -5,6 +5,35 @@
 
 // global-styles
 
+// Mixin for common link styles
+@mixin link-styles($color: inherit) {
+  color: $color;
+  text-decoration: none;
+  transition: color 0.3s;
+
+  &:hover {
+    color: $color;
+  }
+}
+
+// Mixin for common header styles
+@mixin header-styles {
+  border: black;
+  color: $umami-blue-dark-second;
+  font-family: $umami-font-family;
+}
+
+// Mixin for common alert styles
+@mixin alert-styles($background-color, $text-color) {
+  background-color: $background-color;
+  color: $text-color;
+}
+
+// Mixin for common error message styles
+@mixin error-message-styles {
+  color: $umami-red;
+}
+
 * {
   box-sizing: border-box;
 
@@ -13,19 +42,14 @@
   }
 
   body {
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: $umami-font-family, sans-serif;
     line-height: 1.625;
     margin: 0;
     color: #6F6F6F;
+    font-size: 1rem; // Font size in rem
 
     a {
-      color: inherit;
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-
-    a:hover {
-      color: inherit;
+      @include link-styles;
     }
 
     img {
@@ -34,9 +58,7 @@
     }
 
     h1, h2, h3 {
-      border: black;
-      color: $umami-blue-dark-second;
-      font-family: $umami-font-family;
+      @include header-styles;
     }
 
     h2 {
@@ -49,15 +71,16 @@
     }
 
     .title {
-      font-size: 1.75rem;
+      font-size: 1.75rem; // Font size in rem
       line-height: 1.1;
       letter-spacing: 2px;
-      color: $umami-blue-dark ;
+      color: $umami-blue-dark;
       font-weight: bold;
       margin: 1rem 0 0 0;
     }
 
     .alert-flash {
+      @include alert-styles($umami-grey, $umami-white);
       border-radius: 5px;
       margin-bottom: 2vh;
       padding: 10px;
@@ -67,35 +90,27 @@
 
     // Alert success message
     .alert-success-message {
-      background-color: $umami-success;
-      color: $umami-grey;
+      @include alert-styles($umami-success, $umami-grey);
     }
 
     // Alert error/danger message
     .alert-danger-message {
-      background-color: $umami-danger;
-      color: $umami-grey;
+      @include alert-styles($umami-danger, $umami-grey);
     }
 
     .alert-warning-message {
-      background-color: $umami-blue;
-      color: $umami-grey;
+      @include alert-styles($umami-blue, $umami-grey);
     }
 
-    // error message by form constrains
+    // Error message by form constraints
     .error-message {
-      color: $umami-red;
+      @include error-message-styles;
     }
-
-    .font-weight-bold {
-      font-weight: bolder;
-    }
-
 
     /* JavaScript Event back-to-top arrow */
     #back-to-top {
       background-color: $umami-blue-dark;
-      border: 2px solid $umami-white ;
+      border: 2px solid $umami-white;
       border-radius: 5%;
       bottom: 40px;
       color: $umami-white-third;
@@ -122,18 +137,16 @@
     border: 1px solid $umami-grey-light;
 
     h1, h2, h3 {
-      border: $umami-white;
-      color: $umami-blue-dark;
+      @include header-styles;
     }
 
     a {
-      color: $umami-white;
+      @include link-styles($umami-white);
     }
 
     .menu-summary-item {
       h3, p {
-        background-color: $umami-grey;
-        color: $umami-white;
+        @include alert-styles($umami-grey, $umami-white);
       }
     }
   }

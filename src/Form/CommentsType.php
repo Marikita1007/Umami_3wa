@@ -14,9 +14,6 @@ class CommentsType extends AbstractType
         $builder
 //            TODO Marika update form
             ->add('content')
-//            ->add('datetime')
-//            ->add('recipe')
-//            ->add('user')
         ;
     }
 

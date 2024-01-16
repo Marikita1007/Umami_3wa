@@ -6,11 +6,13 @@
     <section class="recipes-dashboard">
         <div class="dashboard-top">
             <h1>Recipes List</h1>
-            <a href="{{ path("new_recipe") }}" class="custom-button-wide">Create New Recipe</a>
+            <a href="{{ path("new_recipe") }}" class="custom-button-wide">
+                <i class="fa-solid fa-plus"></i>
+            </a>
         </div>
 
         {% if recipes is empty %}
-            <div>You haven't created recipe.</div>
+            <p>You haven't created recipe.</p>
         {% else %}
             <table>
                 <thead>
@@ -26,12 +28,12 @@
                 {# Reverse loop to display recipes in ascending order of ID #}
                 {% for recipe in recipes|reverse %}
                     <tr>
-                        <td>{{ recipe.id }}
-                        <td>{{ recipe.name }}</td>
+                        <td data-label="ID">{{ recipe.id }}
+                        <td data-label="Title">{{ recipe.name }}</td>
                         <td><img src="{{ asset('uploads/images/' ~ recipe.image) }}" alt="{{ recipe.name }}"></td>
-                        <td>{{ recipe.description|capitalize }}</td>
+                        <td data-label="Description">{{ recipe.description }}</td>
                         <td>
-                            <div class="action-buttons">
+                            <div class="actions-buttons">
                                 <a href="{{ path("show_recipe", {"id" : recipe.id}) }}" class="show-button custom-button-icon"><i class="fas fa-eye"></i></a>
                                 <a href="{{ path("edit_recipe", {"id" : recipe.id}) }}" class="edit-button custom-button-icon"><i class="fas fa-edit"></i></a>
                                 <a href="{{ path("delete_recipe", {"id" : recipe.id}) }}" class="delete-button custom-button-icon"><i class="fas fa-trash-alt"></i></a>
@@ -74,7 +76,6 @@
         {% endif %}
 
     </section>
-
 {% endblock %}
 
 {# Set route-data for scss #}

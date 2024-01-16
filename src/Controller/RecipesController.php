@@ -599,7 +599,6 @@ class RecipesController extends AbstractController
         return $this->render('footer.html.twig', ['cuisines' => $cuisines]);
     }
 
-
     // Private method to add extra photos
     private function addExtraPhotos(array $images, Recipes $recipe): void
     {

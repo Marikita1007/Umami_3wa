@@ -2,12 +2,23 @@
 
 body[data-route="show_recipes"] {
 
-  h2, h3 {
+  h2 {
+    @include header-styles;
+    font-size: 1.2em;
+    font-weight: bold;
     text-align: center;
   }
 
-  p {
+  h3 {
+    @include header-styles;
+    font-size: 1em;
     font-weight: bold;
+    text-align: center;
+  }
+
+  h4 {
+    @include header-styles;
+    font-size: 0.9em;
   }
 
   .row-recipe {
@@ -29,24 +40,23 @@ body[data-route="show_recipes"] {
   }
 
   .recipe-img {
-    height: auto; /* Maintain aspect ratio */
+    height: auto;
     max-width: 700px;
-    object-fit: cover; /* Ensure the entire container is covered, preserving aspect ratio */
+    object-fit: cover;
     padding: 20px;
     width: 100%;
   }
 
-  /* Make the container flex and allow wrapping */
   .card-box {
     display: block;
     flex-wrap: wrap;
     justify-content: space-between;
     background-color: $umami-white;
-    padding: 20px;
     margin-top: 20px;
+    padding: 20px;
 
     ul {
-      padding-left: 0
+      padding-left: 0.7em;
     }
 
     .extra-img-container {
@@ -54,11 +64,11 @@ body[data-route="show_recipes"] {
       flex-wrap: wrap;
 
       img {
-        flex-basis: 33.33333%; // Display 3 photos in a row.
-        height: 100%; /* Keep the height of images */
-        margin: 0.5rem; /* Add some margin between images */
-        max-width: 150px; /* Adjust the pixel value as needed */
-        object-fit: contain; /* Ensure the entire container is contained, preserving aspect ratio */
+        flex-basis: 33.33333%;
+        height: 100%;
+        margin: 0.5rem;
+        max-width: 150px;
+        object-fit: contain;
       }
     }
   }
@@ -70,14 +80,15 @@ body[data-route="show_recipes"] {
     text-align: center;
 
     img {
-      border : 5px solid $umami-blue-dark;;
-      height: 100%; /* Keep the height of images */
-      max-width: 170px; /* Adjust the pixel value as needed */
-      object-fit: contain; /* Ensure the entire container is contained, preserving aspect ratio */
+      border: 5px solid $umami-blue-dark;
+      height: 100%;
+      max-height: 170px;
+      max-width: 170px;
+      object-fit: contain;
     }
   }
 
-  /* Carousel style */
+  /* Carousel Styles */
   .umami-carousel-container {
     position: relative;
     width: 100%;
@@ -90,10 +101,10 @@ body[data-route="show_recipes"] {
   }
 
   .umami-carousel-item {
-    flex: 0 0 100%; /* Set item width to 100% */
+    flex: 0 0 100%;
   }
 
-  /* Carousel control buttons */
+  /* Carousel Control Buttons */
   .umami-carousel-control {
     position: absolute;
     top: 50%;
@@ -122,7 +133,7 @@ body[data-route="show_recipes"] {
     right: 0;
   }
 
-  /* Carousel indicator */
+  /* Carousel Indicator */
   .umami-carousel-indicators {
     position: absolute;
     bottom: 1rem;
@@ -143,7 +154,7 @@ body[data-route="show_recipes"] {
     cursor: pointer;
   }
 
-  /* Active carousel indicator */
+  /* Active Carousel Indicator */
   .umami-carousel-indicator.active {
     background-color: $umami-white;
   }
@@ -155,7 +166,7 @@ body[data-route="show_recipes"] {
     }
   }
 
-  /* Comments Form designs start */
+  /* Comments Form Designs */
   .comment-section {
     background-color: $umami-white-background;
     border: 1px solid $umami-grey-light;
@@ -167,7 +178,7 @@ body[data-route="show_recipes"] {
     form {
       margin-top: 20px;
       display: flex;
-      flex-direction: column;  // Align child elements vertically
+      flex-direction: column;
 
       textarea {
         background-color: $umami-white-third;
@@ -182,7 +193,7 @@ body[data-route="show_recipes"] {
       }
 
       button {
-        align-self: flex-end;  // Move the button to the right side
+        align-self: flex-end;
         margin: 10px;
       }
     }
@@ -192,47 +203,44 @@ body[data-route="show_recipes"] {
       font-weight: bold;
       margin-bottom: 10px;
     }
-    /* Comments Form designs end */
+  }
 
-    /* Comments contents and username designs start */
-    #comment-parent {
-      background-color: $umami-blue; // Set your desired background color
+  /* Comments Contents and Username Designs */
+  #comment-parent {
+    background-color: $umami-blue;
+    border-radius: 8px;
+    padding: 20px;
+
+    .comment-container {
+      background-color: $umami-white;
       border-radius: 8px;
-      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+      padding: 16px;
 
-      .comment-container {
-        background-color: $umami-white;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        margin-bottom: 20px;
-        padding: 16px;
+      h4 {
+        color: $umami-blue-dark;
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 8px;
+      }
 
-        h4 {
-          color: $umami-blue-dark;
-          font-size: 1.2rem;
-          font-weight: bold;
-          margin-bottom: 8px;
-        }
+      .posted-info {
+        align-self: flex-end;
+        color: $umami-grey;
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+      }
 
-        .posted-info {
-          align-self: flex-end; // Move the button to the right side
-          color: $umami-grey;
-          font-size: 0.9rem;
-          margin-bottom: 8px;
-        }
-
-        p {
-          color: $umami-grey;
-          font-size: 1rem;
-          margin-bottom: 0;
-        }
+      p {
+        color: $umami-grey;
+        font-size: 1rem;
+        margin-bottom: 0;
       }
     }
   }
-  /* Comments contents and username designs end */
 
-
-  /* Dark theme styles for table */
+  /* Dark Theme Styles for Table */
   .darktheme {
     .card-box, .recommendation-recipes, .comment-section {
       background-color: $umami-grey-medium;

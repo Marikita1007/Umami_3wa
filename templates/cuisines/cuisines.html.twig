@@ -2,19 +2,17 @@
 
 {% block title %}Create Cuisines{% endblock %}
 
-
 {% block body %}
     <section class="cuisines-dashboard">
         <div class="dashboard-top">
-            <h1 class="">Cuisine Names</h1>
-            <button class="custom-button-wide" id="createCuisinesButton">
-                Create New Cuisine
+            <h1>Cuisine Names</h1>
+            <button class="custom-button-wide" id="createCuisinesButton" aria-label="Add Cuisine">
+                <i class="fa-solid fa-plus"></i>
             </button>
         </div>
 
-        <div id="alert-div">
-        </div>
-        <table class="">
+        <div id="alert-div" role="alert"></div>
+        <table>
             <thead>
             <tr>
                 <th>ID</th>
@@ -22,23 +20,33 @@
                 <th>Action</th>
             </tr>
             </thead>
-            <tbody id="js-cuisines-table-body">
-            </tbody>
+            <tbody id="js-cuisines-table-body"></tbody>
         </table>
     </section>
 
-
-    <!-- modal for creating and editing function -->
-    <div id="form-modal">
-        <h3>Cuisine Form</h3>
-        <button type="button" class="" aria-label="Close">X</button>
-        <div id="error-div"></div>
+    {#  modal for creating and editing function  #}
+    <div id="form-modal" aria-labelledby="form-modal-title">
+        <h3 id="form-modal-title">Cuisine Form</h3>
+        <button type="button" class="" aria-label="Close" onclick="closeModal()">X</button>
+        <div id="error-div" role="alert"></div>
         <form>
             <input type="hidden" name="update_id" id="update_id">
             <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" name="name">
+            <input type="text" class="form-control" id="name" name="name" aria-describedby="name-error">
             <button type="submit" class="custom-button-wide" id="js-save-cuisine-button">Save Cuisine</button>
         </form>
+    </div>
+
+
+    {# modal for creating and deleting cuisine  #}
+    <div id="confirmation-modal" class="modal">
+        <div class="modal-content">
+            <p class="confirmation-message">Are you sure you want to delete this cuisine?</p>
+            <div class="modal-buttons">
+                <button class="confirm-button" onclick="confirmDelete()">Yes, Delete</button>
+                <button class="cancel-button" onclick="cancelDelete()">Cancel</button>
+            </div>
+        </div>
     </div>
 
     <script src="{{ asset('js/cuisines-form-ajax.js') }}"></script>

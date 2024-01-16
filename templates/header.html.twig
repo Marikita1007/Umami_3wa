@@ -7,16 +7,16 @@
         </div>
         <nav class="menu topnav" id="myTopnav" role="navigation">
             {# Main Navigation Links #}
-            <a href="{{ path('about_us') }}" class="menu-item">About Us</a>
-            <a href="#" class="menu-item">Contact</a>
+            <a href="{{ path('about_us') }}" class="menu-item">About</a>
+            <a href="{{ path('app_contact_us') }}" class="menu-item">Contact</a>
 
-            <!-- Admin-specific Navigation Links (if user is an admin) -->
+            {# Admin-specific Navigation Links (if user is an admin) #}
             {% if is_granted('ROLE_ADMIN') %}
                 <a href="{{ path('admin_dashboard') }}" class="menu-item">Admin</a>
                 <a href="{{ path('cuisines') }}" class="menu-item">Cuisines</a>
             {% endif %}
 
-            <!-- User-specific Navigation Links -->
+            {# User-specific Navigation Links #}
             {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.user.displayName is not same as(app.user.email) %}
                 <a href="{{ path('logout') }}" class="menu-item">Log Out</a>
                 <a href="{{ path('list_recipes') }}" class="menu-item">About Recipes</a>
@@ -32,17 +32,17 @@
                 <a href="{{ path('register') }}" class="menu-item">Sign Up</a>
             {% endif %}
 
-            <!-- Search Icon -->
+            {#  Search Icon #}
             <a href="{{ path('app_recipes_all_filters') }}" class="menu-item menu-button-box" aria-label="Search">
                 <i class="fa fa-search" aria-hidden="true"></i>
             </a>
 
-            <!-- Dark Mode Toggle -->
+            {# Dark Mode Toggle #}
             <a id="darkModeToggle" class="menu-item menu-button-box" aria-label="Toggle light/dark mode">
                 <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
             </a>
 
-            <!-- Responsive Navigation Toggle -->
+            {# Responsive Navigation Toggle #}
             <a href="javascript:void(0);" class="icon" onclick="responsiveNav()" aria-label="Toggle Navigation">
                 <i class="fa fa-bars" aria-hidden="true"></i>
             </a>

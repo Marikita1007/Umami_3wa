@@ -24,8 +24,7 @@
             <link rel="stylesheet" href="{{ asset('build/header-styles.css') }}">
             <link rel="stylesheet" href="{{ asset('build/footer-styles.css') }}">
             <link rel="stylesheet" href="{{ asset('build/home-styles.css') }}">
-            <link rel="stylesheet" href="{{ asset('build/notification-styles.css') }}">
-            <link rel="stylesheet" href="{{ asset('build/categories-styles.css') }}">
+            <link rel="stylesheet" href="{{ asset('build/notifications-styles.css') }}">
             <link rel="stylesheet" href="{{ asset('build/card-styles.css') }}">
             <link rel="stylesheet" href="{{ asset('build/form-styles.css') }}">
             <link rel="stylesheet" href="{{ asset('build/button-styles.css') }}">
@@ -47,7 +46,7 @@
     <body data-route="{{ pageRoute }}">
         {% include 'header.html.twig' %}
         <main id="mainContent">
-            {# MARIKA When ths email is verified; this message shows : https://symfonycasts.com/screencast/symfony-security/verify-email#codeblock-0bac7d3cc4#}
+            {# Flash messages for success/error/warning  #}
             {% for flash in app.flashes('success') %}
                 <div class="alert-success-message alert-flash">{{ flash }}</div>
             {% endfor %}

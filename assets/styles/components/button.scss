@@ -1,6 +1,55 @@
 @import '../base';
 
-/* Button container */
+// Mixin for common button styles
+@mixin common-button-styles($bg-color, $text-color, $border: 1px solid $umami-white) {
+  align-items: center;
+  background-color: $bg-color;
+  border: $border;
+  border-radius: 4px;
+  color: $text-color;
+  cursor: pointer;
+  display: flex;
+  font-weight: bold;
+  margin: 1em;
+  padding: 0.5em 1em;
+  transition: transform 0.3s;
+
+  &:hover {
+    color: inherit;
+    transform: scale(1.03);
+  }
+}
+
+// Mixin for small buttons
+@mixin small-button-styles($bg-color, $text-color) {
+  @include common-button-styles($bg-color, $text-color, 1px solid $umami-grey-light);
+  margin: 0.625em;
+  padding: 0.3125em;
+}
+
+// Mixin for delete/edit/show buttons
+@mixin action-button-styles($bg-color) {
+  @include common-button-styles($bg-color, $umami-grey);
+}
+
+// Mixin for return to list button
+@mixin return-list-button-styles {
+  @include common-button-styles($umami-grey-light, $umami-grey, none);
+  border-radius: 5px;
+  justify-content: center;
+  margin-top: 1em;
+  max-width: 190px;
+  padding: 0.7em;
+}
+
+// Mixin for custom delete button
+@mixin custom-delete-button-styles {
+  @include common-button-styles($umami-danger, $umami-white, 1px solid $umami-danger);
+  padding: 0.375rem 0.75rem;
+  transition: background-color 0.3s;
+}
+
+// Button container
 .custom-button-container {
   align-items: center;
   display: flex;
@@ -8,111 +57,59 @@
   margin: 1em;
 }
 
-/* Button design to create a new Recipe */
+// Button design to create a new Recipe
 .custom-button-wide {
-  align-items: center;
-  background-color: $umami-blue-dark;
-  border: none;
-  border-radius: 4px;
-  color: $umami-grey;
-  cursor: pointer;
-  display: flex;
-  font-weight: bold;
-  margin-left: 10px;
-  padding: 0.5em 1em;
-  transition: transform 0.3s; /* Add a smooth transition */
+  @include common-button-styles($umami-grey-light, $umami-grey);
+
 }
 
-.custom-button-wide:hover {
-  color: inherit;
-  transform: scale(1.03); /* Scale the button by 3% when hovered */
-}
-
-.custom-button-wide > i {
-  margin-right: 0.5em;
-}
-
-/* Icons button design */
+// Icons button design
 .custom-button-icon {
-  border: 1px solid $umami-white;
-  border-radius: 4px;
-  color: $umami-white;
-  display: inline-block;
-  font-weight: bold;
-  margin: 0 0.25em;
-  padding: 0.8em 1.6em;
-  transition: transform 0.3s; /* Add a smooth transition */
+  @include common-button-styles(none, $umami-white);
 }
 
-.custom-button-icon:hover {
-  transform: scale(1.03); /* Scale the button by 3% when hovered */
-}
-
-/* Common styles for small buttons */
+// Common styles for small buttons
 .custom-button-small {
-  align-items: center;
-  border: 1px solid $umami-grey-light;
-  border-radius: 4px;
-  color: $umami-grey;
-  cursor: pointer;
-  display: flex;
-  font-weight: bold;
-  margin: 0.625em;
-  padding: 0.3125em;
-  transition: transform 0.3s; /* Add a smooth transition */
+  @include small-button-styles($umami-grey-light, $umami-grey);
 }
 
-.custom-button-small:hover {
-  transform: scale(1.03); /* Scale the button by 3% when hovered */
-}
-
-/* Styles for edit/delete/edit buttons */
+// Styles for edit/delete/show buttons
 .delete-button {
-  background-color: $umami-danger;
+  @include action-button-styles($umami-danger);
 }
 .edit-button {
-  background-color: $umami-success;
+  @include action-button-styles($umami-success);
 }
 .show-button {
-  background-color: $umami-blue-dark;
+  @include action-button-styles($umami-blue-dark);
 }
 
-/* Design for back to list */
+// Design for back to list
 .return-list-button {
-  background-color: $umami-grey-light;
-  border: none;
-  border-radius: 5px;
-  color: $umami-grey;
-  cursor: pointer;
-  display: inline-block;
-  font-weight: bold;
-  margin-top: 1em;
-  padding: 1em 2em;
-  text-decoration: none;
+  @include return-list-button-styles;
+  margin: 20px 0;
+  max-width: 50px;
 }
 
-.return-list-button:hover {
-  transform: scale(1.03);
-}
-
-/* Button design for delete ingredients and extra Photos */
+// Button design for delete ingredients and extra Photos
 .custom-delete-button {
-  background-color: $umami-danger;
-  border: 1px solid $umami-danger;
-  border-radius: 4px;
-  color: $umami-white;
-  cursor: pointer;
-  display: inline-block;
-  font-weight: bold;
-  padding: 0.375rem 0.75rem;
-  transition: background-color 0.3s;
+  @include custom-delete-button-styles;
 }
 
-/* Style on hover */
+// Style on hover
 .custom-delete-button:hover {
   transform: scale(1.03);
 }
 
-.darktheme .return-list-button {
-  background-color: $umami-grey-medium;
+// Dark theme styles
+.darktheme {
+  .return-list-button {
+    background-color: $umami-grey-medium;
+  }
+}
+
+@media (max-width: $layout-breakpoint-small) {
+  .return-list-button {
+    margin-left: 0;
+  }
 }

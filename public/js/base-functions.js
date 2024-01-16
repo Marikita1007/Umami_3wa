@@ -1,4 +1,3 @@
-
 // Responsive navbar
 function responsiveNav() {
     let myTopnav = document.getElementById("myTopnav");
@@ -19,7 +18,6 @@ window.addEventListener('scroll', function(){
         document.getElementById('back-to-top').style.display = 'none';
     }
 });
-
 
 // Handle Dark Mode
 document.addEventListener('DOMContentLoaded', function () {

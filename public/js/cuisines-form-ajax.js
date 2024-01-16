@@ -1,7 +1,3 @@
-// TODO Make sure responseJSONis working !!
-// Comments everywhere
-// Create Form Constraint
-
 $(document).ready(function(){
     showAllCuisines();
 
@@ -23,16 +19,16 @@ $(document).ready(function(){
 /*
 This function will get all the cuisines
 */
-function showAllCuisines()
-{
+function showAllCuisines() {
     $.ajax({
         url: "/cuisines/list",
         method: "GET",
         success: function(response) {
             $("#js-cuisines-table-body").html("");
             let cuisines = response;
-            for (let i = 0; i < cuisines.length; i++)
-            {
+
+            // Reverse the loop to display the latest cuisine at the top
+            for (let i = cuisines.length - 1; i >= 0; i--) {
                 let editBtn =  '<button ' +
                     ' class="edit-button custom-button-icon" ' +
                     ' data-cuisine-id="' + cuisines[i].id + '"><i class="fas fa-edit"></i>' +
@@ -55,6 +51,7 @@ function showAllCuisines()
         }
     });
 }
+
 
 /*
 check if form submitted is for creating or updating
@@ -124,6 +121,11 @@ function storeCuisine()
             showAllCuisines();
             $("#form-modal").removeClass("show");
             $(".modal-overlay").removeClass("show");
+
+            // Remove success message after 3 seconds
+            setTimeout(function() {
+                $("#alert-div").empty();
+            }, 3000);
         },
         error: function(response) {
             /*
@@ -165,12 +167,17 @@ function updateCuisine()
         data: data,
         success: function(response) {
             $("#js-save-cuisine-button").prop('disabled', false);
-            let successHtml = '<div class="alert-success-message" role="alert"><b>Cuisine Name Updated Successfully</b></div>';
+            let successHtml = '<div class="alert-success-message" role="alert">Cuisine Name Updated Successfully</div>';
             $("#alert-div").html(successHtml);
             $("#name").val("");
             showAllCuisines();
             $("#form-modal").removeClass("show");
             $(".modal-overlay").removeClass("show");
+
+            // Remove success message after 3 seconds
+            setTimeout(function() {
+                $("#alert-div").empty();
+            }, 3000);
         },
         error: function(response) {
             /*
@@ -214,18 +221,54 @@ function createCuisines() {
 /*
 delete record function
 */
-function destroyCuisine(id)
-{
-    $.ajax({
-        url: "/cuisines/delete/" + id,
-        method: "DELETE",
-        success: function(response) {
-            let successHtml = '<div class="alert-success-message" role="alert"><b>Cuisine Deleted Successfully</b></div>';
-            $("#alert-div").html(successHtml);
-            showAllCuisines();
-        },
-        error: function(response) {
-            console.log(response.responseJSON)
-        }
-    });
+
+function showConfirmationModal() {
+    document.getElementById('confirmation-modal').style.display = 'block';
 }
+
+function hideConfirmationModal() {
+    document.getElementById('confirmation-modal').style.display = 'none';
+}
+
+function confirmDelete() {
+    hideConfirmationModal();
+    // Proceed with the delete operation
+    if (typeof confirmDeleteHandler === 'function') {
+        confirmDeleteHandler();
+    }
+}
+
+function cancelDelete() {
+    hideConfirmationModal();
+    // Do nothing or handle cancellation as needed
+}
+
+// Variable to hold the delete operation handler
+let confirmDeleteHandler = null;
+
+function destroyCuisine(id) {
+    // Set up the confirmation modal before making the AJAX request
+    showConfirmationModal();
+
+    // Handle the delete operation in the confirmDelete function
+    confirmDeleteHandler = function () {
+        $.ajax({
+            url: "/cuisines/delete/" + id,
+            method: "DELETE",
+            success: function(response) {
+                let successHtml = '<div class="alert-success-message" role="alert">Cuisine Deleted Successfully</div>';
+                $("#alert-div").html(successHtml);
+                showAllCuisines();
+
+                // Remove success message after 5 seconds
+                setTimeout(function() {
+                    $("#alert-div").empty();
+                }, 5000);
+            },
+            error: function(response) {
+                console.log(response.responseJSON);
+            }
+        });
+    }
+}
+

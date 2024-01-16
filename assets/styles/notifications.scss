@@ -1,6 +1,6 @@
 @import 'base';
 
-body[data-route="notification"] {
+body[data-route="notifications"] {
 
   .custom-container {
     text-align: center;
@@ -16,12 +16,11 @@ body[data-route="notification"] {
 
     p {
       margin-bottom: 1.25em;
-      @extend .font-weight-bold
     }
 
     .custom-button-wide {
-      color: $umami-grey;
-      @extend .font-weight-bold
+      //use @mixin link-styles from base.scss
+      @include link-styles($umami-grey);
     }
 
     @media (max-width: 768px) {

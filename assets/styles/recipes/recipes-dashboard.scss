@@ -4,14 +4,13 @@ body[data-route="recipes_dashboard"] {
 
   .recipes-dashboard {
     border-collapse: collapse;
-
-    /* Border styles for table, th, and td */
     cursor: pointer;
     display: inline-block;
     font-weight: bold;
     height: auto;
     margin: 18px;
 
+    // Border styles for table, th, and td
     .dashboard-top {
       border: none;
       display: flex;
@@ -19,15 +18,10 @@ body[data-route="recipes_dashboard"] {
     }
 
     table {
-      margin: 30px 15px;/* margin top/bottom and side of recipes table */
+      margin: 30px 15px; // Margin top/bottom and side of recipes table
 
-      .action-buttons {
-        display: flex;
-      }
-
-      /* Image styles */
+      // Image styles
       img {
-        /* List recipe image maximum size */
         margin: 0 5px;
         max-width: 100px;
         opacity: 0.8;
@@ -36,30 +30,70 @@ body[data-route="recipes_dashboard"] {
         text-decoration: none;
       }
 
-      th {
-        background-color: $umami-white-background;/* Background color for th */
-        text-align: center;
-      }
-
       th, td {
         border: 1px solid $umami-grey-light;
         min-width: 80px;
+        text-align: center;
       }
 
       tr:nth-child(even) {
-        background-color: $umami-white-background;/* Background color for even rows */
+        background-color: $umami-white-background; // Background color for even rows
       }
 
       tr:nth-child(odd) {
-        background-color: $umami-white;/* Background color for odd rows */
+        background-color: $umami-white; // Background color for odd rows
       }
 
       td:first-child, td:nth-child(2) {
         text-align: center; // Centered ID and name of recipes table
       }
 
-      // TODO MARIKA Change responsive title design !!!
-      @media (max-width: 600px) {
+      // Pagination
+      .pagination-container {
+        align-items: center;
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 20px;
+
+        span {
+          line-height: 36px;
+          margin: 0 5px;
+        }
+      }
+
+      // Form for pagination
+      .pagination-form {
+        margin-top: 20px;
+
+        label {
+          margin-right: 10px;
+        }
+
+        select {
+          border: 1px solid $umami-white;
+          border-radius: 4px;
+          cursor: pointer;
+          font-size: 14px;
+          padding: 8px;
+        }
+      }
+
+      // Dark theme styles for table
+      .darktheme .recipes-dashboard {
+        table {
+          th {
+            background-color: $umami-grey-medium; // Background color for th
+          }
+
+          tr:nth-child(even),
+          tr:nth-child(odd) {
+            background-color: $umami-grey; // Background color for even and odd rows
+          }
+        }
+      }
+
+      // Responsive design for small screens
+      @media (max-width: 768px) {
         display: block;
 
         img {
@@ -67,14 +101,14 @@ body[data-route="recipes_dashboard"] {
           text-align: center;
         }
 
-        th, td {
-          display: block;
-          width: 100%;
-          text-align: left;
+        .actions-buttons {
+          display: flex;
+          justify-content: center; // Center action buttons for both views
         }
 
-        th {
-          text-align: left;
+        td {
+          display: grid;
+          width: 100%;
         }
 
         .dashboard-top {
@@ -90,59 +124,26 @@ body[data-route="recipes_dashboard"] {
           }
         }
 
-        td:first-child, td:nth-child(2) {
-          text-align: left;
+        td::before {
+          // Display data-label as each block name
+          content: attr(data-label);
         }
 
-      }
-    }
+        td:first-child, td:nth-child(2) {
+          text-align: center;
+        }
 
-    // Pagination
-    .pagination-container {
-      align-items: center;
-      display: flex;
-      justify-content: flex-end;
-      margin-top: 20px;
+        // Hide thead and add styles for tbody tr
+        thead {
+          display: none;
+        }
 
-      span {
-        line-height: 36px;
-        margin: 0 5px;
-      }
-    }
-
-    /* Form for pagination */
-    .pagination-form {
-      margin-top: 20px;
-
-      label {
-        margin-right: 10px;
-      }
-
-      select {
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 14px;
-        padding: 8px;
-      }
-    }
-  }
-
-  /* Dark theme styles for table */
-  .darktheme .recipes-dashboard {
-    table {
-      th {
-        background-color: $umami-grey-medium; /* Background color for th */
-      }
-
-      tr:nth-child(even) {
-        background-color: $umami-grey; /* Background color for even rows */
-      }
-
-      tr:nth-child(odd) {
-        background-color: $umami-grey; /* Background color for odd rows */
+        tbody tr {
+          border-bottom: 3px solid $umami-white;
+          display: block;
+          margin-bottom: .625em;
+        }
       }
     }
   }
 }
-
