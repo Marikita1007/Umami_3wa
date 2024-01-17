@@ -39,6 +39,8 @@
         {% endblock %}
 
         {% block javascripts %}
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+            <script src="{{ asset('js/base-functions.js') }}"></script>
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
@@ -67,7 +69,5 @@
             {% endblock %}
         </main>
         {% include 'footer.html.twig' %}
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-        <script src="{{ asset('js/base-functions.js') }}"></script>
     </body>
 </html>

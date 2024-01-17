@@ -95,19 +95,18 @@
     }
 
     .topnav a {
-      font-size: 0.6em;
-    }
-
-    /* This is used to hide all navigation links except the first one for responsiveness */
-    .topnav a:not(:first-child) {
-      border: none;
-      display: none;
+      font-size: 0.7em;
     }
 
     .topnav a.icon {
       display: block;
       float: right;
     }
+
+    .menu-item {
+      margin: 0.3em;
+    }
+
   }
 
   @media screen and (max-width: $layout-breakpoint-small) {
@@ -140,6 +139,9 @@
       float: none;
       text-align: left;
     }
-  }
 
+    .topnav.responsive .menu-button-box {
+      border: none;
+    }
+  }
 }

@@ -1,38 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {# This is before adding aria-labelledby TODO MARIKA DLETE after cleaning !!!   #}
-{#    <section class="home-section">#}
-{#        <div class="container-small">#}
-{#            <article class="block block-last">#}
-{#                <div class="block-body">#}
-{#                    <h2 class="title">Popular Cuisines</h2>#}
-{#                </div>#}
-{#            </article>#}
-{#            {% if topSevenCuisines is not empty %}#}
-{#                <nav class="ingredients-menu">#}
-{#                    {% for cuisine in topSevenCuisines %}#}
-{#                        <a href="{{ path('app_recipes_all_filters', {'cuisineId': cuisine.id}) }}">{{ cuisine.name }}</a>#}
-{#                    {% endfor %}#}
-{#                </nav>#}
-{#            {% endif %}#}
-{#        </div>#}
-{#        {%  if differentCuisines is not empty %}#}
-{#            <div class="container">#}
-{#                <div class="menu-summary" id="menu">#}
-{#                    {% for differentCuisine in differentCuisines %}#}
-{#                        <article class="menu-summary-item">#}
-{#                            <img src="{{ asset('uploads/images/' ~ differentCuisine.image) }}" alt="{{ differentCuisine.name }}" class="menu-summary-img">#}
-{#                            <h3 class="menu-summary-title">{{ differentCuisine.name }}</h3>#}
-{#                            <p>{{ differentCuisine.description }}</p>#}
-{#                            <div class="menu-summary-infos">{{ differentCuisine.cuisine }}</div>#}
-{#                        </article>#}
-{#                    {% endfor %}#}
-{#                </div>#}
-{#            </div>#}
-{#        {% endif %}#}
-{#    </section>#}
-
 
    {#  aria-labelledby associates the section with name "popularCuisinesHeading"  #}
     <section class="home-section" role="region" aria-labelledby="popularCuisinesHeading">
@@ -57,55 +25,19 @@
         {% if differentCuisines is not empty %}
             <!-- Container for Different Cuisines -->
             <div class="container" role="region">
-                <div class="menu-summary" id="menu" role="list">
+                <div class="recipe-summary" id="menu" role="list">
                     {% for differentCuisine in differentCuisines %}
-                        <article class="menu-summary-item" role="listitem">
-                            <img src="{{ asset('uploads/images/' ~ differentCuisine.image) }}" alt="{{ differentCuisine.name }}" class="menu-summary-img">
-                            <h3 class="menu-summary-title">{{ differentCuisine.name }}</h3>
+                        <article class="recipe-summary-item" role="listitem">
+                            <img src="{{ asset('uploads/images/' ~ differentCuisine.image) }}" alt="{{ differentCuisine.name }}" class="recipe-summary-img">
+                            <h3 class="recipe-summary-title">{{ differentCuisine.name }}</h3>
                             <p>{{ differentCuisine.description }}</p>
-                            <div class="menu-summary-infos">{{ differentCuisine.cuisine }}</div>
+                            <div class="recipe-summary-infos">{{ differentCuisine.cuisine }}</div>
                         </article>
                     {% endfor %}
                 </div>
             </div>
         {% endif %}
     </section>
-
-    {# This is before adding aria-labelledby TODO MARIKA DLETE after cleaning !!!   #}
-{#    <section class="home-section">#}
-{#        <div  class="container-small">#}
-{#            <article  class="block block-last">#}
-{#                <div class="block-body">#}
-{#                    <h2 class="title">Top Picks: Delectable Recipes</h2>#}
-{#                </div>#}
-{#            </article>#}
-{#        </div>#}
-
-{#        <article  class="block block-left">#}
-{#            <div class="block-img">#}
-{#                <img src="{{ asset('images/burger.jpg') }}" alt="Delicious burger">#}
-{#            </div>#}
-{#            <div class="block-body">#}
-{#                <h2 class="title"><span>Discover</span> our top recipes</h2>#}
-{#                <p>#}
-{#                    Attending a trade show can be a very effective method of promoting your company and its products. And one of the most effective ways to optimize your trade show display and increase traffic to your booth is through the use of banner stands.#}
-{#                </p>#}
-{#                <a href="" class="more">See more</a>#}
-{#            </div>#}
-{#        </article >#}
-{#        <article class="block block-right">#}
-{#            <div class="block-img">#}
-{#                <img src="{{ asset('images/crusted-chicken.jpg') }}" alt="Delicious crusted chicken">#}
-{#            </div>#}
-{#            <div class="block-body">#}
-{#                <h2 class="title"><span>Discover</span> our top recipes</h2>#}
-{#                <p>#}
-{#                    Attending a trade show can be a very effective method of promoting your company and its products. And one of the most effective ways to optimize your trade show display and increase traffic to your booth is through the use of banner stands.#}
-{#                </p>#}
-{#                <a href="" class="more">See more</a>#}
-{#            </div>#}
-{#        </article>#}
-{#    </section>#}
 
     <section class="home-section" role="region" aria-labelledby="topPicksHeading">
         <!-- Section for TOP PICKS Cuisines -->
@@ -144,39 +76,6 @@
         </article>
     </section>
 
-{# This is before adding aria-labelledby TODO MARIKA DLETE after cleaning !!!   #}
-{#    <section class="home-section">#}
-{#        <div class="container-small">#}
-{#            <article class="block block-last">#}
-{#                <header>#}
-{#                    <h2 class="title">Menu Inspirations</h2>#}
-{#                </header>#}
-{#            </article>#}
-
-{#            <div class="container-small flex-content">#}
-{#                <ul class="card-container" role="list">#}
-{#                    {% for recipe in sixRecipes %}#}
-{#                        <li class="custom-card" role="listitem">#}
-{#                            <a href="{{ path('show_recipe', {id: recipe.id}) }}">#}
-{#                                <figure>#}
-{#                                    {% if recipe.image %}#}
-{#                                        <img src="{{ asset('uploads/images/' ~ recipe.image) }}" alt="{{ recipe.name }}">#}
-{#                                    {% else %}#}
-{#                                        <i class="fa-solid fa-eye-slash fa-2xl" aria-label="No image available"></i>#}
-{#                                    {% endif %}#}
-{#                                    <figcaption>#}
-{#                                        <h4>{{ recipe.name }}</h4>#}
-{#                                        <p>{{ recipe.description|slice(0, 50) }}...<a href="{{ path('show_recipe', {id: recipe.id}) }}"><b>See More</b></a></p>#}
-{#                                    </figcaption>#}
-{#                                </figure>#}
-{#                            </a>#}
-{#                        </li>#}
-{#                    {% endfor %}#}
-{#                </ul>#}
-{#            </div>#}
-{#        </div>#}
-{#    </section>#}
-
     <section class="home-section" role="region" aria-labelledby="recipeInspirationsHeading">
         <!-- Section for Cuisine Inspirations -->
         <div class="container-small">
@@ -189,7 +88,17 @@
             <div class="container-small flex-content">
                 <ul class="card-container" role="list">
                     {% for recipe in sixRecipes %}
+
                         <li class="custom-card" role="listitem">
+                            {% if app.user and 'ROLE_USER' in app.user.roles %}
+                                <div class="like-container">
+                                    {% if recipe.getLikedUsers().contains(app.user) %}
+                                        <i class="fa-solid fa-heart like-icon liked" data-recipe-id="{{ recipe.id }}"></i>
+                                    {% else %}
+                                        <i class="fa-regular fa-heart like-icon" data-recipe-id="{{ recipe.id }}"></i>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
                             <a href="{{ path('show_recipe', {id: recipe.id}) }}">
                                 <figure>
                                     {% if recipe.image %}
@@ -206,11 +115,11 @@
                         </li>
                     {% endfor %}
                 </ul>
+                <a href="{{ path('app_recipes_all_filters') }}" class="button-show-all">See All Recipes<i class="fa-solid fa-arrow-right-from-bracket"></i></a>
             </div>
         </div>
     </section>
-
-
+    <script src="{{ asset('js/show_like.js') }}"></script>
 {% endblock %}
 
 {# Set route-data for scss #}

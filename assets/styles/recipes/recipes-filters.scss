@@ -12,13 +12,12 @@ body[data-route="recipes_filters"] {
       padding: 1.25em;
       box-sizing: border-box;
 
-      h2 {
-        font-size: 1.2em;
-        font-weight: bold;
+      .custom-button-wide {
+        margin: 0;
+      }
 
-        i {
-          padding-right: 0.3em;
-        }
+      h2 {
+        text-transform: none;
       }
     }
 
@@ -41,12 +40,14 @@ body[data-route="recipes_filters"] {
       text-align: center;
     }
 
-    @media (max-width: $layout-breakpoint-medium) {
+    @media (max-width: $layout-breakpoint-small) {
       flex-direction: column;
 
       .left-sidebar, .right-content {
         flex: 1;
         order: initial; /* Reset the order for larger screens */
+        padding: 0;
+        margin: 1em;
       }
     }
   }

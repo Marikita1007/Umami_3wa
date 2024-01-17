@@ -33,20 +33,28 @@
     font-weight: bold;
   }
 
-  // Media queries for responsiveness
-  @media screen and (min-width: 48rem) {
-    // 768px
+  .footer-credits {
+    text-align: center;
+  }
+
+}
+
+// Media queries for responsiveness
+
+@media screen and (max-width: $layout-breakpoint-small) {
+
+  footer {
     .footer-columns {
-      flex-wrap: nowrap; // Prevent columns from wrapping on larger screens
+      flex-wrap: wrap; // Prevent columns from wrapping on larger screens
     }
 
     .footer-column {
       width: 18.75rem;
       margin-right: 3.125rem;
     }
-  }
-}
 
-.footer-credits {
-  text-align: center;
+    img {
+      max-width: 100px;
+    }
+  }
 }

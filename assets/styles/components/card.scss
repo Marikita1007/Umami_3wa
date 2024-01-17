@@ -1,10 +1,11 @@
 @import '../base';
 
 /* Mixin for card styles */
-@mixin card-styles($width: 30%, $min-width: 230px, $hover-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2)) {
+@mixin card-styles($width: 30%, $max-width: 330px, $min-width: 230px, $hover-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2)) {
   border-radius: 5px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   margin: 10px;
+  max-width: $max-width;
   min-width: $min-width;
   overflow: hidden;
   transition: 0.3s;
@@ -24,8 +25,20 @@
   img {
     border-radius: 5px;
     width: 100%;
-    height: 220px;
+    height: 220px; // Set a fixed height for the image
     object-fit: fill;
+  }
+
+  .like-container {
+    cursor: pointer;
+    margin: inherit; // Put Like icon inside the image
+    position: absolute;
+
+    .like-icon {
+      &.liked {
+        color: $umami-red; // Apply the color for the liked state
+      }
+    }
   }
 }
 
