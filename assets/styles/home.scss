@@ -26,33 +26,35 @@ body[data-route="home"] {
         display: inline-block;
         margin: 0 5px;
         position: relative;
+
+        &::after {
+          content: '';
+          display: block;
+          position: absolute;
+          bottom: 5px;
+          left: 0;
+          right: 0;
+          height: 1px;
+          opacity: 0;
+          background: $umami-blue-dark;
+          transition: .3s;
+        }
+
+        &.active::after, &:hover::after {
+          bottom: 0;
+          opacity: 1;
+        }
       }
 
-      //ingredients...means food categories  MARIKA
-      .ingredients-menu a::after {
-        content: '';
-        display: block;
-        position: absolute;
-        bottom: 5px;
-        left: 0;
-        right: 0;
-        height: 1px;
-        opacity: 0;
-        background: $umami-blue-dark;
-        transition: .3s;
-      }
-
-      .ingredients-menu .active::after, .ingredients-menu a:hover::after {
-        bottom: 0;
-        opacity: 1;
-      }
-
-      // This is a css for cards
+      // This is a CSS for cards
       .card-container {
         display: flex;
-        flex-wrap: wrap;
+        justify-content: center;
       }
+    }
 
+    .container-small:nth-child(2) {
+      @include centerFlexContainer;
     }
 
     .container {
@@ -60,51 +62,36 @@ body[data-route="home"] {
       padding: 0 20px;
       max-width: 1150px;
 
-      .menu-summary-img {
+      .recipe-summary-img {
         position: absolute;
         top: 0;
         left: 0;
         width: 100px;
       }
 
-      .menu-summary-title {
-        font-size: 1.125rem;
+      .recipe-summary-title {
         color: $umami-grey;
+        font-size: 1.125rem;
         font-weight: bold;
         padding-bottom: 0.75rem;
         margin-bottom: 0;
       }
 
-      .menu-summary p {
+      .recipe-summary p {
         margin: 0;
         padding-bottom: 1rem;
         font-size: 0.875rem;
       }
 
-      .menu-summary-infos {
+      .recipe-summary-infos {
         font-family: $umami-font-family-cursive, serif;
         color: $umami-blue-dark;
         font-size: 2.5rem;
         line-height: 1;
       }
-
-      .block-card {
-        width: 350px;
-
-        ol {
-          list-style: none;
-          padding: 0;
-          margin: 0;
-
-          .fa-star {
-            background-color: transparent;
-            border: none;
-          }
-        }
-      }
     }
 
-    .menu-summary-item {
+    .recipe-summary-item {
       position: relative;
       padding-left: 120px;
       margin-bottom: 30px;
@@ -122,26 +109,25 @@ body[data-route="home"] {
 
     .title {
       color: $umami-blue-dark;
-      font-size: 1.75rem;
+      font-size: 1.3em;
       line-height: 1.1;
       letter-spacing: 2px;
       font-weight: bold;
       text-align: center;
       text-transform: uppercase;
       margin: 1rem 0 0 0;
-    }
 
-    .title span {
-      font-family: $umami-blue;
-      color: $umami-blue-dark;
-      font-size: 2.5rem;
-      display:block;
-      text-transform: none;
+      span {
+        font-family: $umami-blue;
+        color: $umami-blue-dark;
+        font-size: 1em;
+        display: block;
+        text-transform: none;
+      }
     }
-
   }
 
-  @media only screen and (min-width: 800px) {
+  @media only screen and (min-width: $layout-breakpoint-medium) {
 
     .block {
       margin-bottom: 100px;
@@ -151,25 +137,20 @@ body[data-route="home"] {
       margin-bottom: 60px;
     }
 
-    //MARIKA  It was space between and changed to  justify-content: center;
     .block-left, .block-right {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      @include centerFlexContainer;
+
+      .block-body {
+        width: 445px;
+        flex: none;
+      }
     }
 
-    .block-img {
-      border: none;
-      position: relative;
-    }
-
-    .block-left .block-body, .block-right .block-body {
-      width: 445px;
-      flex: none;
+    .block-right > .block-img {
+      @include centerFlexContainer;
     }
 
     .block-img::before {
-      content: '';
       display: block;
       border: solid 1px $umami-blue-dark;
       position: absolute;
@@ -204,10 +185,10 @@ body[data-route="home"] {
 
     .title {
       margin-bottom: 1.2rem;
-    }
 
-    .title::before {
-      margin-bottom: 10px;
+      &::before {
+        margin-bottom: 10px;
+      }
     }
 
     .more {
@@ -219,7 +200,7 @@ body[data-route="home"] {
       margin: 0 32px;
     }
 
-    .menu-summary {
+    .recipe-summary {
       position: relative;
       padding: 85px 0;
       display: flex;
@@ -227,50 +208,44 @@ body[data-route="home"] {
       flex-wrap: wrap;
     }
 
-    .menu-summary-item {
+    .recipe-summary-item {
       padding-left: 192px;
       margin-bottom: 110px;
       width: calc(50% - 40px);
+
+      &:nth-child(even) {
+        text-align: right;
+        padding-left: 0;
+        padding-right:  192px;
+
+        .recipe-summary-img {
+          left: auto;
+          right: 0;
+        }
+
+        .recipe-summary-price {
+          margin-left: auto;
+        }
+      }
     }
 
-    .menu-summary-item:nth-child(even) {
-      text-align: right;
-      padding-left: 0;
-      padding-right:  192px;
-    }
-
-    .menu-summary-item:nth-child(even) .menu-summary-img {
-      left: auto;
-      right: 0;
-    }
-
-    .menu-summary-item:nth-child(even) .menu-summary-price {
-      margin-left: auto;
-    }
-
-    .menu-summary-img {
+    .recipe-summary-img {
       width: 160px;
     }
 
-    .menu-summary-title {
+    .recipe-summary-title {
       margin-top: 0;
       line-height: 1.2;
-      background: #FFF;
+      background: #FFFFFF;
     }
 
-    .menu-summary p {
-      background: #FFf;
+    .recipe-summary p {
+      background: #FFFFFF;
     }
 
-    .menu-summary-price {
-      padding-top: 4px;
-      width: 85px;
-      background: #FFF;
-    }
-
-    //Background Diamond
-    .menu-summary::before {
-      content:'';
+    // Background Diamond
+    .recipe-summary::before {
+      content: '';
       position: absolute;
       display: block;
       top: 60%;
@@ -281,54 +256,27 @@ body[data-route="home"] {
       transform: translate(-50%, -260px) rotate(45deg);
     }
 
-    .block-chief {
-      display: flex;
-      align-items: center;
-      margin-bottom: 0px;
+  }
+
+  @media only screen and (max-width: $layout-breakpoint-small ) {
+
+    .block-right, .block-left{
+      text-align: center;
     }
 
-    .block-chief .block-img::before {
-      display: none;
-    }
-
-    .block-chief .block-img {
-      flex: none;
-      width: 404px;
-      order: 2;
-    }
-
-    .reservation {
-      padding: 100px 0;
-    }
-
-    .reservation-form-row {
-      margin: 64px 0;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .reservation-form-row input, .reservation-form-row select {
-      width: calc(33.33% - 20px);
-      margin-bottom: 0;
-    }
-
-    .reservation .button {
-      width: calc(33.33% - 20px);
+    .block-right > .block-img, .block-left > .block-img {
+      @include centerFlexContainer;
     }
   }
 
-  /* Dark theme styles */
-  .darktheme .menu-summary .menu-summary-item {
-
-    h3 {
+    /* Dark theme styles */
+  .darktheme .recipe-summary .recipe-summary-item {
+    h3, p {
       background-color: $umami-grey-medium;
       color: $umami-white;
     }
-
-    p {
-      background-color: $umami-grey-medium;
-    }
   }
 }
+
 
 

@@ -3,11 +3,15 @@ function responsiveNav() {
     let myTopnav = document.getElementById("myTopnav");
     if (myTopnav.className === "topnav") {
         myTopnav.classList.add("responsive");
+
+        // Check and toggle dark mode if needed
+        const storedDarkMode = localStorage.getItem('darkMode');
+        const isDarkMode = storedDarkMode === 'true' || false;
+
     } else {
         myTopnav.className = "topnav";
     }
 }
-
 
 // Scroll and arrow appears
 window.addEventListener('scroll', function(){
@@ -29,14 +33,17 @@ document.addEventListener('DOMContentLoaded', function () {
     function updateBackgroundImages(isDarkMode) {
         const homeSection = document.querySelector('.home-section');
 
-        if (isDarkMode) {
-            homeSection.style.background = 'none';
-            // Apply a darkening filter
-            homeSection.style.filter = 'brightness(70%)'; // Adjust the percentage as needed
-        } else {
-            homeSection.style.background = 'fixed top 95px right 0 url(images/oranges.jpg) no-repeat, fixed top 640px left 0 url(images/spices.jpg) no-repeat';
-            // Remove the filter for the light mode
-            homeSection.style.filter = 'brightness(100%)';
+        // Check if the 'home-section' element exists and has a 'style' property
+        if (homeSection) {
+            if (isDarkMode) {
+                homeSection.style.background = 'none';
+                // Apply a darkening filter
+                homeSection.style.filter = 'brightness(70%)'; // Adjust the percentage as needed
+            } else {
+                homeSection.style.background = 'fixed top 95px right 0 url(images/oranges.jpg) no-repeat, fixed top 640px left 0 url(images/spices.jpg) no-repeat';
+                // Remove the filter for the light mode
+                homeSection.style.filter = 'brightness(100%)';
+            }
         }
     }
 
@@ -77,7 +84,6 @@ document.addEventListener('DOMContentLoaded', function () {
             footerContent.classList.add('darktheme');
         }
     }
-
 
 });
 

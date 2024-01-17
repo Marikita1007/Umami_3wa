@@ -18,6 +18,10 @@
     color: inherit;
     transform: scale(1.03);
   }
+
+  i {
+    margin-right: 3px;
+  }
 }
 
 // Mixin for small buttons
@@ -60,7 +64,6 @@
 // Button design to create a new Recipe
 .custom-button-wide {
   @include common-button-styles($umami-grey-light, $umami-grey);
-
 }
 
 // Icons button design
@@ -99,6 +102,15 @@
 // Style on hover
 .custom-delete-button:hover {
   transform: scale(1.03);
+}
+
+.button-show-all {
+  @include common-button-styles($umami-blue, $umami-grey);
+  border-radius: 30px;
+
+  i.fa-arrow-right-from-bracket {
+    margin-left: 5px; // Adjust the value as needed
+  }
 }
 
 // Dark theme styles

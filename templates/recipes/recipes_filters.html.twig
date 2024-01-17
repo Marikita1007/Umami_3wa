@@ -1,171 +1,180 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <section class="flex-container">
-        <!-- Left Sidebar for Filters -->
-        <div class="left-sidebar">
-            <h2><i class="fa-solid fa-filter"></i>Recipes Filters</h2>
-            {{ form_start(formFilterSearch) }}
-            {{ form_row(formFilterSearch.word) }}
-            <button type="submit" class="custom-button-wide">Search</button>
-            {{ form_end(formFilterSearch) }}
+<section class="flex-container">
+    <!-- Left Sidebar for Filters -->
+    <div class="left-sidebar">
+        <h2><i class="fa-solid fa-filter"></i>Recipes Filters</h2>
+        {{ form_start(formFilterSearch) }}
+        {{ form_row(formFilterSearch.word) }}
+        <button type="submit" class="custom-button-wide"><i class="fa-solid fa-magnifying-glass"></i></button>
+        {{ form_end(formFilterSearch) }}
 
-            {{ form_start(formCuisines) }}
-            {{ form_row(formCuisines.name) }}
-            <button type="submit" class="custom-button-wide">Search</button>
-            {{ form_end(formCuisines) }}
+        {{ form_start(formCuisines) }}
+        {{ form_row(formCuisines.name) }}
+        <button type="submit" class="custom-button-wide"><i class="fa-solid fa-magnifying-glass"></i></button>
+        {{ form_end(formCuisines) }}
 
-            {{ form_start(formCategories) }}
-            {{ form_row(formCategories.name) }}
-            <button type="submit" class="custom-button-wide">Search bobo</button>
-            {{ form_end(formCategories) }}
-        </div>
+        {{ form_start(formCategories) }}
+        {{ form_row(formCategories.name) }}
+        <button type="submit" class="custom-button-wide"><i class="fa-solid fa-magnifying-glass"></i></button>
+        {{ form_end(formCategories) }}
+    </div>
 
 
-        {# Right Content for Recipes #}
-        <div class="right-content">
-            <h1>Recipes Search Results</h1>
+    {# Right Content for Recipes #}
+    <div class="right-content">
+        <h1>Recipes Search Results</h1>
 
-            {% if recipesByWord is defined and theMealDbMealsByName|length > 0 %}
-                <div class="flex-content">
-                    <ul class="card-container" role="list">
-                        {% if theMealDbMealsByName is defined and theMealDbMealsByName|length > 0 %}
-                            {% for meal in theMealDbMealsByName.meals %}
-                                <li class="custom-card" role="listitem">
-                                    <a href="{{ path('show_the_meal_db_recipe', {idMeal: meal.idMeal}) }}">
-                                        <figure>
-                                            {% if meal.strMealThumb %}
-                                                <img src="{{ meal.strMealThumb }}" alt="{{ meal.strMeal }}">
-                                            {% else %}
-                                                <i class="fa-solid fa-eye-slash fa-2xl" aria-label="No image available"></i>
-                                            {% endif %}
-                                            <figcaption>
-                                                <h4>{{ meal.strMeal }}</h4>
-                                                <p>{{ meal.strInstructions|slice(0, 50) }}...</p>
-                                                <p>See more...</p>
-                                            </figcaption>
-                                        </figure>
-                                    </a>
-                                </li>
-                            {% endfor %}
-                        {% endif %}
-
-                        {% for recipe in recipesByWord %}
-                            {{ _self.renderRecipeCard(recipe) }}
+        {% if recipesByWord is defined and theMealDbMealsByName|length > 0 %}
+            <div class="flex-content">
+                <ul class="card-container" role="list">
+                    {% if theMealDbMealsByName is defined and theMealDbMealsByName|length > 0 %}
+                        {% for meal in theMealDbMealsByName.meals %}
+                            <li class="custom-card" role="listitem">
+                                <a href="{{ path('show_the_meal_db_recipe', {idMeal: meal.idMeal}) }}">
+                                    <figure>
+                                        {% if meal.strMealThumb %}
+                                            <img src="{{ meal.strMealThumb }}" alt="{{ meal.strMeal }}">
+                                        {% else %}
+                                            <i class="fa-solid fa-eye-slash fa-2xl" aria-label="No image available"></i>
+                                        {% endif %}
+                                        <figcaption>
+                                            <h4>{{ meal.strMeal }}</h4>
+                                            <p>{{ meal.strInstructions|slice(0, 50) }}...</p>
+                                            <p>See more...</p>
+                                        </figcaption>
+                                    </figure>
+                                </a>
+                            </li>
                         {% endfor %}
-                    </ul>
-                </div>
-            {% elseif recipesByCuisine is defined and recipesByCuisine|length > 0 %}
-                <div class="flex-content">
-                    <ul class="card-container" role="list">
-
-                        {% if theMealDbMealsByCuisine is defined and theMealDbMealsByCuisine|length > 0 %}
-                            {% for meal in theMealDbMealsByCuisine.meals %}
-                                <li class="custom-card" role="listitem">
-                                    <a href="{{ path('show_the_meal_db_recipe', {idMeal: meal.idMeal}) }}">
-                                        <figure>
-                                            {% if meal.strMealThumb %}
-                                                <img src="{{ meal.strMealThumb }}" alt="{{ meal.strMeal }}">
-                                            {% else %}
-                                                <i class="fa-solid fa-eye-slash fa-2xl" aria-label="No image available"></i>
-                                            {% endif %}
-                                            <figcaption>
-                                                <h4>{{ meal.strMeal }}</h4>
-                                                <p>See more {{ meal.strMeal }} Details...</p>
-                                            </figcaption>
-                                        </figure>
-                                    </a>
-                                </li>
-                            {% endfor %}
-                        {% endif %}
-
-                        {% for recipe in recipesByCuisine %}
-                            {{ _self.renderRecipeCard(recipe) }}
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% elseif recipesByCategories is defined and recipesByCategories|length > 0 %}
-                <div class="flex-content">
-                    <ul class="card-container" role="list">
-
-                        {% if theMealDbMealsByCategory is defined and theMealDbMealsByCategory|length > 0 %}
-                            {% for meal in theMealDbMealsByCategory.meals %}
-                                <li class="custom-card" role="listitem">
-                                    <a href="{{ path('show_the_meal_db_recipe', {idMeal: meal.idMeal}) }}">
-                                        <figure>
-                                            {% if meal.strMealThumb %}
-                                                <img src="{{ meal.strMealThumb }}" alt="{{ meal.strMeal }}">
-                                            {% else %}
-                                                <i class="fa-solid fa-eye-slash fa-2xl" aria-label="No image available"></i>
-                                            {% endif %}
-                                            <figcaption>
-                                                <h4>{{ meal.strMeal }}</h4>
-                                                <p>See more {{ meal.strMeal }} Details...</p>
-                                            </figcaption>
-                                        </figure>
-                                    </a>
-                                </li>
-                            {% endfor %}
-                        {% endif %}
-
-                        {% for recipe in recipesByCategories %}
-                            {{ _self.renderRecipeCard(recipe) }}
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% elseif recipes is defined and recipes|length > 0 %}
-                <div class="flex-content">
-                    <ul class="card-container" role="list">
-
-                        {% if theMealDbRecipe is defined and theMealDbRecipe|length > 0 %}
-                            {% for meal in theMealDbRecipe.meals %}
-                                <li class="custom-card" role="listitem">
-                                    <a href="{{ path('show_the_meal_db_recipe', {idMeal: meal.idMeal}) }}">
-                                        <figure>
-                                            {% if meal.strMealThumb %}
-                                                <img src="{{ meal.strMealThumb }}" alt="{{ meal.strMeal }}">
-                                            {% else %}
-                                                <i class="fa-solid fa-eye-slash fa-2xl" aria-label="No image available"></i>
-                                            {% endif %}
-                                            <figcaption>
-                                                <h4>{{ meal.strMeal }}</h4>
-                                                <p>{{ meal.strInstructions|slice(0, 50) }}...See More</p>
-                                            </figcaption>
-                                        </figure>
-                                    </a>
-                                </li>
-                            {% endfor %}
-                        {% endif %}
-
-                        {% for recipe in recipes %}
-                            {{ _self.renderRecipeCard(recipe) }}
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% else %}
-                <p>We couldn't find the recipes you're looking for. Sorry about that!</p>
-            {% endif %}
-            </div>
-    </section>
-
-    {% macro renderRecipeCard(recipe) %}
-        <li class="custom-card" role="listitem">
-            <a href="{{ path('show_recipe', {id: recipe.id}) }}">
-                <figure>
-                    {% if recipe.image %}
-                        <img src="{{ asset('uploads/images/' ~ recipe.image) }}" alt="{{ recipe.name }}">
-                    {% else %}
-                        <i class="fa-solid fa-eye-slash fa-2xl" aria-label="No image available"></i>
                     {% endif %}
-                    <figcaption>
-                        <h4>{{ recipe.name }}</h4>
-                        <p>{{ recipe.description|slice(0, 50) }}...<a href="{{ path('show_recipe', {id: recipe.id}) }}">See More</a></p>
-                    </figcaption>
-                </figure>
-            </a>
-        </li>
-    {% endmacro %}
 
+                    {% for recipe in recipesByWord %}
+                        {{ _self.renderRecipeCard(recipe) }}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% elseif recipesByCuisine is defined and recipesByCuisine|length > 0 %}
+            <div class="flex-content">
+                <ul class="card-container" role="list">
+
+                    {% if theMealDbMealsByCuisine is defined and theMealDbMealsByCuisine|length > 0 %}
+                        {% for meal in theMealDbMealsByCuisine.meals %}
+                            <li class="custom-card" role="listitem">
+                                <a href="{{ path('show_the_meal_db_recipe', {idMeal: meal.idMeal}) }}">
+                                    <figure>
+                                        {% if meal.strMealThumb %}
+                                            <img src="{{ meal.strMealThumb }}" alt="{{ meal.strMeal }}">
+                                        {% else %}
+                                            <i class="fa-solid fa-eye-slash fa-2xl" aria-label="No image available"></i>
+                                        {% endif %}
+                                        <figcaption>
+                                            <h4>{{ meal.strMeal }}</h4>
+                                            <p>See more {{ meal.strMeal }} Details...</p>
+                                        </figcaption>
+                                    </figure>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% for recipe in recipesByCuisine %}
+                        {{ _self.renderRecipeCard(recipe) }}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% elseif recipesByCategories is defined and recipesByCategories|length > 0 %}
+            <div class="flex-content">
+                <ul class="card-container" role="list">
+
+                    {% if theMealDbMealsByCategory is defined and theMealDbMealsByCategory|length > 0 %}
+                        {% for meal in theMealDbMealsByCategory.meals %}
+                            <li class="custom-card" role="listitem">
+                                <a href="{{ path('show_the_meal_db_recipe', {idMeal: meal.idMeal}) }}">
+                                    <figure>
+                                        {% if meal.strMealThumb %}
+                                            <img src="{{ meal.strMealThumb }}" alt="{{ meal.strMeal }}">
+                                        {% else %}
+                                            <i class="fa-solid fa-eye-slash fa-2xl" aria-label="No image available"></i>
+                                        {% endif %}
+                                        <figcaption>
+                                            <h4>{{ meal.strMeal }}</h4>
+                                            <p>See more {{ meal.strMeal }} Details...</p>
+                                        </figcaption>
+                                    </figure>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% for recipe in recipesByCategories %}
+                        {{ _self.renderRecipeCard(recipe) }}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% elseif recipes is defined and recipes|length > 0 %}
+            <div class="flex-content">
+                <ul class="card-container" role="list">
+
+                    {% if theMealDbRecipe is defined and theMealDbRecipe|length > 0 %}
+                        {% for meal in theMealDbRecipe.meals %}
+                            <li class="custom-card" role="listitem">
+                                <a href="{{ path('show_the_meal_db_recipe', {idMeal: meal.idMeal}) }}">
+                                    <figure>
+                                        {% if meal.strMealThumb %}
+                                            <img src="{{ meal.strMealThumb }}" alt="{{ meal.strMeal }}">
+                                        {% else %}
+                                            <i class="fa-solid fa-eye-slash fa-2xl" aria-label="No image available"></i>
+                                        {% endif %}
+                                        <figcaption>
+                                            <h4>{{ meal.strMeal }}</h4>
+                                            <p>{{ meal.strInstructions|slice(0, 50) }}...See More</p>
+                                        </figcaption>
+                                    </figure>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% for recipe in recipes %}
+                        {{ _self.renderRecipeCard(recipe) }}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% else %}
+            <p>We couldn't find the recipes you're looking for. Sorry about that!</p>
+        {% endif %}
+    </div>
+</section>
+
+{% macro renderRecipeCard(recipe) %}
+<li class="custom-card" role="listitem">
+    {% if app.user and 'ROLE_USER' in app.user.roles %}
+        <div class="like-container">
+            {% if recipe.getLikedUsers().contains(app.user) %}
+                <i class="fa-solid fa-heart like-icon liked" data-recipe-id="{{ recipe.id }}"></i>
+            {% else %}
+                <i class="fa-regular fa-heart like-icon" data-recipe-id="{{ recipe.id }}"></i>
+            {% endif %}
+        </div>
+    {% endif %}
+    <a href="{{ path('show_recipe', {id: recipe.id}) }}">
+        <figure>
+            {% if recipe.image %}
+                <img src="{{ asset('uploads/images/' ~ recipe.image) }}" alt="{{ recipe.name }}">
+            {% else %}
+                <i class="fa-solid fa-eye-slash fa-2xl" aria-label="No image available"></i>
+            {% endif %}
+            <figcaption>
+                <h4>{{ recipe.name }}</h4>
+                <p>{{ recipe.description|slice(0, 50) }}...<a href="{{ path('show_recipe', {id: recipe.id}) }}">See More</a></p>
+            </figcaption>
+        </figure>
+    </a>
+</li>
+{% endmacro %}
+<script src="{{ asset('js/show_like.js') }}"></script>
 {% endblock %}
 
 {# Set route-data for scss #}

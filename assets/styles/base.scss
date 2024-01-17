@@ -34,6 +34,13 @@
   color: $umami-red;
 }
 
+// Mixin for centering flex container
+@mixin centerFlexContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 * {
   box-sizing: border-box;
 
@@ -126,7 +133,10 @@
 
   @media (max-width: $layout-breakpoint-small) {
     html {
-      font-size: 16px;
+      font-size: 1em;
+    }
+    h1, h2, h3 {
+      font-size: 1em;
     }
   }
 

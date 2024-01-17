@@ -62,10 +62,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $recipes;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Recipes::class)
+     * @ORM\JoinTable(name="user_likes",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="recipe_id", referencedColumnName="id")}
+     * )
+     */
+    private $likedRecipes;
+
     public function __construct() {
         $this->roles = ['ROLE_USER'];
         $this->comments = new ArrayCollection();
         $this->recipes = new ArrayCollection();
+        $this->likedRecipes = new ArrayCollection();
     }
 
     public function __toString()
@@ -270,6 +280,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $recipe->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Recipes>
+     */
+    public function getLikedRecipes(): Collection
+    {
+        return $this->likedRecipes;
+    }
+
+    public function addLikedRecipe(Recipes $likedRecipe): self
+    {
+        if (!$this->likedRecipes->contains($likedRecipe)) {
+            $this->likedRecipes[] = $likedRecipe;
+        }
+
+        return $this;
+    }
+
+    public function removeLikedRecipe(Recipes $likedRecipe): self
+    {
+        $this->likedRecipes->removeElement($likedRecipe);
 
         return $this;
     }

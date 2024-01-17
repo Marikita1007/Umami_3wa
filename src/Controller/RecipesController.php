@@ -24,6 +24,7 @@ use App\Services\SimpleUploadService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Types\IntegerType;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -609,6 +610,38 @@ class RecipesController extends AbstractController
             $new_photos->setName($new_photo);
             $recipe->addPhoto($new_photos);
         }
+    }
+
+    #[Route('/{id}/like', name: 'recipe_like', methods: ['GET', 'POST'])]
+    #[Security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')")]
+    public function recipeLike($id, LoggerInterface $logger, EntityManagerInterface $entityManager)
+    {
+        // Get the currently logged-in user
+        $user = $this->getUser();
+
+        // Get the recipe based on the provided $id
+        $recipe = $entityManager->getRepository(Recipes::class)->find($id);
+
+        // Check if the recipe exists
+        if (!$recipe) {
+            throw $this->createNotFoundException('Recipe not found');
+        }
+
+        // Check if the user has already liked the recipe
+        if ($user->getLikedRecipes()->contains($recipe)) {
+            // Remove the liked recipe from the user's collection
+            $user->removeLikedRecipe($recipe);
+            $liked = false;
+        } else {
+            // Add the liked recipe to the user's collection
+            $user->addLikedRecipe($recipe);
+            $liked = true;
+        }
+
+        // Persist the changes to the database
+        $entityManager->flush();
+
+        return $this->json(['liked' => $liked]);
     }
 }
 

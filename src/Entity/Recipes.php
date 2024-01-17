@@ -138,12 +138,18 @@ class Recipes
      */
     private $user;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="likedRecipes")
+     */
+    private $likedUsers;
+
     public function __construct()
     {
         $this->ingredients = new ArrayCollection();
         $this->photos = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->category = new ArrayCollection();
+        $this->likedUsers = new ArrayCollection();
     }
 
     public function __toString()
@@ -451,6 +457,33 @@ class Recipes
     {
         if ($this->category->removeElement($category)) {
             $category->removeRecipe($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getLikedUsers(): Collection
+    {
+        return $this->likedUsers;
+    }
+
+    public function addLikedUser(User $likedUser): self
+    {
+        if (!$this->likedUsers->contains($likedUser)) {
+            $this->likedUsers[] = $likedUser;
+            $likedUser->addLikedRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLikedUser(User $likedUser): self
+    {
+        if ($this->likedUsers->removeElement($likedUser)) {
+            $likedUser->removeLikedRecipe($this);
         }
 
         return $this;
