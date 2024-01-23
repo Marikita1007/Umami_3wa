@@ -43,9 +43,10 @@ class CuisinesRepository extends ServiceEntityRepository
     public function findTopSevenCuisines(): array
     {
         return $this->createQueryBuilder('c')
+            ->select('c', 'COUNT(r.id) as recipeCount')
             ->leftJoin('c.recipes', 'r')
             ->groupBy('c.id')
-            ->orderBy('COUNT(r.id)', 'DESC')
+            ->orderBy('recipeCount', 'DESC')
             ->setMaxResults(7)
             ->getQuery()
             ->getResult()

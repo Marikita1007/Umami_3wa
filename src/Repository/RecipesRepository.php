@@ -134,6 +134,18 @@ class RecipesRepository extends ServiceEntityRepository
         return $queryBuilder->getQuery()->getResult();
     }
 
+    public function findTopLikedRecipes(int $limit = 2): array
+    {
+        $queryBuilder= $this->createQueryBuilder('r')
+            ->select('r, COUNT(u.id) as likeCount')
+            ->leftJoin('r.likedUsers', 'u')
+            ->groupBy('r.id')
+            ->orderBy('likeCount', 'DESC')
+            ->setMaxResults($limit);
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return Recipes[] Returns an array of Recipes objects
 //     */

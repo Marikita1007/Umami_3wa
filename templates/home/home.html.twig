@@ -8,30 +8,33 @@
         <div class="container-small">
             <article class="block block-last">
                 <div class="block-body">
-                    <!-- Heading for Popular Cuisines Section -->
                     <h2 class="title" id="popularCuisinesHeading">Popular Cuisines</h2>
                 </div>
             </article>
+
             {% if topSevenCuisines is not empty %}
                 <!-- Navigation Menu for Popular Cuisines -->
                 <nav class="ingredients-menu" role="navigation" aria-label="Popular Cuisines Menu">
-                    {% for cuisine in topSevenCuisines %}
-                        <!-- Menu Item Link for Each Cuisine on top -->
-                        <a href="{{ path('app_recipes_all_filters', {'cuisineId': cuisine.id}) }}">{{ cuisine.name }}</a>
+                    {% for topSevenCuisine in topSevenCuisines %}
+                        {# Create a link to recipes filters page with an aria-label attribute #}
+                        <a href="{{ path('app_recipes_all_filters', {'cuisineId': topSevenCuisine[0].id}) }}" aria-label="{{ topSevenCuisine[0].name }}">{{ topSevenCuisine[0].name }}</a>
                     {% endfor %}
                 </nav>
             {% endif %}
+
         </div>
         {% if differentCuisines is not empty %}
             <!-- Container for Different Cuisines -->
-            <div class="container" role="region">
-                <div class="recipe-summary" id="menu" role="list">
+            <div class="container" role="region" aria-labelledby="menu-heading">
+                <div class="recipe-summary" id="menu">
                     {% for differentCuisine in differentCuisines %}
-                        <article class="recipe-summary-item" role="listitem">
-                            <img src="{{ asset('uploads/images/' ~ differentCuisine.thumbnail) }}" alt="{{ differentCuisine.name }}" class="recipe-summary-img">
-                            <h3 class="recipe-summary-title">{{ differentCuisine.name }}</h3>
-                            <p>{{ differentCuisine.description }}</p>
-                            <div class="recipe-summary-infos">{{ differentCuisine.cuisine }}</div>
+                        <article class="recipe-summary-item">
+                            <a href="{{ path('show_recipe', {'id': differentCuisine.id}) }}" aria-label="{{ differentCuisine.name }}">
+                                <img src="{{ asset('uploads/images/' ~ differentCuisine.thumbnail) }}" alt="{{ differentCuisine.name }}" class="recipe-summary-img">
+                                <h3 class="recipe-summary-title">{{ differentCuisine.name }}</h3>
+                                <p>{{ differentCuisine.description }}</p>
+                                <div class="recipe-summary-infos">{{ differentCuisine.cuisine }}</div>
+                            </a>
                         </article>
                     {% endfor %}
                 </div>
@@ -40,40 +43,48 @@
     </section>
 
     <section class="home-section" role="region" aria-labelledby="topPicksHeading">
-        <!-- Section for TOP PICKS Cuisines -->
+        <!-- Section for Popular Recipes -->
         <div class="container-small">
             <article class="block block-last">
                 <div class="block-body">
-                    <h2 class="title" id="topPicksHeading">Top Picks: Delectable Recipes</h2>
+                    <h2 class="title" id="topPicksHeading">Popular recipes</h2>
                 </div>
             </article>
         </div>
 
-        <article class="block block-left" role="article">
-            <div class="block-img">
-                <img src="{{ asset('images/burger.jpg') }}" alt="Delicious burger">
-            </div>
-            <div class="block-body">
-                <h2 class="title"><span>Discover</span> our top recipes</h2>
-                <p>
-                    Attending a trade show can be a very effective method of promoting your company and its products. And one of the most effective ways to optimize your trade show display and increase traffic to your booth is through the use of banner stands.
-                </p>
-                <a href="#" class="more" aria-label="See more about top burger recipes">See more</a>
-            </div>
-        </article>
+        {% if topLikedRecipes is not empty %}
 
-        <article class="block block-right" role="article">
-            <div class="block-img">
-                <img src="{{ asset('images/crusted-chicken.jpg') }}" alt="Delicious crusted chicken">
-            </div>
-            <div class="block-body">
-                <h2 class="title"><span>Discover</span> our top recipes</h2>
-                <p>
-                    Attending a trade show can be a very effective method of promoting your company and its products. And one of the most effective ways to optimize your trade show display and increase traffic to your booth is through the use of banner stands.
-                </p>
-                <a href="#" class="more" aria-label="See more about top crusted chicken recipes">See more</a>
-            </div>
-        </article>
+            {# Loop through each topLikedRecipe in the topLikedRecipes array #}
+            {% for topLikedRecipe in topLikedRecipes %}
+
+                {# Set the classes to be used in a cycle for alternating styling #}
+                {% set cycleClasses = ['block-left', 'block-right'] %}
+                {# Use the cycle function to alternate between block-left and block-right classes #}
+                {% set blockClass = cycle(cycleClasses, loop.index0) %}
+
+                <article class="block {{ blockClass }}" role="article">
+                    {# Display the recipe thumbnail image with alt text set to the recipe name #}
+                    <div class="block-img">
+                        <img src="{{ asset('uploads/images/' ~ topLikedRecipe[0].thumbnail) }}" alt="{{ topLikedRecipe[0].name }}">
+                    </div>
+
+                    {# Display the title with the word "Discover" wrapped in a span for styling #}
+                    <div class="block-body">
+                        <h2 class="title"><span>Discover</span> our top recipes</h2>
+
+                        {# Display a shortened version of the recipe description #}
+                        <p>
+                            {% set words = topLikedRecipe[0].description|split(' ') %}
+                            {% set limitedWords = words|slice(0, 20)|join(' ') %}
+                            {{ limitedWords }}{% if words|length > 20 %}...{% endif %}
+                        </p>
+
+                        {# Create a link to the detailed recipe page with an aria-label attribute #}
+                        <a href="{{ path('show_recipe', {'id': topLikedRecipe[0].id}) }}" class="more" aria-label="{{ topLikedRecipe[0].name }}">See more</a>
+                    </div>
+                </article>
+            {% endfor %}
+        {% endif %}
     </section>
 
     <section class="home-section" role="region" aria-labelledby="recipeInspirationsHeading">

@@ -31,12 +31,22 @@ security:
                 require_previous_session: true
             logout: true
 
+            # Remember Me functionality in Symfony allows users to remain logged in even after their session expires,
+            # thanks to a secure cookie that is stored on their device.
             # Remember Me System https://symfonycasts.com/screencast/symfony-security/remember-me
             remember_me:
+                # The secret used for signing the remember me cookie
                 secret: '%kernel.secret%'
+
+                # Properties used to generate the hash for the cookie's signature
+                # In this case, only the user's password is used to generate the hash
                 signature_properties: [ password ]
+
+                # If set to true, the user will be remembered automatically on each request
                 always_remember_me: true
 
+            # Use the custom AccessDeniedHandler to handle access denied situations
+            access_denied_handler: app.access_denied_handler
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -62,3 +72,12 @@ when@test:
                 cost: 4 # Lowest possible value for bcrypt
                 time_cost: 3 # Lowest possible value for argon
                 memory_cost: 10 # Lowest possible value for argon
+
+services:
+
+    # Define a service for the custom AccessDeniedHandler
+    app.access_denied_handler:
+        class: App\Security\AccessDeniedHandler
+        arguments:
+            $router: '@router'
+        public: true

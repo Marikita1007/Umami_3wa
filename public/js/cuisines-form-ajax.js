@@ -28,6 +28,30 @@ function showAllCuisines() {
             $("#js-cuisines-table-body").html("");
             let cuisines = response;
 
+            // Sort cuisines in descending order based on ID
+            cuisines.sort(function(a, b) {
+                return b.id - a.id;
+            });
+
+            for (let i = 0; i < cuisines.length; i++) {
+                let editBtn =  '<button ' +
+                    ' class="edit-button custom-button-icon" ' +
+                    ' data-cuisine-id="' + cuisines[i].id + '"><i class="fas fa-edit"></i>' +
+                    '</button> ';
+                let deleteBtn =  '<button ' +
+                    ' class="delete-button custom-button-icon" ' +
+                    ' data-cuisine-id="' + cuisines[i].id + '"><i class="fas fa-trash-alt"></i>' +
+                    '</button>';
+
+                let cuisineRow = '<tr>' +
+                    '<td>' + cuisines[i].id + '</td>' +
+                    '<td>' + cuisines[i].name + '</td>' +
+                    '<td>' + editBtn + deleteBtn + '</td>' +
+                    '</tr>';
+
+                $("#js-cuisines-table-body").append(cuisineRow);
+            }
+
         },
         error: function(response) {
             console.log(response.responseJSON)
