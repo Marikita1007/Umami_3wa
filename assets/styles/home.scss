@@ -140,8 +140,12 @@ body[data-route="home"] {
     .block-left, .block-right {
       @include centerFlexContainer;
 
+      .block-img {
+        max-width: 350px;
+      }
+
       .block-body {
-        width: 445px;
+        width: 22em;
         flex: none;
       }
     }

@@ -96,6 +96,8 @@ class CuisinesController extends AbstractController
             return $this->json('No cuisines found for id' . $id, 404);
         }
 
+        $cuisines->setName($request->request->get('name'));
+
         // Validate the entity using Symfony's validator
         $errors = $validator->validate($cuisines);
 
@@ -109,7 +111,6 @@ class CuisinesController extends AbstractController
             return $this->json(['messages' => ['errors' => $errorMessages]], 400); // HTTP 400 Bad Request
         }
 
-        $cuisines->setName($request->request->get('name'));
         $entityManager->flush();
 
         $data = [

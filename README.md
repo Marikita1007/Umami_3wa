@@ -204,3 +204,9 @@ yarn watch
 ```
 
 5. This command will start the Webpack Encore build process and continuously watch for changes in your SCSS file. When changes are detected, the CSS file will be recompiled automatically.
+
+```bash
+yarn run build
+```
+
+6. If you update the `webpack.config.js` file, don't forget to run the command above to update your webpack file. 
