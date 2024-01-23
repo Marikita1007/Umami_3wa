@@ -17,10 +17,16 @@ class IngredientsType extends AbstractType
             ->add('name', TextType::class, [
                 'label' => 'Ingredient Name',
                 'help' => 'Insert at least one ingredient.',
+                'attr' => [
+                    'aria-label' => 'Ingredient Name',
+                ],
             ])
             ->add('amount', TextType::class, [
                 'label' => 'Amount of Ingredient',
                 'help' => 'Insert amount of the ingredient.',
+                'attr' => [
+                    'aria-label' => 'Amount of Ingredient',
+                ],
             ])
         ;
     }

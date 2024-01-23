@@ -161,8 +161,8 @@
     {% endif %}
     <a href="{{ path('show_recipe', {id: recipe.id}) }}">
         <figure>
-            {% if recipe.image %}
-                <img src="{{ asset('uploads/images/' ~ recipe.image) }}" alt="{{ recipe.name }}">
+            {% if recipe.thumbnail %}
+                <img src="{{ asset('uploads/images/' ~ recipe.thumbnail) }}" alt="{{ recipe.name }}">
             {% else %}
                 <i class="fa-solid fa-eye-slash fa-2xl" aria-label="No image available"></i>
             {% endif %}

@@ -24,7 +24,7 @@ class IngredientRecipeType extends AbstractType
                 'entry_options' => [
                     'attr' => ['class' => 'ingredients-box'],
                 ],
-                'csrf_protection' => true, //Enabling CSRF token TODO MARIKA Check if its needed
+                'csrf_protection' => true, //Enabling CSRF token
             ])
         ;
     }

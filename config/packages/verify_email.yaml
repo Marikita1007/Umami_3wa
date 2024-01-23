@@ -1,0 +1,3 @@
+# The registration email verification link will be valid for one hour.
+symfonycasts_verify_email:
+  lifetime: 3600

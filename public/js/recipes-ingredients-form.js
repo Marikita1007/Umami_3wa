@@ -60,8 +60,7 @@ $(document).ready(function(){
         const collectionPhoto = document.querySelector(e.currentTarget.dataset.collection);
 
         const item = document.createElement('div');
-        item.className = 'mt-3';
-
+        // item.className = 'mt-3'; //REFACTOR TODO MARIKA Don't use bootstrap
         const label = document.createElement("h4");
         label.innerHTML = "Photo " + (parseInt(collectionPhoto.dataset.index) + 1);
         collectionPhoto.appendChild(label);

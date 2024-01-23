@@ -28,14 +28,14 @@ class HomeController extends AbstractController
 
         $getRecipes = $this->recipesController->showRecipes(); // Call function to show recipes from database
 
-        // Get only the first 6 recipes to pass to the template
-        $sixRecipes = array_slice($getRecipes, 0, 6);
+        // Get only the first 9 recipes to pass to the template
+        $nineLatestRecipes = $recipesRepository->findlatestRecipes();
 
 
 
         return $this->render('home/home.html.twig', [
             'controller_name' => 'HomeController',
-            'sixRecipes' => $sixRecipes,
+            'nineLatestRecipes' => $nineLatestRecipes,
             'topSevenCuisines' => $cuisinesRepository->findTopSevenCuisines(),
             'differentCuisines' => $recipesRepository->differentCuisines(),
         ]);

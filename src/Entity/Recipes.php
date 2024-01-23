@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Gedmo\Mapping\Annotation as Gedmo; // MARIKA TODO This is for created_at updated_at
+use Gedmo\Mapping\Annotation as Gedmo; // This is for createdAt updatedAt
 
 /**
  * @ORM\Entity(repositoryClass=RecipesRepository::class)
@@ -56,19 +56,19 @@ class Recipes
      * @ORM\Column(type="datetime", nullable=false)
      * @Gedmo\Timestampable(on="create")
      */
-    private $created_at;
+    private $createdAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @Gedmo\Timestampable(on="create")
+     * @Gedmo\Timestampable(on="update")
      */
-    private $updated_at;
+    private $updatedAt;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="Recipe image can not be blank.")
+     * @Assert\NotBlank(message="Recipe thumbnail can not be blank.")
      */
-    private $image;
+    private $thumbnail;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -78,7 +78,7 @@ class Recipes
      *     message="The text cannot contain a minus."
      * )
      */
-    private $prep_time;
+    private $prepTime;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -93,7 +93,7 @@ class Recipes
      *      minMessage = "Cook time must be at least {{ limit }} minutes long",
      * )
      */
-    private $cook_time;
+    private $cookTime;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -123,7 +123,7 @@ class Recipes
     private Collection $photos;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="recipe")
+     * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="recipe", cascade={"persist", "remove"})
      */
     private Collection $comments;
 
@@ -162,8 +162,8 @@ class Recipes
      */
     public function setCreatedAtValue(): void
     {
-        $this->created_at = new \DateTimeImmutable();
-        $this->updated_at = new \DateTimeImmutable();
+        $this->createAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
     }
 
     /**
@@ -172,7 +172,7 @@ class Recipes
      */
     public function setUpdatedAtValue(): void
     {
-        $this->updated_at = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -218,48 +218,48 @@ class Recipes
 
     public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(?\DateTimeInterface $created_at): static
+    public function setCreatedAt(?\DateTimeInterface $createdAt): static
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     public function getUpdatedAt(): ?\DateTimeInterface
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $updated_at): static
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): static
     {
-        $this->updated_at = $updated_at;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
-    public function getImage(): ?string
+    public function getThumbnail(): ?string
     {
-        return $this->image;
+        return $this->thumbnail;
     }
 
-    public function setImage(?string $image): self
+    public function setThumbnail(?string $thumbnail): self
     {
-        $this->image = $image;
+        $this->thumbnail = $thumbnail;
 
         return $this;
     }
 
     public function getPrepTime(): ?int
     {
-        return $this->prep_time;
+        return $this->prepTime;
     }
 
-    public function setPrepTime(?int $prep_time): self
+    public function setPrepTime(?int $prepTime): self
     {
-        $this->prep_time = $prep_time;
+        $this->prepTime = $prepTime;
 
         return $this;
     }
@@ -278,12 +278,12 @@ class Recipes
 
     public function getCookTime(): ?int
     {
-        return $this->cook_time;
+        return $this->cookTime;
     }
 
-    public function setCookTime(?int $cook_time): self
+    public function setCookTime(?int $cookTime): self
     {
-        $this->cook_time = $cook_time;
+        $this->cookTime = $cookTime;
 
         return $this;
     }

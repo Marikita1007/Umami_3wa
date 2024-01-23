@@ -10,20 +10,21 @@
 
   &-columns {
     display: flex;
-    flex-wrap: wrap; // Allow columns to wrap to the next line on smaller screens
+    //flex-wrap: wrap; // Allow columns to wrap to the next line on smaller screens
     justify-content: space-between;
   }
 
   &-column {
     width: 100%; // Make each column take full width on smaller screens
-    margin-bottom: 1.25rem; // 20px
+    margin-bottom: 1.25rem;
 
     &:last-child {
       margin-bottom: 0; // Remove margin from the last column
     }
 
     img {
-      margin-bottom: 0.625rem; // 10px
+      margin-bottom: 0.625rem;
+      max-width: 200px;
     }
   }
 
@@ -44,6 +45,7 @@
 @media screen and (max-width: $layout-breakpoint-small) {
 
   footer {
+
     .footer-columns {
       flex-wrap: wrap; // Prevent columns from wrapping on larger screens
     }
@@ -55,6 +57,10 @@
 
     img {
       max-width: 100px;
+    }
+
+    &-columns {
+      flex-wrap: wrap; // Allow columns to wrap to the next line on smaller screens
     }
   }
 }

@@ -8,8 +8,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-#[IsGranted("ROLE_ADMIN")]
+#[IsGranted("ROLE_USER")]
 class CuisinesController extends AbstractController
 {
     #[Route("/cuisines", name: "cuisines", methods: ["GET"])]
@@ -59,12 +60,25 @@ class CuisinesController extends AbstractController
     }
 
     #[Route("/cuisines/new", name: "cuisines_new", methods: ["POST"])]
-    public function new(Request $request): Response
+    public function new(Request $request, ValidatorInterface $validator): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
 
         $cuisines = new Cuisines();
         $cuisines->setName($request->request->get('name'));
+
+        // Validate the entity using Symfony's validator
+        $errors = $validator->validate($cuisines);
+
+        if (count($errors) > 0) {
+            // There are validation errors
+            $errorMessages = [];
+            foreach ($errors as $error) {
+                $errorMessages[] = $error->getMessage();
+            }
+
+            return $this->json(['messages' => ['errors' => $errorMessages]], 400); // HTTP 400 Bad Request
+        }
 
         $entityManager->persist($cuisines);
         $entityManager->flush();
@@ -73,13 +87,26 @@ class CuisinesController extends AbstractController
     }
 
     #[Route("/cuisines/edit/{id}", name: "cuisines_edit", methods: ["PUT"])]
-    public function edit(Request $request, int $id): Response
+    public function edit(Request $request, int $id, ValidatorInterface $validator): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
         $cuisines = $entityManager->getRepository(cuisines::class)->find($id);
 
         if (!$cuisines) {
             return $this->json('No cuisines found for id' . $id, 404);
+        }
+
+        // Validate the entity using Symfony's validator
+        $errors = $validator->validate($cuisines);
+
+        if (count($errors) > 0) {
+            // There are validation errors
+            $errorMessages = [];
+            foreach ($errors as $error) {
+                $errorMessages[] = $error->getMessage();
+            }
+
+            return $this->json(['messages' => ['errors' => $errorMessages]], 400); // HTTP 400 Bad Request
         }
 
         $cuisines->setName($request->request->get('name'));

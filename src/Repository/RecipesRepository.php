@@ -119,8 +119,17 @@ class RecipesRepository extends ServiceEntityRepository
             ->setParameter('categories', $recipeCategories)
             ->andWhere('r.id != :recipeId')
             ->setParameter('recipeId', $recipeId)
-            ->orderBy('r.created_at', 'DESC') // Order by created_at in descending order
+            ->orderBy('r.createdAt', 'DESC') // Order by createdAt in descending order
             ->setMaxResults(3);
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    public function findlatestRecipes(int $limit = 9): array
+    {
+        $queryBuilder = $this->createQueryBuilder('r')
+            ->orderBy('r.createdAt', 'DESC') //Ordering by latest recipes calling createdAt
+            ->setMaxResults($limit);
 
         return $queryBuilder->getQuery()->getResult();
     }

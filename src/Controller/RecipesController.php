@@ -73,7 +73,7 @@ class RecipesController extends AbstractController
         // Get the current user and search the database for recipes related to that user.
         $recipes = $recipesRepository->findBy(
             ['user' => $this->getUser()],
-            ['created_at' => 'ASC'], // Order by creation date in descending order
+            ['createdAt' => 'ASC'], // Order by creation date in descending order
             $perPage,
             ($page - 1) * $perPage
         );
@@ -202,63 +202,6 @@ class RecipesController extends AbstractController
         ]);
     }
 
-//    /**
-//     * TODO MARIKA If edit both(recipes and ingredients) at same time is not a good solution, put this back
-//     * Controller method for creating a new recipe.
-//     *
-//     * - Authenticated users can create recipes via a recipe form.
-//     * - If not authenticated, it redirects to the login page with an error message.
-//     *
-//     * @Route("/new", name="new_recipe", methods={"GET", "POST"})
-//     * @Security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')")
-//     */
-//    public function createNewRecipe(EntityManagerInterface $entityManager, Request $request, SluggerInterface $slugger): Response
-//    {
-//        // Create a new Recipe entity
-//        $recipe = new Recipes();
-//
-//        // Set user id to logged in user id
-//        $user = $this->getUser();
-//
-//        if (!empty($user)) {
-//            $recipe->setUser($user); // set user entity
-//        } else {
-//            $this->addFlash('error', 'You must be logged in to create recipe.');
-//            return $this->redirectToRoute('/login'); // redirect user to login form
-//        }
-//
-//        // Create a form for the Recipe entity
-//        $form = $this->createForm(RecipesType::class, $recipe);
-//
-//        // Handle form submission
-//        $form->handleRequest($request);
-//
-//        if ($form->isSubmitted() && $form->isValid()) {
-//
-//            // Get the uploaded file
-//            $imageFile = $form['image']->getData();
-//
-//            // Check if a file was uploaded
-//            if ($imageFile) {
-//                $this->saveImage($imageFile, $slugger, $recipe);
-//            }
-//
-//            // Persist the Recipe entity
-//            $entityManager->persist($recipe);
-//            $entityManager->flush();
-//
-//            // Show message of success
-//            $this->addFlash('success', 'Your recipe was created successfully');
-//
-//            // Redirect to the recipe details page
-//            return $this->redirectToRoute('show_recipe', ['id' => $recipe->getId()]);
-//        }
-//
-//        return $this->render('recipes/new_recipe.html.twig', [
-//            'form' => $form->createView(),
-//        ]);
-//    }
-
     /**
      * Controller method for creating a new recipe and a new ingredient.
      */
@@ -286,11 +229,11 @@ class RecipesController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             // Get the uploaded file from recipe form
-            $imageFile = $form['recipe']['image']->getData();
+            $thumbnailFile = $form['recipe']['thumbnail']->getData();
 
             // Check if a file was uploaded
-            if ($imageFile) {
-                $this->saveImage($imageFile, $slugger, $recipe);
+            if ($thumbnailFile) {
+                $this->saveThumbnail($thumbnailFile, $slugger, $recipe);
             }
 
             // Form handler to insert into Recipes and Ingredients tables
@@ -307,15 +250,20 @@ class RecipesController extends AbstractController
             // Get additional photos from Photos Entity
             $photos = $request->files->all();
 
-            if ($photos == null){
-                //TODO Change this Later cause User already added one photo 29122023
-                $this->addFlash('danger', 'Each product must have at least one photo');
-                return $this->redirectToRoute('new_recipe');
-            } else {
-                $images = $photos['ingredient_recipe']['recipe']['photos'] ?? null;
-                if ($images) {
-                    $this->addExtraPhotos($images, $recipe);
-                }
+//            if ($photos == null){
+//                //TODO Change this Later cause User already added one photo 29122023
+//                $this->addFlash('danger', 'Each product must have at least one photo');
+//                return $this->redirectToRoute('new_recipe');
+//            } else {
+//                $images = $photos['ingredient_recipe']['recipe']['photos'] ?? null;
+//                if ($images) {
+//                    $this->addExtraPhotos($images, $recipe);
+//                }
+//            }
+            // TODO MARIKA Code above without if else
+            $images = $photos['ingredient_recipe']['recipe']['photos'] ?? null;
+            if ($images) {
+                $this->addExtraPhotos($images, $recipe);
             }
 
             $entityManager->persist($recipe);
@@ -345,8 +293,6 @@ class RecipesController extends AbstractController
         PhotosRepository $photosRepository): Response
     {
 
-        // TODO MARIKA アクセス権限の確認: ユーザーが作成したレシピであるか、またはROLE_ADMIN権限を持っているか確認
-        // TODO Marika Do I need this ?
         $this->denyAccessUnlessGranted('EDIT', $recipe);
 
         $ingredients = $ingredientsRepository->findBy(['recipe' => $recipe]);
@@ -359,9 +305,10 @@ class RecipesController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
 
-            $imageFile = $form['recipe']['image']->getData();
-            if ($imageFile) {
-                $this->saveImage($imageFile, $slugger, $recipe);
+            // TODO MArika Refactor Make sure I only allowed jpeg and png !!!
+            $thumbnailFile = $form['recipe']['thumbnail']->getData();
+            if ($thumbnailFile) {
+                $this->saveThumbnail($thumbnailFile, $slugger, $recipe);
             }
 
             // Form handler to insert into Recipes and Ingredients tables
@@ -379,21 +326,25 @@ class RecipesController extends AbstractController
             //Get additional photos
             $photos = $request->files->all();
 
-            if ($photos === null){
-                //TODO MARIKA Change here cause user already have one image
-                $this->addFlash('danger', 'Each product must have at least one photo');
-                return $this->redirectToRoute('edit_recipe' , ['id' => $recipe->getId()]);
-            } else {
-                $images = $photos['ingredient_recipe']['recipe']['photos'] ?? null;
-                if ($images !== null) {
-                    $this->addExtraPhotos($images, $recipe);
-                }
+//            if ($photos === null){
+//                //TODO MARIKA Change here cause user already have one image
+//                $this->addFlash('danger', 'Each recipe must have at least one photo');
+//                return $this->redirectToRoute('edit_recipe' , ['id' => $recipe->getId()]);
+//            } else {
+//
+//            }
+
+            $images = $photos['ingredient_recipe']['recipe']['photos'] ?? null;
+            if ($images !== null) {
+                $this->addExtraPhotos($images, $recipe);
             }
+
 
             $entityManager->persist($recipe);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Recipe and ingredients have been updated.');
+            // Show flash message with recipe name
+            $this->addFlash('success', sprintf('The new recipe "%s" with ingredients is updated.', $recipe->getName()));
 
             return $this->redirectToRoute("show_recipe", ['id' => $recipe->getId()]);
         }
@@ -413,7 +364,9 @@ class RecipesController extends AbstractController
 
         $entityManager->remove($recipe);
         $entityManager->flush();
-        $this->addFlash('success', 'Your recipe was deleted');
+
+        $this->addFlash('success', 'Your recipe was deleted.');
+
         return $this->redirectToRoute("list_recipes");
     }
 
@@ -569,7 +522,7 @@ class RecipesController extends AbstractController
 //        return new JsonResponse(['error' => 'Invalid Token'], 400);
     }
 
-    private function saveImage(UploadedFile $imageFile, SluggerInterface $slugger, $recipe)
+    private function saveThumbnail(UploadedFile $imageFile, SluggerInterface $slugger, $recipe)
     {
         // Get the original file name and extension
         $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
@@ -590,7 +543,7 @@ class RecipesController extends AbstractController
 
         // Update the 'image' property of your entity to store the file name
         // instead of its contents
-        $recipe->setImage($newFilename);
+        $recipe->setThumbnail($newFilename);
     }
 
     public function renderFooter(): Response
@@ -605,9 +558,9 @@ class RecipesController extends AbstractController
     {
         foreach ($images as $image) {
             $new_photos = new Photos();
-            $image_new = $image['name'];
+            $image_new = $image['fileName'];
             $new_photo = $this->simpleUploadService->uploadImage($image_new);
-            $new_photos->setName($new_photo);
+            $new_photos->setFileName($new_photo);
             $recipe->addPhoto($new_photos);
         }
     }

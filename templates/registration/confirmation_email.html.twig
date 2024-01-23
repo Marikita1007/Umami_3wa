@@ -2,15 +2,12 @@
 
 {% block body %}
     <div class="login-form-custom">
-        <h1>Verify your Email</h1>
+        <h1>Verify your Email Account for UMAMI</h1>
         <p>
-            A verification email has been sent. Please click the link to enable your account before logging in.
+            Please click the link down below to enable your account before logging in.
         </p>
-        <button type="button">Resend Email</button>
-    </div>
-    <p>
-        Please confirm your email address by clicking the following link: <br><br>
+        {#  signedUrl contains URL of user with route app_verify_email #}
         <a href="{{ signedUrl }}">Confirm my Email</a>.
         This link will expire in {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
-    </p>
+    </div>
 {% endblock %}

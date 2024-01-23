@@ -28,7 +28,7 @@
                 <div class="recipe-summary" id="menu" role="list">
                     {% for differentCuisine in differentCuisines %}
                         <article class="recipe-summary-item" role="listitem">
-                            <img src="{{ asset('uploads/images/' ~ differentCuisine.image) }}" alt="{{ differentCuisine.name }}" class="recipe-summary-img">
+                            <img src="{{ asset('uploads/images/' ~ differentCuisine.thumbnail) }}" alt="{{ differentCuisine.name }}" class="recipe-summary-img">
                             <h3 class="recipe-summary-title">{{ differentCuisine.name }}</h3>
                             <p>{{ differentCuisine.description }}</p>
                             <div class="recipe-summary-infos">{{ differentCuisine.cuisine }}</div>
@@ -87,7 +87,7 @@
 
             <div class="container-small flex-content">
                 <ul class="card-container" role="list">
-                    {% for recipe in sixRecipes %}
+                    {% for recipe in nineLatestRecipes %}
 
                         <li class="custom-card" role="listitem">
                             {% if app.user and 'ROLE_USER' in app.user.roles %}
@@ -101,8 +101,8 @@
                             {% endif %}
                             <a href="{{ path('show_recipe', {id: recipe.id}) }}">
                                 <figure>
-                                    {% if recipe.image %}
-                                        <img src="{{ asset('uploads/images/' ~ recipe.image) }}" alt="{{ recipe.name }}">
+                                    {% if recipe.thumbnail %}
+                                        <img src="{{ asset('uploads/images/' ~ recipe.thumbnail) }}" alt="{{ recipe.name }}">
                                     {% else %}
                                         <i class="fa-solid fa-eye-slash fa-2xl" aria-label="No image available"></i>
                                     {% endif %}

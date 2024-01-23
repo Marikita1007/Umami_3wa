@@ -6,9 +6,12 @@ use App\Repository\CuisinesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CuisinesRepository::class)
+ * @UniqueEntity(fields="name", message="This Cuisine name already exist")
  */
 class Cuisines
 {
@@ -20,7 +23,13 @@ class Cuisines
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=30)
+     * @Assert\NotBlank(message="Cuisine name is required")
+     * @Assert\Length(
+     *     min=2,
+     *     max=30,
+     *     minMessage="Cuisine name must be at least {{ limit }} characters long",
+     *     maxMessage="Cuisine name cannot be longer than {{ limit }} characters")
+     * @ORM\Column(type="string", length=30, unique=true, nullable=false)
      */
     private $name;
 

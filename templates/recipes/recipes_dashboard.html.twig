@@ -30,13 +30,13 @@
                     <tr>
                         <td data-label="ID">{{ recipe.id }}
                         <td data-label="Title">{{ recipe.name }}</td>
-                        <td><img src="{{ asset('uploads/images/' ~ recipe.image) }}" alt="{{ recipe.name }}"></td>
+                        <td><img src="{{ asset('uploads/images/' ~ recipe.thumbnail) }}" alt="{{ recipe.name }}"></td>
                         <td data-label="Description">{{ recipe.description }}</td>
                         <td>
                             <div class="actions-buttons">
                                 <a href="{{ path("show_recipe", {"id" : recipe.id}) }}" class="show-button custom-button-icon"><i class="fas fa-eye"></i></a>
                                 <a href="{{ path("edit_recipe", {"id" : recipe.id}) }}" class="edit-button custom-button-icon"><i class="fas fa-edit"></i></a>
-                                <a href="{{ path("delete_recipe", {"id" : recipe.id}) }}" class="delete-button custom-button-icon"><i class="fas fa-trash-alt"></i></a>
+                                <a href="#" onclick="showConfirmationModal('{{ recipe.name }}', '{{ path('delete_recipe', {'id': recipe.id}) }}')" class="delete-button custom-button-icon"><i class="fas fa-trash-alt"></i></a>
                             </div>
                         </td>
                     </tr>
@@ -47,7 +47,7 @@
 
         {% if page is defined and page is not null %}
             {# Pagination links #}
-            <div class="pagination-container">
+            <div class="pagination-container custom-button-container">
                 {% if hasPreviousPage %}
                     <a href="{{ path('list_recipes', {'page': page-1, 'perPage': perPage}) }}" class="custom-button-small">Previous</a>
                 {% else %}
@@ -59,7 +59,7 @@
                 {% if hasNextPage %}
                     <a href="{{ path('list_recipes', {'page': page+1, 'perPage': perPage}) }}" class="custom-button-small">Next</a>
                 {% else %}
-                    <span class="disabled-button">Next</span>
+                    <span class="disabled-button custom-button-small">Next</span>
                 {% endif %}
             </div>
 
@@ -74,8 +74,20 @@
                 </select>
             </form>
         {% endif %}
-
     </section>
+
+    <!-- modal for confirm deleting cuisine -->
+    <div id="confirmation-modal" class="modal">
+        <div class="modal-content">
+            <p id="confirmation-message" class="confirmation-message"></p>
+            <div class="modal-buttons">
+                <button class="confirm-button" onclick="confirmDelete()">Yes, Delete</button>
+                <button class="cancel-button" onclick="cancelDelete()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ asset('js/recipes_dashboard.js') }}"></script>
 {% endblock %}
 
 {# Set route-data for scss #}

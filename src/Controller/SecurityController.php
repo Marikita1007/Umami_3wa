@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +17,8 @@ class SecurityController extends AbstractController
     #[Route("/login", name: "login")]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-// TODO MARIKA Check if I still need thi code or not<
+
+// TODO MARIKA Check if I still need this code or not<
 //        // If user is already logged in, don't display the login page again
 //        if ($this->getUser()) {
 //            return $this->redirectToRoute('home');
@@ -48,6 +50,9 @@ class SecurityController extends AbstractController
         ]);
     }
 
+    /**
+     * @throws \Exception
+     */
     #[Route("/logout", name: "logout")]
     public function logout(): void
     {

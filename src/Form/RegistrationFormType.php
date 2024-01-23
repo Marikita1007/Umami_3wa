@@ -11,8 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class RegistrationFormType extends AbstractType
 {
@@ -34,7 +33,6 @@ class RegistrationFormType extends AbstractType
                     'placeholder' => 'Username',
                     'required' => 'required',
                 ],
-//                'help' => 'Pick your username wisely – it\'s permanent!',
             ])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
@@ -48,14 +46,14 @@ class RegistrationFormType extends AbstractType
                     'autocomplete' => 'new-password',
                 ],
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter a password',
-                    ]),
-                    new Length([
-                        'min' => 6,
+                    new Assert\NotBlank(['message' => 'Password must not be blank']),
+                    new Assert\Length([
+                        'min' => 12,
                         'minMessage' => 'Your password should be at least {{ limit }} characters',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 4096,
+                    ]),
+                    new Assert\Regex([
+                        'pattern' => "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/",
+                        'message' => 'Your password must contain at least one lowercase letter, one uppercase letter, one number, and one special character.',
                     ]),
                 ],
             ])
@@ -69,7 +67,7 @@ class RegistrationFormType extends AbstractType
                     'autocomplete' => 'new-password',
                 ],
                 'constraints' => [
-                    new NotBlank([
+                    new Assert\NotBlank([
                         'message' => 'Please confirm your password',
                     ]),
                 ],

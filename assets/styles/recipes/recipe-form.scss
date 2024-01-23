@@ -50,6 +50,21 @@ body[data-route="recipe-form"] {
       margin-right: 5px;
       max-width: 10px;
     }
+
+    .img-container {
+
+      img {
+        height: auto;
+        margin: 0;
+        max-width: 100%;
+        width: 20%;
+      }
+
+      a {
+        justify-content: center;
+        max-width: 40px;
+      }
+    }
   }
 
   h1 {
@@ -67,7 +82,7 @@ body[data-route="recipe-form"] {
   }
 }
 
-/* Constraint Error messages */
+/* Constraints Error messages */
 #ingredient_recipe_recipe, #ingredient-fields-list {
   ul {
     li {
