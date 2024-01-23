@@ -3,11 +3,6 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    {# Flash messages for email verification error  #}
-    {% for flash_error in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flash_error }} TITI</div>
-    {% endfor %}
-
     <section class="registration-section">
         <div class="page-content">
             <div class="form-content">
@@ -34,7 +29,7 @@
                     {# form_rest renders all fields that have not yet been rendered for the given form#}
                     {{ form_rest(registrationForm) }}
                     <div class="btn-form">
-                        <button type="submit" name="register" class="register">Register</button>
+                        <button type="submit" name="register" class="register">Sign up</button>
                     </div>
                 </form>
             </div>

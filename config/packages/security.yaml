@@ -9,7 +9,7 @@ security:
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
         users_in_memory: { memory: null }
-        # MARIKA Here Adding config for a user provider
+        # Here Adding config for a user provider
         app_user_provider:
             entity:
                 class: App\Entity\User
@@ -28,11 +28,10 @@ security:
                 check_path: login #Symfony calls the same route for show the form and the line
                 default_target_path: home
                 enable_csrf: true
-            custom_authenticator:
-#                - App\Security\LoginFormAuthenticator
-                - App\Security\DummyAuthenticator
+                require_previous_session: true
             logout: true
-            #  MARIKA Remember Me System https://symfonycasts.com/screencast/symfony-security/remember-me
+
+            # Remember Me System https://symfonycasts.com/screencast/symfony-security/remember-me
             remember_me:
                 secret: '%kernel.secret%'
                 signature_properties: [ password ]

@@ -30,6 +30,7 @@ Encore
     .addEntry('the-meal-db-api', './public/js/the-meal-db-api.js')
     .addEntry('base-functions', './public/js/base-functions.js')
     .addEntry('show_like', './public/js/show_like.js')
+    .addEntry('recipes-dashboard', './public/js/recipes_dashboard.js')
 
     // Added scss files
     .addStyleEntry('base-styles', ['./assets/styles/base.scss'])
@@ -47,6 +48,7 @@ Encore
     .addStyleEntry('button-styles', './assets/styles/components/button.scss')
     .addStyleEntry('user-profile', './assets/styles/profiles/user_profile.scss')
     .addStyleEntry('legal-pages','./assets/styles/legal-pages/legal-pages.scss')
+    .addStyleEntry('delete-confirmations','./assets/styles/components/delete-confirmations.scss')
 
     // Added bootstrap CSS
     .addStyleEntry('bootstrap-css', './node_modules/bootstrap/dist/css/bootstrap.css')

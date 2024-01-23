@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\PhotosRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=PhotosRepository::class)
@@ -20,7 +21,7 @@ class Photos
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    private $fileName;
 
     /**
      * @ORM\ManyToOne(targetEntity=Recipes::class, inversedBy="photos", cascade={"persist"})
@@ -30,7 +31,7 @@ class Photos
 
     public function  __toString(): string
     {
-        return $this->name;
+        return $this->fileName;
     }
 
     public function getId(): ?int
@@ -38,14 +39,14 @@ class Photos
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getFileName(): ?string
     {
-        return $this->name;
+        return $this->fileName;
     }
 
-    public function setName(string $name): self
+    public function setFileName(string $fileName): self
     {
-        $this->name = $name;
+        $this->fileName = $fileName;
 
         return $this;
     }

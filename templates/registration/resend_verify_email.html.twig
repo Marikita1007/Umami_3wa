@@ -3,11 +3,22 @@
 {% block title %}Verify Email{% endblock %}
 
 {% block body %}
-    <div class="login-form-custom">
-        <h1>Verify your Email</h1>
-        <p>
-            A verification email has been sent. Please click the link to enable your account before logging in.
-        </p>
-        <button type="button">Re-send Email</button>
+{# todo marika get rid of bootstrap #}
+    <div class="container">
+        <div class="row">
+            <div class="login-form bg-light mt-4 p-4">
+                <h1 class="h3 mb-3 font-weight-normal">Verify your Email</h1>
+
+                <p>
+                    A verification email was sent - please click it to enable your
+                    account before logging in.
+                </p>
+
+{#                TODO MARIKA Check if I need this button  #}
+{#                <form action="{{ path('app_verify_resend_email') }}" method="post">#}
+{#                    <button type="submit" class="btn btn-primary">Re-send Email</button>#}
+{#                </form>#}
+            </div>
+        </div>
     </div>
 {% endblock %}

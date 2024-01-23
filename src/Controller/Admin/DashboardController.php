@@ -97,6 +97,9 @@ class DashboardController extends AbstractDashboardController
     public function configureActions(): Actions
     {
         return parent::configureActions()
-            ->add(Crud::PAGE_INDEX, Action::DETAIL);
+            ->add(Crud::PAGE_INDEX, Action::DETAIL)
+
+            // Removing delete checkboxes from dashboard to prevent deleting at once
+            ->remove(Crud::PAGE_INDEX, Action::BATCH_DELETE);
     }
 }

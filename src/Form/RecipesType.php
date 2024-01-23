@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class RecipesType extends AbstractType
 {
@@ -23,50 +24,88 @@ class RecipesType extends AbstractType
         // Insert form inputs to table recipes
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Recipe Name'
+                'label' => 'Recipe Name',
+                'attr' => [
+                    'aria-label' => 'Recipe Name',
+                ],
             ])
             ->add('description', TextareaType::class,  [
                 'label' => 'Description',
                 'help' => 'Describe your recipe.',
+                'attr' => [
+                    'aria-label' => 'Description',
+                ],
             ])
             ->add('instructions', TextareaType::class,  [
                 'label' => 'Instruction',
                 'help' => 'Give a detailed instruction of your recipe.',
+                'attr' => [
+                    'aria-label' => 'Instruction',
+                ],
             ])
-            ->add('image', FileType::class, [
+            ->add('thumbnail', FileType::class, [
                 'data_class' => null, // Important: Prevents the file data from being converted to a string
-                'help' => 'One image is required.',
+                'help' => 'One thumbnail is required.',
+                'required' => true,
+                'constraints' => [ // constraint wrong file and max file size
+                    new Assert\Image([
+                        'maxSize' => '5M',
+                        'mimeTypes' => ['image/png', 'image/jpeg'],
+                        'mimeTypesMessage' => 'Please upload a valid PNG or JPEG thumbnail image.',
+                    ]),
+                ],
+                'attr' => [
+                    'aria-label' => 'Thumbnail Image',
+                ],
             ])
-            ->add('prep_time',IntegerType::class, [
+            ->add('prepTime',IntegerType::class, [
                 'required' => false,
                 'label' => 'Preparation time',
-                'help' => 'If your recipe doesn\'t need preparation time. Leave it blank or enter 0',
+                'help' => 'If your recipe doesn\'t need preparation time. Leave it blank',
+                'attr' => [
+                    'aria-label' => 'Preparation Time',
+                ],
             ])
             ->add('servings',IntegerType::class, [
                 'required' => false,
                 'label' => 'Servings',
                 'help' => 'Enter number of people can enjoy your recipe.',
+                'attr' => [
+                    'aria-label' => 'Servings',
+                ],
             ])
-            ->add('cook_time',IntegerType::class, [
+            ->add('cookTime',IntegerType::class, [
                 'label' => 'Cooking Time',
-                'help' => 'Enter time to cook your recipe. Cooking time is mandatory.',
+                'help' => 'Enter time to cook your recipe in minutes. Cooking time is mandatory.',
+                'attr' => [
+                    'aria-label' => 'CookTime',
+                ],
             ])
             ->add('calories',IntegerType::class, [
                 'required' => false,
                 'label' => 'Calories',
                 'help' => 'Enter calories of your recipe. Leave it blank if you aren\'t sure',
+                'attr' => [
+                    'aria-label' => 'Calories',
+                ],
             ])
             ->add('difficulty', EntityType::class, [
                 'class' => Difficulty::class, // Specify the Difficulty entity class
                 'placeholder' => 'Select a difficulty',
                 'choice_label' => 'name', // Display the 'name' property of the Difficulty entity
                 'help' => 'Choose difficulty of your recipe.',
+                'attr' => [
+                    'aria-label' => 'Difficulty',
+                ],
             ])
             ->add('cuisine', EntityType::class,[
                 'class' => Cuisines::class,
                 'placeholder' => 'Select a Cuisine',
                 'choice_label' => 'name', // Display the 'name' property of the Cuisine entity
                 'help' => 'Choose Cuisine of your recipe. Leave it blank if if you can\'t find your Cuisine Country.' ,
+                'attr' => [
+                    'aria-label' => 'Cuisine',
+                ],
             ])
             ->add('category', EntityType::class, [
                 'class' => Categories::class,
@@ -77,6 +116,9 @@ class RecipesType extends AbstractType
                 'required' => false, // Make it optional if needed
                 'by_reference' => false, // Set to false to handle updates properly
                 'help' => 'Choose Categories for your recipe.',
+                'attr' => [
+                    'aria-label' => 'Category',
+                ],
             ])
             ->add('photos', CollectionType::class,[
                 'entry_type' => PhotosType::class,
@@ -84,7 +126,10 @@ class RecipesType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
-                'mapped' => false
+                'mapped' => false,
+                'attr' => [
+                    'aria-label' => 'Photos',
+                ],
             ])
 
         ;

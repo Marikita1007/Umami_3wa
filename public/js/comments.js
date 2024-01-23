@@ -15,7 +15,6 @@ comment_form.addEventListener('submit', function (e) {
     // console.log(formData);
 
     // Store the current URL
-    // Store the current URL
     let currentUrl = window.location.href;
 
     // Assume the URL looks like something "https://localhost:8000/recipes/recipe/recipe-id"

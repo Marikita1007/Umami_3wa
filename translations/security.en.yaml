@@ -1,2 +1,3 @@
-"Invalid credentials.": "Invalid password entered !"
-"Username could not be found.": "Email not found !"
+"Invalid credentials.": "Invalid password entered"
+"Username could not be found.": "Email Not found"
+"This value should be the user's current password." : "Please enter your current password here"

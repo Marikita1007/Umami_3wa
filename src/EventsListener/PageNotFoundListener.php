@@ -25,7 +25,5 @@ class PageNotFoundListener
 
         $content = $this->twig->render('notification/page_not_found_exception.html.twig');
         $event->setResponse((new Response())->setContent($content));
-
     }
-
 }

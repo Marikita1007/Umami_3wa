@@ -13,13 +13,13 @@
             {# Admin-specific Navigation Links (if user is an admin) #}
             {% if is_granted('ROLE_ADMIN') %}
                 <a href="{{ path('admin_dashboard') }}" class="menu-item">Admin</a>
-                <a href="{{ path('cuisines') }}" class="menu-item">Cuisines</a>
             {% endif %}
 
             {# User-specific Navigation Links #}
             {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.user.displayName is not same as(app.user.email) %}
-                <a href="{{ path('logout') }}" class="menu-item">Log Out</a>
+                <a href="{{ path('cuisines') }}" class="menu-item">Cuisines</a>
                 <a href="{{ path('list_recipes') }}" class="menu-item">About Recipes</a>
+                <a href="{{ path('logout') }}" class="menu-item">Log Out</a>
                 <a href="{{ path('user_edit') }}" class="menu-item menu-button-box" aria-label="{{ app.user.displayName }} Avatar">
                     <img src="{{ app.user.avatarUrl }}" alt="{{ app.user.displayName }} Avatar">
                 </a>

@@ -24,27 +24,10 @@ function showAllCuisines() {
         url: "/cuisines/list",
         method: "GET",
         success: function(response) {
+
             $("#js-cuisines-table-body").html("");
             let cuisines = response;
 
-            // Reverse the loop to display the latest cuisine at the top
-            for (let i = cuisines.length - 1; i >= 0; i--) {
-                let editBtn =  '<button ' +
-                    ' class="edit-button custom-button-icon" ' +
-                    ' data-cuisine-id="' + cuisines[i].id + '"><i class="fas fa-edit"></i>' +
-                    '</button> ';
-                let deleteBtn =  '<button ' +
-                    ' class="delete-button custom-button-icon" ' +
-                    ' data-cuisine-id="' + cuisines[i].id + '"><i class="fas fa-trash-alt"></i>' +
-                    '</button>';
-
-                let cuisineRow = '<tr>' +
-                    '<td>' + cuisines[i].id + '</td>' +
-                    '<td>' + cuisines[i].name + '</td>' +
-                    '<td>' + editBtn + deleteBtn + '</td>' +
-                    '</tr>';
-                $("#js-cuisines-table-body").append(cuisineRow);
-            }
         },
         error: function(response) {
             console.log(response.responseJSON)
@@ -137,15 +120,16 @@ function storeCuisine()
             {
                 let errors = response.responseJSON.messages.errors;
 
-                let nameValidation = "";
-                if (typeof errors.name !== 'undefined')
-                {
-                    nameValidation = '<li>' + errors.name + '</li>';
-                }
-
                 let errorHtml = '<div class="alert-danger-message" role="alert">' +
                     '<b>Validation Error!</b>' +
-                    '</div>';
+                    '<ul>';
+
+                // Loop through the errors and add them to the errorHtml
+                Object.entries(errors).forEach(([key, value]) => {
+                    errorHtml += '<li>' + value + '</li>';
+                });
+
+                errorHtml += '</ul></div>';
                 $("#error-div").html(errorHtml);
             }
         }
@@ -189,16 +173,16 @@ function updateCuisine()
             {
                 let errors = response.responseJSON.messages.errors;
 
-                let nameValidation = "";
-                if (typeof errors.name !== 'undefined')
-                {
-                    nameValidation = '<li>' + errors.name + '</li>';
-                }
-
                 let errorHtml = '<div class="alert-danger-message" role="alert">' +
                     '<b>Validation Error!</b>' +
-                    '<ul>' + nameValidation + '</ul>' +
-                    '</div>';
+                    '<ul>';
+
+                // Loop through the errors and add them to the errorHtml
+                Object.entries(errors).forEach(([key, value]) => {
+                    errorHtml += '<li>' + value + '</li>';
+                });
+
+                errorHtml += '</ul></div>';
                 $("#error-div").html(errorHtml);
             }
         }
@@ -240,7 +224,6 @@ function confirmDelete() {
 
 function cancelDelete() {
     hideConfirmationModal();
-    // Do nothing or handle cancellation as needed
 }
 
 // Variable to hold the delete operation handler

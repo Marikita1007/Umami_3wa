@@ -52,7 +52,7 @@
                     {% for sameCategoriesRecipe in sameCategoriesRecipes %}
                         <a href="{{ path('show_recipe', {'id': sameCategoriesRecipe.id}) }}">
                             <h4>{{ sameCategoriesRecipe.name }}</h4>
-                            <img src="{{ asset('uploads/images/' ~ sameCategoriesRecipe.image) }}" alt="{{ sameCategoriesRecipe.name }}">
+                            <img src="{{ asset('uploads/images/' ~ sameCategoriesRecipe.thumbnail) }}" alt="{{ sameCategoriesRecipe.name }}">
                         </a>
                     {% endfor %}
                 </article>
@@ -68,9 +68,12 @@
             <div class="card-box">
                 <h2>{{ recipe.name }}</h2>
                 <h5>{{ recipe.description }}</h5>
-                <time> <i class="fa fa-calendar"></i> {{ recipe.createdAt ? recipe.createdAt|date('Y-m-d H:i:s') : (recipe.updatedAt ? recipe.updatedAt|date('Y-m-d H:i:s') : '') }}</time>
-
-                <img class="recipe-img" src="{{ asset('uploads/images/' ~ recipe.image) }}" alt="{{ recipe.name }}">
+                {% if  recipe.updatedAt > recipe.createdAt %}
+                    <time><i class="fa fa-calendar"></i> Updated : {{ recipe.updatedAt|date('Y-m-d') }}</time>
+                {% else %}
+                    <time> <i class="fa fa-calendar"></i> Created : {{ recipe.createdAt|date('Y-m-d') }}</time>
+                {% endif %}
+                    <img class="recipe-img" src="{{ asset('uploads/images/' ~ recipe.thumbnail) }}" alt="{{ recipe.name }}">
 
                 {% if extraPhotos is defined and extraPhotos is not null and extraPhotos|length > 0 %}
                     <h3>Additional Photos</h3>
@@ -98,8 +101,8 @@
             <button class="custom-button-wide" type="submit">Add a comment</button>
             {{ form_end(form) }}
         {% else %}
-            {# Display a message or other content for non-authenticated users #}
-            <p>Please log in to leave a comment.</p>
+            {# Display a message for non-authenticated users #}
+            <p>Please log in to leave or check comments.</p>
         {% endif %}
 
         <div id="comment-parent">

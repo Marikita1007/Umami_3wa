@@ -11,10 +11,10 @@
     {{ form_row(form.recipe.name) }}
     {{ form_row(form.recipe.description) }}
     {{ form_row(form.recipe.instructions) }}
-    {{ form_row(form.recipe.image) }}
-    {{ form_row(form.recipe.prep_time) }}
+    {{ form_row(form.recipe.thumbnail) }}
+    {{ form_row(form.recipe.prepTime) }}
     {{ form_row(form.recipe.servings) }}
-    {{ form_row(form.recipe.cook_time) }}
+    {{ form_row(form.recipe.cookTime) }}
     {{ form_row(form.recipe.calories) }}
     {{ form_row(form.recipe.difficulty) }}
     {{ form_row(form.recipe.cuisine) }}
@@ -31,6 +31,8 @@
                 {{ form_row(ingredient.amount) }}
             </li>
         {% endfor %}
+        {# Error message also appears when use try to Create Recipe without pressing Add Ingredient #}
+        <span id="js-ingredient-error-message" class="error-message"></span>
     </ul>
 
     <div id="photos"
@@ -40,7 +42,7 @@
 
     {% for photo in photos %}
         <span class="img-container">
-            <img src="{{ asset('uploads/images/' ~ photo.name) }}" width="10%" class="img-fluid mx-3" alt="">
+            <img src="{{ asset('uploads/images/' ~ photo.fileName) }}" alt="{{ asset(photo.fileName) }}">
             <a href="{{ path('app_delete_photo_recipe', {'id': recipe.id, 'imageId': photo.id}) }}" class="custom-delete-button">X</a>
         </span>
     {% endfor %}

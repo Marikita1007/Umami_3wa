@@ -119,8 +119,8 @@
                 <button class="custom-button-wide" type="submit">Add a comment</button>
                 {{ form_end(form) }}
             {% else %}
-                 Display a message or other content for non-authenticated users
-                <p>Please log in to leave a comment.</p>
+                {# Display a message for non-authenticated users #}
+                <p>Please log in to see or leave comments.</p>
             {% endif %}
 
             <div id="comment-parent">

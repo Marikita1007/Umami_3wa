@@ -42,9 +42,9 @@ class RecipesApiController extends AbstractController
                 'description'   => $recipe->getDescription(),
                 'instructions'  => $recipe->getInstructions(),
                 'image'         => $recipe->getImage(),
-                'prep_time'     => $recipe->getPrepTime(),
+                'prepTime'     => $recipe->getPrepTime(),
                 'servings'      => $recipe->getServings(),
-                'cook_time'     => $recipe->getPrepTime(),
+                'cookTime'     => $recipe->getPrepTime(),
                 'calories'      => $recipe->getCalories(),
                 'difficulty'    => $recipe->getDifficulty()
             ];
@@ -66,11 +66,11 @@ class RecipesApiController extends AbstractController
         $recipe->setDescription($request->request->get('description'));
         $recipe->setInstructions($request->request->get('instructions'));
         $recipe->setCreatedAt($request->request->get('created_at'));
-        $recipe->setImage($request->request->get('instructions'));
+        $recipe->setThumbnail($request->request->get('instructions'));
         $recipe->setInstructions($request->request->get('image'));
-        $recipe->setPrepTime($request->request->get('prep_time'));
+        $recipe->setPrepTime($request->request->get('prepTime'));
         $recipe->setServings($request->request->get('servings'));
-        $recipe->setCookTime($request->request->get('cook_time'));
+        $recipe->setCookTime($request->request->get('cookTime'));
         $recipe->setCalories($request->request->get('calories'));
         $recipe->setDifficulty($request->request->get('difficulty'));
 
@@ -100,9 +100,9 @@ class RecipesApiController extends AbstractController
             'instructions' => $recipe->getInstructions(),
             'created_at'   => $recipe->getCreatedAt(),
             'image'        => $recipe->getImage(),
-            'prep_time'    => $recipe->getPrepTime(),
+            'prepTime'    => $recipe->getPrepTime(),
             'servings'     => $recipe->getServings(),
-            'cook_time'    => $recipe->getCookTime(),
+            'cookTime'    => $recipe->getCookTime(),
             'calories'     => $recipe->getCalories(),
             'difficulty'   => $recipe->getDifficulty()
         ];
@@ -113,7 +113,6 @@ class RecipesApiController extends AbstractController
     #[Route("/recipe/{id}", name: "recipe_edit", methods: ["PUT"])]
     public function edit(Request $request, int $id): Response
     {
-//        dd($request->request);
         $recipe = $this->recipesRepository->find($id);
 
         if (!$recipe) {
@@ -136,11 +135,11 @@ class RecipesApiController extends AbstractController
             'name'         => 'setName',
             'description'  => 'setDescription',
             'instructions' => 'setInstructions',
-//            'updated_at'   => 'setUpdatedAt',
+//            'updatedAt'   => 'setUpdatedAt',
             'image'        => 'setImage',
-            'prep_time'    => 'setPrepTime',
+            'prepTime'    => 'setPrepTime',
             'servings'     => 'setServings',
-            'cook_time'    => 'setCookTime',
+            'cookTime'    => 'setCookTime',
             'calories'     => 'setCalories',
             'difficulty'   => 'setDifficulty',
         ];
@@ -159,12 +158,12 @@ class RecipesApiController extends AbstractController
             'name'         => $recipe->getName(),
             'description'  => $recipe->getDescription(),
             'instructions' => $recipe->getInstructions(),
-            'created_at'   => $recipe->getCreatedAt(),
-            'updated_at'   => $recipe->getUpdatedAt(),
+            'createdAt'   => $recipe->getCreatedAt(),
+            'updatedAt'   => $recipe->getUpdatedAt(),
             'image'        => $recipe->getImage(),
             'prep_time'    => $recipe->getPrepTime(),
             'servings'     => $recipe->getServings(),
-            'cook_time'    => $recipe->getCookTime(),
+            'cookTime'    => $recipe->getCookTime(),
             'calories'     => $recipe->getCalories(),
             'difficulty'   => $recipe->getDifficulty()
         ];
