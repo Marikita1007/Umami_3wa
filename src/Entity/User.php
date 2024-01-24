@@ -65,7 +65,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $recipes;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Recipes::class)
+     * @ORM\ManyToMany(targetEntity=Recipes::class, mappedBy="likedUsers")
      * @ORM\JoinTable(name="user_likes",
      *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="recipe_id", referencedColumnName="id")}
@@ -172,9 +172,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
          $this->plainPassword = null;
     }
 
-    //MARIKA I ADDED : https://symfonycasts.com/screencast/symfony-security/password-credentials#play
-    //The key thing is that this property will not be persisted to the database:
-    // it's just a temporary property that we can use during, for example, registration, to store the plain password.
+    // This property will not be persisted to the database:
+    // it's just a temporary property that we can use during registration, to store the plain password.
     public function getPlainPassword(): ?string
     {
         return $this->plainPassword;

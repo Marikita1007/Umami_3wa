@@ -9,7 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-//TODO MARIKA Refactor This form is not used.
+// Form for Cuisine Filter
 class CuisinesType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -18,7 +18,7 @@ class CuisinesType extends AbstractType
             ->add('name', EntityType::class, [
                 'label' => 'Search by Cuisine',
                 'class' => Cuisines::class,
-                'choice_label' => 'name'
+                'choice_label' => 'name',
             ])
         ;
     }
@@ -27,6 +27,7 @@ class CuisinesType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Cuisines::class,
+            'validation_groups' => false, // Stop constrains check for filter search
         ]);
     }
 }
