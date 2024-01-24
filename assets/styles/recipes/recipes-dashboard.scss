@@ -2,6 +2,10 @@
 
 body[data-route="recipes_dashboard"] {
 
+  #mainContent {
+    text-align: center;
+  }
+
   .recipes-dashboard {
     border-collapse: collapse;
     cursor: pointer;
@@ -9,12 +13,13 @@ body[data-route="recipes_dashboard"] {
     font-weight: bold;
     height: auto;
     margin: 18px;
+    max-width: 960px;
 
     // Border styles for table, th, and td
     .dashboard-top {
       border: none;
       display: flex;
-      justify-content: space-between;
+      justify-content: space-around;
     }
 
     table {
@@ -78,20 +83,6 @@ body[data-route="recipes_dashboard"] {
         }
       }
 
-      // Dark theme styles for table
-      .darktheme .recipes-dashboard {
-        table {
-          th {
-            background-color: $umami-grey-medium; // Background color for th
-          }
-
-          tr:nth-child(even),
-          tr:nth-child(odd) {
-            background-color: $umami-grey; // Background color for even and odd rows
-          }
-        }
-      }
-
       // Responsive design for small screens
       @media (max-width: 768px) {
         display: block;
@@ -143,6 +134,20 @@ body[data-route="recipes_dashboard"] {
           display: block;
           margin-bottom: .625em;
         }
+      }
+    }
+  }
+
+  // Dark theme styles for table
+  .darktheme .recipes-dashboard {
+    table {
+      th {
+        background-color: $umami-grey-medium; // Background color for th
+      }
+
+      tr:nth-child(even),
+      tr:nth-child(odd) {
+        background-color: $umami-grey; // Background color for even and odd rows
       }
     }
   }

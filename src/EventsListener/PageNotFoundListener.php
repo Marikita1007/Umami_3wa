@@ -12,7 +12,12 @@ use Symfony\Component\HttpFoundation\Response;
 #[AsEventListener(event: KernelEvents::EXCEPTION)]
 class PageNotFoundListener
 {
-    public function __construct(private Environment $twig){}
+    private Environment $twig;
+
+    public function __construct(Environment $twig)
+    {
+        $this->twig = $twig;
+    }
 
     public function onKernelException(ExceptionEvent $event):void
     {
@@ -23,6 +28,7 @@ class PageNotFoundListener
             return;
         }
 
+        // Render the standard 404 page
         $content = $this->twig->render('notification/page_not_found_exception.html.twig');
         $event->setResponse((new Response())->setContent($content));
     }

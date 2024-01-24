@@ -38,6 +38,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Validator\Context\ExecutionContext;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
@@ -567,7 +568,7 @@ class RecipesController extends AbstractController
 
     #[Route('/{id}/like', name: 'recipe_like', methods: ['GET', 'POST'])]
     #[Security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')")]
-    public function recipeLike($id, LoggerInterface $logger, EntityManagerInterface $entityManager)
+    public function recipeLike($id, LoggerInterface $logger, EntityManagerInterface $entityManager): JsonResponse
     {
         // Get the currently logged-in user
         $user = $this->getUser();
@@ -584,10 +585,12 @@ class RecipesController extends AbstractController
         if ($user->getLikedRecipes()->contains($recipe)) {
             // Remove the liked recipe from the user's collection
             $user->removeLikedRecipe($recipe);
+            $recipe->removeLikedUser($user); // Update the inverse side
             $liked = false;
         } else {
             // Add the liked recipe to the user's collection
             $user->addLikedRecipe($recipe);
+            $recipe->addLikedUser($user); // Update the inverse side
             $liked = true;
         }
 

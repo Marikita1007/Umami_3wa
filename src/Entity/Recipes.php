@@ -87,10 +87,12 @@ class Recipes
 
     /**
      * @ORM\Column(type="integer")
-     * @Assert\NotBlank(message="Cook time can not be blank.")
-     * @Assert\Length(
+     * @Assert\NotBlank(message="Cook time cannot be blank.")
+     * @Assert\Range(
      *      min = 2,
+     *      max = 150,
      *      minMessage = "Cook time must be at least {{ limit }} minutes long",
+     *      maxMessage = "Cook time cannot be more than {{ limit }} minutes long",
      * )
      */
     private $cookTime;
@@ -139,7 +141,7 @@ class Recipes
     private $user;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="likedRecipes")
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="likedRecipes")
      */
     private $likedUsers;
 
