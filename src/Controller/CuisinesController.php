@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Cuisines;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,7 +23,7 @@ class CuisinesController extends AbstractController
     }
 
     #[Route("/cuisines/list", name: "cuisines_list", methods: ["GET"])]
-    public function showAll(): Response
+    public function showAll(): JsonResponse
     {
         $cuisines = $this->getDoctrine()
             ->getRepository(Cuisines::class)
@@ -40,7 +41,7 @@ class CuisinesController extends AbstractController
     }
 
     #[Route("/cuisines/show/{id}", name: "cuisines_show", methods: ["GET", "POST"])]
-    public function show(int $id): Response
+    public function show(int $id): JsonResponse
     {
         $cuisines = $this->getDoctrine()
             ->getRepository(Cuisines::class)
@@ -60,15 +61,15 @@ class CuisinesController extends AbstractController
     }
 
     #[Route("/cuisines/new", name: "cuisines_new", methods: ["POST"])]
-    public function new(Request $request, ValidatorInterface $validator): Response
+    public function new(Request $request, ValidatorInterface $validator): JsonResponse
     {
         $entityManager = $this->getDoctrine()->getManager();
 
-        $cuisines = new Cuisines();
-        $cuisines->setName($request->request->get('name'));
+        $cuisine = new Cuisines();
+        $cuisine->setName($request->request->get('name'));
 
         // Validate the entity using Symfony's validator
-        $errors = $validator->validate($cuisines);
+        $errors = $validator->validate($cuisine);
 
         if (count($errors) > 0) {
             // There are validation errors
@@ -80,26 +81,26 @@ class CuisinesController extends AbstractController
             return $this->json(['messages' => ['errors' => $errorMessages]], 400); // HTTP 400 Bad Request
         }
 
-        $entityManager->persist($cuisines);
+        $entityManager->persist($cuisine);
         $entityManager->flush();
 
-        return $this->json('Created new cuisines successfully with id ' . $cuisines->getId());
+        return $this->json('Created new cuisines successfully with id ' . $cuisine->getId());
     }
 
-    #[Route("/cuisines/edit/{id}", name: "cuisines_edit", methods: ["PUT"])]
-    public function edit(Request $request, int $id, ValidatorInterface $validator): Response
+    #[Route("/cuisines/edit/{id}", name: "cuisine_edit", methods: ["PUT"])]
+    public function edit(Request $request, int $id, ValidatorInterface $validator): JsonResponse
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $cuisines = $entityManager->getRepository(cuisines::class)->find($id);
+        $cuisine = $entityManager->getRepository(cuisines::class)->find($id);
 
-        if (!$cuisines) {
+        if (!$cuisine) {
             return $this->json('No cuisines found for id' . $id, 404);
         }
 
-        $cuisines->setName($request->request->get('name'));
+        $cuisine->setName($request->request->get('name'));
 
         // Validate the entity using Symfony's validator
-        $errors = $validator->validate($cuisines);
+        $errors = $validator->validate($cuisine);
 
         if (count($errors) > 0) {
             // There are validation errors
@@ -114,26 +115,26 @@ class CuisinesController extends AbstractController
         $entityManager->flush();
 
         $data = [
-            'id' => $cuisines->getId(),
-            'name' => $cuisines->getName(),
+            'id' => $cuisine->getId(),
+            'name' => $cuisine->getName(),
         ];
 
         return $this->json($data);
     }
 
-    #[Route("/cuisines/delete/{id}", name: "cuisines_delete", methods: ["DELETE"])]
-    public function delete(int $id): Response
+    #[Route("/cuisines/delete/{id}", name: "cuisine_delete", methods: ["DELETE"])]
+    public function delete(int $id): JsonResponse
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $cuisines = $entityManager->getRepository(cuisines::class)->find($id);
+        $cuisine = $entityManager->getRepository(cuisines::class)->find($id);
 
-        if (!$cuisines) {
-            return $this->json('No cuisines found for id' . $id, 404);
+        if (!$cuisine) {
+            return $this->json('No cuisine found for id' . $id, 404);
         }
 
-        $entityManager->remove($cuisines);
+        $entityManager->remove($cuisine);
         $entityManager->flush();
 
-        return $this->json('Deleted a cuisines successfully with id ' . $id);
+        return $this->json('Deleted a cuisine successfully with id ' . $id);
     }
 }
