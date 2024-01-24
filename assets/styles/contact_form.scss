@@ -1,0 +1,43 @@
+@import 'base';
+
+body[data-route="contact_form"] {
+
+  /* Dark theme styles for Contact Form Page */
+  .darktheme {
+
+    .contact-form {
+
+      .form-control {
+        background-color: $umami-grey;
+        color: $umami-white;
+
+        form {
+          background-color: $umami-grey;
+
+          input::placeholder {
+            color: $umami-white;
+          }
+
+          div[role="alert"] {
+            color: $umami-white;
+          }
+
+          .btn-form button,
+          .btn-form-small {
+            background: $umami-grey;
+            color: $umami-white;
+
+            &:hover {
+              background: lighten($umami-grey, 10%);
+            }
+          }
+
+          h1 {
+            color: $umami-white;
+          }
+
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,153 @@
+@import 'base';
+
+// Mixin for common card styles for about us
+@mixin card-styles {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  margin: 8px;
+
+  img {
+    width: 100%;
+  }
+}
+
+body[data-route="about_us"] {
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+
+  .about-section {
+    background-color: $umami-grey-light;
+    color: $umami-grey;
+    margin-bottom: 3px;
+    padding: 50px;
+    text-align: center;
+
+    h1 {
+      color: $umami-grey;
+    }
+  }
+
+  .button {
+    background-color: $umami-grey;
+    border: none;
+    color: $umami-white;
+    cursor: pointer;
+    display: inline-block;
+    outline: 0;
+    padding: 8px;
+    text-align: center;
+    width: 100%;
+
+    &:hover {
+      background-color: #555;
+    }
+  }
+
+  h2 {
+    text-align: center;
+  }
+
+  .card {
+    @include card-styles;
+
+    .container {
+      padding: 16px;
+    }
+  }
+
+  .column {
+    float: left;
+    margin-bottom: 16px;
+    padding: 0 8px;
+    width: 33.3%;
+
+    @media screen and (max-width: 650px) {
+      display: block;
+      width: 100%;
+    }
+  }
+
+  .container::after,
+  .row::after {
+    clear: both;
+    content: "";
+    display: table;
+  }
+
+  .container-small {
+    padding: 0 16px;
+  }
+
+  .title {
+    color: $umami-grey;
+  }
+
+  /* Dark theme styles */
+  .darktheme {
+    background-color: $umami-black;
+    color: $umami-white;
+
+    .about-section {
+      background-color: #222;
+      color: $umami-white;
+
+      h1 {
+        color: $umami-white;
+      }
+    }
+
+    .button {
+      background-color: $umami-grey-medium;
+      color: $umami-white;
+
+      &:hover {
+        background-color: $umami-black;
+      }
+    }
+
+    .card {
+      background-color: $umami-grey-medium;
+      color: $umami-white;
+
+      .container {
+        padding: 16px;
+
+        h2, p, button {
+          color: $umami-white;
+        }
+
+        h2 {
+          font-size: 1.5em;
+        }
+
+        p {
+          font-size: 1em;
+        }
+      }
+    }
+  }
+}
+
+// Include mixin for card styles
+.row {
+  .column {
+
+    .card {
+      @include card-styles;
+
+      .container {
+        h2, p, button {
+          margin: 0;
+        }
+
+        h2 {
+          font-size: 1.5em;
+        }
+
+        p {
+          font-size: 1em;
+        }
+      }
+    }
+  }
+}

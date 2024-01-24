@@ -37,6 +37,7 @@ Encore
     .addStyleEntry('header-styles', './assets/styles/header.scss')
     .addStyleEntry('footer-styles', './assets/styles/footer.scss')
     .addStyleEntry('home-styles', './assets/styles/home.scss')
+    .addStyleEntry('about-us', './assets/styles/about_us.scss')
     .addStyleEntry('notifications-styles', './assets/styles/notifications.scss')
     .addStyleEntry('show-recipe-styles', './assets/styles/recipes/show-recipe.scss')
     .addStyleEntry('recipe-form-styles', './assets/styles/recipes/recipe-form.scss')
@@ -48,6 +49,7 @@ Encore
     .addStyleEntry('button-styles', './assets/styles/components/button.scss')
     .addStyleEntry('user-profile', './assets/styles/profiles/user_profile.scss')
     .addStyleEntry('legal-pages','./assets/styles/legal-pages/legal-pages.scss')
+    .addStyleEntry('contact-form','./assets/styles/contact_form.scss')
     .addStyleEntry('delete-confirmations','./assets/styles/components/delete-confirmations.scss')
 
     // Added bootstrap CSS

@@ -3,10 +3,10 @@
 {% block title %}Contact us{% endblock %}
 
 {% block body %}
-    <div class="page-content">
+    <section class="contact-form page-content">
         <div class="form-control">
             <h1>Contact Form</h1>
-            <form class="form-detail" method="post">
+            <form method="post">
                 {{ form_start(form) }}
                 {{ form_row(form.email) }}
                 {{ form_row(form.name) }}
@@ -15,5 +15,7 @@
                 {{ form_end(form) }}
             </form>
         </div>
-    </div>
+    </section>
 {% endblock %}
+
+{% set pageRoute = 'contact_form' %}
