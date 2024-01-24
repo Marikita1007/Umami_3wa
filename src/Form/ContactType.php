@@ -24,6 +24,7 @@ class ContactType extends AbstractType
                     'class' => 'input-text',
                     'placeholder' => 'Email Address',
                     'required' => 'required', // Ensures the field is required on the client side
+                    'aria-label' => 'Email Address',
                 ],
                 'constraints' => [
                     new Email(['message' => 'Please enter a valid email address.']), // Validates email format
@@ -36,6 +37,7 @@ class ContactType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Name',
                     'required' => 'required',
+                    'aria-label' => 'Name',
                 ],
                 'constraints' => [
                     new NotBlank(['message' => 'Name is required.']),
@@ -44,7 +46,10 @@ class ContactType extends AbstractType
             // Message field with client-side rows attribute and server-side constraints
             ->add('message', TextareaType::class, [
                 'label' => 'Message',
-                'attr' => ['rows' => 5], // Sets the number of visible text lines on the client side
+                'attr' => [
+                    'rows' => 5, // Sets the number of visible text lines on the client side
+                    'aria-label' => 'Message',
+                ],
                 'constraints' => [
                     new Length([
                         'min' => 5,

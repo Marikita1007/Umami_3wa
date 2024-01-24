@@ -2,10 +2,57 @@
 
 {% block body %}
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}!</h1>
-    <div>About Us Page</div>
-</div>
+    {# Added aria-labelledby attribute to associate it with the main heading "About Us."#}
+    <section aria-labelledby="aboutUsHeading">
+        <div class="about-section">
+            <h1 id="aboutUsHeading">About Us</h1>
+            <p>Vivamus tempus commodo lorem. </p>
+            <p>Sed arcu mauris, hendrerit ac sagittis at, vehicula ac erat. Morbi dapibus luctus eros.</p>
+        </div>
+
+        <h2>Our Team</h2>
+        <div class="row">
+            <div class="column">
+                <div class="card">
+                    <img src="{{ asset('images/portlait3.jpg') }}" alt="Image of Maureen">
+                    <div class="container">
+                        <h2>Maureen M. Smith</h2>
+                        <p class="title">CEO & Founder</p>
+                        <p>Some text that describes me lorem ipsum ipsum lorem.</p>
+                        <p>Email: <a href="mailto:maureen@umami.com">maureen@umami.com</a></p>
+                        <a href="mailto:maureen@umami.com" class="button" role="button" aria-label="Contact Maureen">Contact</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="card">
+                    <img src="{{ asset('images/portlait2.jpg') }}" alt="Image of Daly">
+                    <div class="container">
+                        <h2>Daly Harry</h2>
+                        <p class="title">Recipe Director</p>
+                        <p>Some text that describes me lorem ipsum ipsum lorem.</p>
+                        <p>Email: <a href="mailto:daly@umami.com">daly@umami.com</a></p>
+                        <a href="mailto:daly@umami.com" class="button" role="button" aria-label="Contact Daly">Contact</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="card">
+                    <img src="{{ asset('images/portlait1.jpg') }}" alt="Image of Ang">
+                    <div class="container">
+                        <h2>Ang Li</h2>
+                        <p class="title">Customer Advisor</p>
+                        <p>Some text that describes me lorem ipsum ipsum lorem.</p>
+                        <p>Email: <a href="mailto:ang@umami.com">ang@umami.com</a></p>
+                        <a href="mailto:john@umami.com" class="button" role="button" aria-label="Contact Ang">Contact</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
 {% endblock %}
 
 {% set pageRoute = 'about_us' %}
