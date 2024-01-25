@@ -43,7 +43,8 @@ security:
                 signature_properties: [ password ]
 
                 # If set to true, the user will be remembered automatically on each request
-                always_remember_me: true
+                # We want to use signature_properties so comment out this.
+                # always_remember_me: true
 
             # Use the custom AccessDeniedHandler to handle access denied situations
             access_denied_handler: app.access_denied_handler
