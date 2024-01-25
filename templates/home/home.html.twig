@@ -119,7 +119,8 @@
                                     {% endif %}
                                     <figcaption>
                                         <h4>{{ recipe.name }}</h4>
-                                        <p>{{ recipe.description|slice(0, 50) }}...<a href="{{ path('show_recipe', {id: recipe.id}) }}"><b>See More</b></a></p>
+                                        <p>{{ recipe.description|slice(0, 50) }}...</p>
+                                        <p>See More</p>
                                     </figcaption>
                                 </figure>
                             </a>
