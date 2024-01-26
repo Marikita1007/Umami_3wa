@@ -33,8 +33,8 @@ class HomeController extends AbstractController
 
         return $this->render('home/home.html.twig', [
             'nineLatestRecipes' => $nineLatestRecipes, // get latest recipes that created
-            'topSevenCuisines' => $cuisinesRepository->findTopSevenCuisines(), // get 7 top created recipes
-            'differentCuisines' => $recipesRepository->differentCuisines(), // get random cuisines
+            'topSevenCuisines' => $cuisinesRepository->findTopSevenCuisines(), // get 7 cuisines that has most recipes
+            'fourRandomRecipes' => $recipesRepository->findRandomRecipes(), // get random cuisines
             'topLikedRecipes' => $recipesRepository->findTopLikedRecipes(),
         ]);
     }
