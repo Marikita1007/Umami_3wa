@@ -29,8 +29,9 @@ class ContactController extends AbstractController
                 ->from($contactFormData['email'])
                 ->to('umami_admin@example.com')
                 ->subject('You got mail from UMAMI contact.')
-                ->text('Sender : '.$contactFormData['email'].\PHP_EOL.
-                    $contactFormData['message'],
+                ->text('Sender Email: '.$contactFormData['email'].\PHP_EOL.
+                    'Sender Name (or Username): '.$contactFormData['name'].\PHP_EOL.
+                    'Message Context : '.$contactFormData['message'],
                     'text/plain');
 
             $mailer->send($email);
