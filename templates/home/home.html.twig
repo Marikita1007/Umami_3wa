@@ -23,17 +23,17 @@
             {% endif %}
 
         </div>
-        {% if differentCuisines is not empty %}
+        {% if fourRandomRecipes is not empty %}
             <!-- Container for Different Cuisines -->
             <div class="container" role="region" aria-labelledby="menu-heading">
                 <div class="recipe-summary" id="menu">
-                    {% for differentCuisine in differentCuisines %}
+                    {% for fourRandomRecipe in fourRandomRecipes %}
                         <article class="recipe-summary-item">
-                            <a href="{{ path('show_recipe', {'id': differentCuisine.id}) }}" aria-label="{{ differentCuisine.name }}">
-                                <img src="{{ asset('uploads/images/' ~ differentCuisine.thumbnail) }}" alt="{{ differentCuisine.name }}" class="recipe-summary-img">
-                                <h3 class="recipe-summary-title">{{ differentCuisine.name }}</h3>
-                                <p>{{ differentCuisine.description }}</p>
-                                <div class="recipe-summary-infos">{{ differentCuisine.cuisine }}</div>
+                            <a href="{{ path('show_recipe', {'id': fourRandomRecipe.id}) }}" aria-label="{{ fourRandomRecipe.name }}">
+                                <img src="{{ asset('uploads/images/' ~ fourRandomRecipe.thumbnail) }}" alt="{{ fourRandomRecipe.name }}" class="recipe-summary-img">
+                                <h3 class="recipe-summary-title">{{ fourRandomRecipe.name }}</h3>
+                                <p>{{ fourRandomRecipe.description }}</p>
+                                <div class="recipe-summary-infos">{{ fourRandomRecipe.cuisine }}</div>
                             </a>
                         </article>
                     {% endfor %}
@@ -92,7 +92,7 @@
         <div class="container-small">
             <article class="block block-last">
                 <header>
-                    <h2 class="title" id="recipeInspirationsHeading">Recipe Inspirations</h2>
+                    <h2 class="title" id="recipeInspirationsHeading">Latest Recipes</h2>
                 </header>
             </article>
 

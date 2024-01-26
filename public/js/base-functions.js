@@ -1,26 +1,24 @@
+document.addEventListener('DOMContentLoaded', function () {
 
-// Scroll and arrow appears
-window.addEventListener('scroll', function(){
+    // Scroll and arrow appears
+    window.addEventListener('scroll', function(){
 
-    const backToTopButton = document.getElementById('back-to-top');
+        const backToTopButton = document.getElementById('back-to-top');
 
-    if (window.scrollY > 500) {
-        backToTopButton.classList.add('visible');
-    } else {
-        backToTopButton.classList.remove('visible');
-    }
+        if (window.scrollY > 500) {
+            backToTopButton.classList.add('visible');
+        } else {
+            backToTopButton.classList.remove('visible');
+        }
 
-    // Scroll to top when the arrow is clicked
-    document.getElementById('back-to-top').addEventListener('click', function () {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
+        // Scroll to top when the arrow is clicked
+        document.getElementById('back-to-top').addEventListener('click', function () {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         });
     });
-});
-
-
-document.addEventListener('DOMContentLoaded', function () {
 
     // Responsive navbar
     document.getElementById('toggleNav').addEventListener('click', function() {

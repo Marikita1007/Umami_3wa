@@ -86,7 +86,7 @@ class RecipesRepository extends ServiceEntityRepository
     /**
      * @return recipes[] Returns an array of random 4 cuisines objects
      */
-    public function differentCuisines(): array
+    public function findRandomRecipes(): array
     {
         // Native SQL query to select random rows from 'cuisines' table
         $sql  = 'SELECT r.*, RAND() as rand
@@ -100,7 +100,7 @@ class RecipesRepository extends ServiceEntityRepository
         $rsm = new ResultSetMapping();
 
         // Add the main entity (Cuisines) to the ResultSetMapping
-        $rsm->addEntityResult($this->_entityName, 'c');
+        $rsm->addEntityResult(Recipes::class, 'c');
 
         // Add field mappings for the 'id' field
         $rsm->addFieldResult('c', 'id', 'id');
