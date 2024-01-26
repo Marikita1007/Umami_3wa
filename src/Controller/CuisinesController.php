@@ -17,8 +17,12 @@ class CuisinesController extends AbstractController
     #[Route("/cuisines", name: "cuisines", methods: ["GET"])]
     public function index(): Response
     {
+        $cuisines = $this->getDoctrine()
+            ->getRepository(Cuisines::class)
+            ->findAll();
+
         return $this->render('cuisines/cuisines.html.twig', [
-            'controller_name' => 'CuisinesController',
+            'cuisines' => $cuisines,
         ]);
     }
 
@@ -37,6 +41,7 @@ class CuisinesController extends AbstractController
                 'name' => $cuisine->getName(),
             ];
         }
+
         return $this->json($data);
     }
 

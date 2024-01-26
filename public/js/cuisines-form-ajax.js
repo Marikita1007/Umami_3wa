@@ -1,3 +1,5 @@
+// jQuery for Cuisine CRUD
+// This function is called the moment Cuisine Name Page shows
 $(document).ready(function(){
     showAllCuisines();
 
@@ -58,7 +60,6 @@ function showAllCuisines() {
         }
     });
 }
-
 
 /*
 check if form submitted is for creating or updating
@@ -229,13 +230,12 @@ function createCuisines() {
 /*
 delete record function
 */
-
 function showConfirmationModal() {
-    document.getElementById('confirmation-modal').style.display = 'block';
+    $("#confirmation-cuisine-modal").show();
 }
 
 function hideConfirmationModal() {
-    document.getElementById('confirmation-modal').style.display = 'none';
+    $("#confirmation-cuisine-modal").hide();
 }
 
 function confirmDelete() {

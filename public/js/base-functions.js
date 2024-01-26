@@ -1,51 +1,48 @@
-// Responsive navbar
-function responsiveNav() {
-    let myTopnav = document.getElementById("myTopnav");
-    if (myTopnav.className === "topnav") {
-        myTopnav.classList.add("responsive");
-
-        // Check and toggle dark mode if needed
-        const storedDarkMode = localStorage.getItem('darkMode');
-        const isDarkMode = storedDarkMode === 'true' || false;
-
-    } else {
-        myTopnav.className = "topnav";
-    }
-}
 
 // Scroll and arrow appears
 window.addEventListener('scroll', function(){
 
-    if(window.scrollY > 500){
-        document.getElementById('back-to-top').style.display = 'block';
+    const backToTopButton = document.getElementById('back-to-top');
+
+    if (window.scrollY > 500) {
+        backToTopButton.classList.add('visible');
     } else {
-        document.getElementById('back-to-top').style.display = 'none';
+        backToTopButton.classList.remove('visible');
     }
+
+    // Scroll to top when the arrow is clicked
+    document.getElementById('back-to-top').addEventListener('click', function () {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
 });
 
-// Handle Dark Mode
+
 document.addEventListener('DOMContentLoaded', function () {
+
+    // Responsive navbar
+    document.getElementById('toggleNav').addEventListener('click', function() {
+        let myTopnav = document.getElementById("myTopnav");
+
+        // Check if the class list includes "responsive"
+        if (myTopnav.classList.contains("responsive")) {
+            myTopnav.classList.remove("responsive");
+        } else {
+            myTopnav.classList.add("responsive");
+
+            // Check and toggle dark mode if needed
+            const storedDarkMode = localStorage.getItem('darkMode');
+            const isDarkMode = storedDarkMode === 'true' || false;
+            // Add your dark mode logic here if needed
+        }
+    });
+
+    // Handle Dark Mode
     // Check user preference on page load (e.g., from localStorage)
     // Default to light mode if not set
     const isDarkMode = localStorage.getItem('darkMode') === 'true';
-
-    // Function to update the background images based on dark mode status
-    function updateBackgroundImages(isDarkMode) {
-        const homeSection = document.querySelector('.home-section');
-
-        // Check if the 'home-section' element exists and has a 'style' property
-        if (homeSection) {
-            if (isDarkMode) {
-                homeSection.style.background = 'none';
-                // Apply a darkening filter
-                homeSection.style.filter = 'brightness(70%)'; // Adjust the percentage as needed
-            } else {
-                homeSection.style.background = 'fixed top 95px right 0 url(images/oranges.jpg) no-repeat, fixed top 640px left 0 url(images/spices.jpg) no-repeat';
-                // Remove the filter for the light mode
-                homeSection.style.filter = 'brightness(100%)';
-            }
-        }
-    }
 
     // Update the class of the main content
     updateDarkModeClass(isDarkMode);
@@ -58,9 +55,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Update the class of the main content
         updateDarkModeClass(isDarkMode);
-
-        // Update background images based on dark mode status
-        updateBackgroundImages(isDarkMode);
     });
 
     // Function to update the class of the main content

@@ -102,7 +102,7 @@ class ProfileController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        return $this->render('profile/delete_account_confirmation.html.twig', [
+        return $this->render('profile/delete_account_confirmation.twig', [
             'user' => $user,
             'form' => $form->createView(),
         ]);

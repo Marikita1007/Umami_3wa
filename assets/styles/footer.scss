@@ -46,13 +46,14 @@
 
   footer {
 
+    text-align: center;
+
     .footer-columns {
       flex-wrap: wrap; // Prevent columns from wrapping on larger screens
     }
 
     .footer-column {
       width: 18.75rem;
-      margin-right: 3.125rem;
     }
 
     img {

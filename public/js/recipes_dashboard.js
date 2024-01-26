@@ -7,7 +7,7 @@ function showConfirmationModal(recipeName, deleteUrl) {
     confirmationMessageElement.textContent = `Are you sure you want to delete the recipe "${recipeName}"?`;
 
     // Get the confirm button inside the modal
-    const confirmButton = document.querySelector('#confirmation-modal .confirm-button');
+    const confirmButton = document.querySelector('#confirmation-recipe-modal .confirm-button');
 
     // Configure the confirm button to redirect to the delete URL
     confirmButton.onclick = function () {
@@ -16,12 +16,12 @@ function showConfirmationModal(recipeName, deleteUrl) {
     };
 
     // Display the confirmation modal
-    document.getElementById('confirmation-modal').style.display = 'block';
+    document.getElementById('confirmation-recipe-modal').style.display = 'block';
 }
 
 // Function to hide the confirmation modal
 function hideConfirmationModal() {
-    document.getElementById('confirmation-modal').style.display = 'none';
+    document.getElementById('confirmation-recipe-modal').style.display = 'none';
 }
 
 // Function to handle the delete operation (optional)
