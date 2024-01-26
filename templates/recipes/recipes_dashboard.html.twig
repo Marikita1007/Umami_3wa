@@ -63,6 +63,7 @@
                 {% endif %}
             </div>
 
+            {# Refactor TODO MARIKA !!!! #}
             {# Form to change the number of recipes #}
             <form action="{{ path('list_recipes') }}" method="get" class="pagination-form">
                 <label for="perPage">Recipes per page:</label>
@@ -77,13 +78,11 @@
     </section>
 
     <!-- modal for confirm deleting cuisine -->
-    <div id="confirmation-modal" class="modal">
-        <div class="modal-content">
-            <p id="confirmation-message" class="confirmation-message"></p>
-            <div class="modal-buttons">
-                <button class="confirm-button" onclick="confirmDelete()">Yes, Delete</button>
-                <button class="cancel-button" onclick="cancelDelete()">Cancel</button>
-            </div>
+    <div id="confirmation-recipe-modal">
+        <p id="confirmation-message" class="confirmation-message"></p>
+        <div class="modal-buttons">
+            <button class="confirm-button" onclick="confirmDelete()">Yes, Delete</button>
+            <button class="cancel-button" onclick="cancelDelete()">Cancel</button>
         </div>
     </div>
 

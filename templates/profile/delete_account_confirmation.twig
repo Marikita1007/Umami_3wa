@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body_id 'user_password' %}
+
+{% block body %}
+    <section>
+        {% include 'profile/profile_dashboard.html.twig' %}
+        <div class="content-container">
+            <h1>Account Cancellation</h1>
+            <p>Are you sure you want to cancel your account?</p>
+            <p>I'm sorry to see you go. Please note that we will keep your recipes, but once you delete your account, your
+                account information and comments will no longer be available.</p>
+
+            <form id="deleteAccountForm" method="post" action="{{ path('app_user_delete', {'id': user.id}) }}"
+                  class="delete-account-form">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+                <button type="button" class="custom-button-wide" onclick="showConfirmationModal()">Delete My Account</button>
+            </form>
+        </div>
+    </section>
+
+    {# modal for deleting account #}
+    <div id="confirmation-account-modal">
+        <p id="confirmation-message" class="confirmation-message">Are you sure you want to delete your account?</p>
+        <div class="modal-buttons">
+            <button class="confirm-button" onclick="submitDeleteAccountForm()">Yes, Delete</button>
+            <button class="cancel-button" onclick="cancelDelete()">Cancel</button>
+        </div>
+    </div>
+
+    <script src="{{ asset('js/delete_account_confirmation.js') }}"></script>
+{% endblock %}
+
+{% set pageRoute = 'user_profile' %}
+
+

@@ -1,7 +1,10 @@
 @import '../base';
 
 /* Confirmation styles for deleting a cuisine  */
-#confirmation-modal {
+#confirmation-recipe-modal,
+#confirmation-cuisine-modal,
+#confirmation-account-modal,
+{
   display: none;
   position: fixed;
   top: 50%;
