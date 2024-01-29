@@ -123,7 +123,7 @@ function storeCuisine()
         data: data,
         success: function(response) {
             $("#js-save-cuisine-button").prop('disabled', false);
-            let successHtml = '<div class="alert-success-message" role="alert">New Cuisine Name Created Successfully</div>';
+            let successHtml = '<div class="alert-success-message alert-flash" role="alert">New Cuisine Name Created Successfully</div>';
             $("#alert-div").html(successHtml);
             $("#name").val("");
             showAllCuisines();
@@ -145,7 +145,7 @@ function storeCuisine()
             {
                 let errors = response.responseJSON.messages.errors;
 
-                let errorHtml = '<div class="alert-danger-message" role="alert">' +
+                let errorHtml = '<div class="alert-danger-message alert-flash" role="alert">' +
                     '<b>Validation Error!</b>' +
                     '<ul>';
 
@@ -176,7 +176,7 @@ function updateCuisine()
         data: data,
         success: function(response) {
             $("#js-save-cuisine-button").prop('disabled', false);
-            let successHtml = '<div class="alert-success-message" role="alert">Cuisine Name Updated Successfully</div>';
+            let successHtml = '<div class="alert-success-message alert-flash" role="alert">Cuisine Name Updated Successfully</div>';
             $("#alert-div").html(successHtml);
             $("#name").val("");
             showAllCuisines();
@@ -198,7 +198,7 @@ function updateCuisine()
             {
                 let errors = response.responseJSON.messages.errors;
 
-                let errorHtml = '<div class="alert-danger-message" role="alert">' +
+                let errorHtml = '<div class="alert-danger-message alert-flash" role="alert">' +
                     '<b>Validation Error!</b>' +
                     '<ul>';
 
@@ -263,7 +263,7 @@ function destroyCuisine(id) {
             url: "/cuisines/delete/" + id,
             method: "DELETE",
             success: function(response) {
-                let successHtml = '<div class="alert-success-message" role="alert">Cuisine Deleted Successfully</div>';
+                let successHtml = '<div class="alert-success-message alert-flash" role="alert">Cuisine Deleted Successfully</div>';
                 $("#alert-div").html(successHtml);
                 showAllCuisines();
 
