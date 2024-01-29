@@ -1,6 +1,6 @@
 $(document).ready(function(){
-    jQuery('.add-another-collection-widget').click(function (e) {
-        let list = jQuery(jQuery(this).attr('data-list-selector'));
+    $('.add-another-collection-widget').click(function (e) {
+        let list = $($(this).attr('data-list-selector'));
         let counter = list.data('widget-counter') || list.children().length;
         let newWidget = list.attr('data-prototype');
 
@@ -9,11 +9,11 @@ $(document).ready(function(){
         counter++;
         list.data('widget-counter', counter);
 
-        let newElem = jQuery(list.attr('data-widget-tags')).html(newWidget);
+        let newElem = $(list.attr('data-widget-tags')).html(newWidget);
         newElem.find('input').each(function () {
             // Update the field names to match the new input
-            let newName = jQuery(this).attr('name').replace(/__name__/g, counter);
-            jQuery(this).attr('name', newName);
+            let newName = $(this).attr('name').replace(/__name__/g, counter);
+            $(this).attr('name', newName);
         });
 
         newElem.appendTo(list);
@@ -60,7 +60,7 @@ $(document).ready(function(){
         const collectionPhoto = document.querySelector(e.currentTarget.dataset.collection);
 
         const item = document.createElement('div');
-        // item.className = 'mt-3'; //REFACTOR TODO MARIKA Don't use bootstrap
+        // item.className = 'mt-3';
         const label = document.createElement("h4");
         label.innerHTML = "Photo " + (parseInt(collectionPhoto.dataset.index) + 1);
         collectionPhoto.appendChild(label);

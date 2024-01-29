@@ -10,7 +10,7 @@
 
         <section class="row-recipe">
             <div class="leftcolumn">
-                <div class="card-box">
+                <article class="card-box">
                     <h3>About Recipe</h3>
                     <ul>
                         {% if decodedTheMealDbData.meals[0].strCategory is not empty %}
@@ -21,7 +21,7 @@
                             <p>Cuisine : {{ decodedTheMealDbData.meals[0].strArea }}</p>
                         {% endif %}
                     </ul>
-                </div>
+                </article>
                 <article class="card-box">
                     <h3>Ingredients</h3>
                     <ul>
@@ -48,13 +48,13 @@
                 {% endif %}
             </div>
             <div class="rightcolumn">
-                <div class="card-box">
+                <article class="card-box">
                     <h2>{{ decodedTheMealDbData.meals[0].strMeal }}</h2>
                     <img class="recipe-img" src="{{ decodedTheMealDbData.meals[0].strMealThumb }}" alt="{{ decodedTheMealDbData.meals[0].strMeal }}">
 
                     <h3>Instructions</h3>
                     <p>{{ decodedTheMealDbData.meals[0].strInstructions }}</p>
-                </div>
+                </article>
             </div>
         </section>
 

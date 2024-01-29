@@ -68,6 +68,7 @@ class RecipesCrudController extends AbstractCrudController
             DateTimeField::new('updatedAt')
                 ->hideOnForm(),
             AssociationField::new('cuisine', 'Cuisine')
+                ->setRequired(true) //This field is mandatory
                 ->autocomplete(),
             // Use AssociationField for the ManyToMany relationship with Categories
             AssociationField::new('category', 'Categories')
@@ -77,8 +78,10 @@ class RecipesCrudController extends AbstractCrudController
                     'by_reference' => false, // Set to false to handle updates properly
                 ]),
             AssociationField::new('difficulty', 'Difficulty of cooking')
+                ->setRequired(true) //This field is mandatory
                 ->autocomplete(),
-            AssociationField::new('user', 'Recipe Created User'),
+            AssociationField::new('user', 'Recipe Created User')
+                ->setRequired(true) //This field is mandatory,
         ];
     }
 }

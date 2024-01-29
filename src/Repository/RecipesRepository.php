@@ -112,6 +112,24 @@ class RecipesRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    /*
+     * Get the number of likes for a specific recipe.
+     *
+     * @param int $recipeId The ID of the recipe.
+     *
+     * @return int The number of likes for the recipe.
+     */
+    public function getLikesCountForRecipe(int $recipeId): int
+    {
+        return $this->createQueryBuilder('r')
+            ->select('COUNT(u.id)')
+            ->join('r.likedUsers', 'u')
+            ->where('r.id = :recipeId')
+            ->setParameter('recipeId', $recipeId)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
     public function getSameCategoriesRecipes($recipeCategories, $recipeId): array
     {
         $queryBuilder = $this->createQueryBuilder('r')
