@@ -5,7 +5,7 @@
 {% block body %}
     <section class="row-recipe">
         <div class="leftcolumn">
-            <div class="card-box">
+            <article class="card-box">
                 <h3>About Recipe</h3>
                 <p>Preparation Time : {{ recipe.prepTime }} minutes</p>
                 <p>Servings : {{ recipe.servings }} people</p>
@@ -37,7 +37,7 @@
                         {% endfor %}
                     </ul>
                 {% endif %}
-            </div>
+            </article>
             <article class="card-box">
                 <h3>Ingredients</h3>
                 <ul>
@@ -65,15 +65,20 @@
                 </a>
             {% endif %}
 
-            <div class="card-box">
+            <article class="card-box">
                 <h2>{{ recipe.name }}</h2>
-                <h5>{{ recipe.description }}</h5>
-                {% if  recipe.updatedAt > recipe.createdAt %}
-                    <time><i class="fa fa-calendar"></i> Updated : {{ recipe.updatedAt|date('Y-m-d') }}</time>
-                {% else %}
-                    <time> <i class="fa fa-calendar"></i> Created : {{ recipe.createdAt|date('Y-m-d') }}</time>
-                {% endif %}
-                    <img class="recipe-img" src="{{ asset('uploads/images/' ~ recipe.thumbnail) }}" alt="{{ recipe.name }}">
+                <p>{{ recipe.description }}</p>
+
+                <div class="recipe-infos">
+                    {% if  recipe.updatedAt > recipe.createdAt %}
+                        <time><i class="fa fa-calendar"></i>Updated : {{ recipe.updatedAt|date('Y-m-d') }}</time>
+                    {% else %}
+                        <time><i class="fa fa-calendar"></i>Created : {{ recipe.createdAt|date('Y-m-d') }}</time>
+                    {% endif %}
+                    <i class="fa-solid fa-heart like-icon liked" data-recipe-id="{{ recipe.id }}"></i>{{ LikesCountForRecipe }}
+                </div>
+
+                <img class="recipe-img" src="{{ asset('uploads/images/' ~ recipe.thumbnail) }}" alt="{{ recipe.name }}">
 
                 {% if extraPhotos is defined and extraPhotos is not null and extraPhotos|length > 0 %}
                     <h3>Additional Photos</h3>
@@ -87,7 +92,7 @@
                 <h3>Instructions</h3>
                 <p>{{ recipe.instructions }}</p>
 
-            </div>
+            </article>
         </div>
     </section>
 

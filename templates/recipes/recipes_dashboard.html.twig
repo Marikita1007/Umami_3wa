@@ -25,8 +25,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                {# Reverse loop to display recipes in ascending order of ID #}
-                {% for recipe in recipes|reverse %}
+                {% for recipe in recipes %}
                     <tr>
                         <td data-label="ID">{{ recipe.id }}
                         <td data-label="Title">{{ recipe.name }}</td>
@@ -63,7 +62,6 @@
                 {% endif %}
             </div>
 
-            {# Refactor TODO MARIKA !!!! #}
             {# Form to change the number of recipes #}
             <form action="{{ path('list_recipes') }}" method="get" class="pagination-form">
                 <label for="perPage">Recipes per page:</label>

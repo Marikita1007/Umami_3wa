@@ -4,7 +4,7 @@
 
    {#  aria-labelledby associates the section with name "popularCuisinesHeading"  #}
     <section class="home-section" role="region" aria-labelledby="popularCuisinesHeading">
-        <!-- Section for Popular Cuisines -->
+        {#   Section for Popular Cuisines     #}
         <div class="container-small">
             <article class="block block-last">
                 <div class="block-body">
@@ -13,7 +13,7 @@
             </article>
 
             {% if topSevenCuisines is not empty %}
-                <!-- Navigation Menu for Popular Cuisines -->
+                {#   Navigation Menu for Popular Cuisines     #}
                 <nav class="ingredients-menu" role="navigation" aria-label="Popular Cuisines Menu">
                     {% for topSevenCuisine in topSevenCuisines %}
                         {# Create a link to recipes filters page with an aria-label attribute #}
@@ -24,15 +24,16 @@
 
         </div>
         {% if fourRandomRecipes is not empty %}
-            <!-- Container for Different Cuisines -->
+            {#     Container for Four Random Cuisines Recipes      #}
             <div class="container" role="region" aria-labelledby="menu-heading">
                 <div class="recipe-summary" id="menu">
                     {% for fourRandomRecipe in fourRandomRecipes %}
                         <article class="recipe-summary-item">
                             <a href="{{ path('show_recipe', {'id': fourRandomRecipe.id}) }}" aria-label="{{ fourRandomRecipe.name }}">
-                                <img src="{{ asset('uploads/images/' ~ fourRandomRecipe.thumbnail) }}" alt="{{ fourRandomRecipe.name }}" class="recipe-summary-img">
+                                <img class="recipe-summary-img" src="{{ asset('uploads/images/' ~ fourRandomRecipe.thumbnail) }}" alt="{{ fourRandomRecipe.name }}" title="{{ fourRandomRecipe.name }}">
                                 <h3 class="recipe-summary-title">{{ fourRandomRecipe.name }}</h3>
-                                <p>{{ fourRandomRecipe.description }}</p>
+                                {# Display Maximum 20 words of the recipe description #}
+                                <p>{{ fourRandomRecipe.description|split(' ')|slice(0, 20)|join(' ') }}</p>
                                 <div class="recipe-summary-infos">{{ fourRandomRecipe.cuisine }}</div>
                             </a>
                         </article>
@@ -43,7 +44,7 @@
     </section>
 
     <section class="home-section" role="region" aria-labelledby="topPicksHeading">
-        <!-- Section for Popular Recipes -->
+        {#  Section for Popular Recipes    #}
         <div class="container-small">
             <article class="block block-last">
                 <div class="block-body">
@@ -65,7 +66,7 @@
                 <article class="block {{ blockClass }}" role="article">
                     {# Display the recipe thumbnail image with alt text set to the recipe name #}
                     <div class="block-img">
-                        <img src="{{ asset('uploads/images/' ~ topLikedRecipe[0].thumbnail) }}" alt="{{ topLikedRecipe[0].name }}">
+                        <img src="{{ asset('uploads/images/' ~ topLikedRecipe[0].thumbnail) }}" alt="{{ topLikedRecipe[0].name }}" title="{{ topLikedRecipe[0].name }}">
                     </div>
 
                     {# Display the title with the word "Discover" wrapped in a span for styling #}
@@ -88,7 +89,7 @@
     </section>
 
     <section class="home-section" role="region" aria-labelledby="recipeInspirationsHeading">
-        <!-- Section for Cuisine Inspirations -->
+        {#   Section for Nine Latest Inserted Recipes    #}
         <div class="container-small">
             <article class="block block-last">
                 <header>
@@ -113,7 +114,7 @@
                             <a href="{{ path('show_recipe', {id: recipe.id}) }}">
                                 <figure>
                                     {% if recipe.thumbnail %}
-                                        <img src="{{ asset('uploads/images/' ~ recipe.thumbnail) }}" alt="{{ recipe.name }}">
+                                        <img src="{{ asset('uploads/images/' ~ recipe.thumbnail) }}" alt="{{ recipe.name }}" title="{{ recipe.name }}">
                                     {% else %}
                                         <i class="fa-solid fa-eye-slash fa-2xl" aria-label="No image available"></i>
                                     {% endif %}

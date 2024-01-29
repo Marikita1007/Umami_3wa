@@ -31,3 +31,7 @@ services:
         public: true # Make the service accessible from outside Classes
     App\Repository\RecipesRepository:
         public: true
+
+    App\Form\EventsListener\RecipesFormSubscriber:
+        tags:
+            - { name: 'kernel.event_subscriber' }

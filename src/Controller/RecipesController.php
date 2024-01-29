@@ -74,10 +74,11 @@ class RecipesController extends AbstractController
         // Get the current user and search the database for recipes related to that user.
         $recipes = $recipesRepository->findBy(
             ['user' => $this->getUser()],
-            ['createdAt' => 'ASC'], // Order by creation date in descending order
+            ['createdAt' => 'DESC'], // Order by creation date in descending order
             $perPage,
             ($page - 1) * $perPage
         );
+
         // Determine if there is a next page
         $hasNextPage = count($recipesRepository->findBy(['user' => $this->getUser()], [], 1, $page * $perPage)) > 0;
 
@@ -194,6 +195,7 @@ class RecipesController extends AbstractController
 
         return $this->render('recipes/show_recipe.html.twig', [
             'recipe' => $recipe,
+            'LikesCountForRecipe' => $recipesRepository->getLikesCountForRecipe($recipe->getId()),
             'extraPhotos' => $photosRepository->findBy(['recipe' => $recipe]),
             'form' => $form->createView(),
             // Fetch comments with associated user information
@@ -211,8 +213,6 @@ class RecipesController extends AbstractController
     public function createNewRecipeAndIngredients(
         Request $request,
         EntityManagerInterface $entityManager,
-        SluggerInterface $slugger,
-        SimpleUploadService $simpleUploadService,
     ): Response
     {
         $recipe = new Recipes();
@@ -234,7 +234,7 @@ class RecipesController extends AbstractController
 
             // Check if a file was uploaded
             if ($thumbnailFile) {
-                $this->saveThumbnail($thumbnailFile, $slugger, $recipe);
+                $this->addThumbnail($thumbnailFile, $recipe);
             }
 
             // Form handler to insert into Recipes and Ingredients tables
@@ -251,17 +251,6 @@ class RecipesController extends AbstractController
             // Get additional photos from Photos Entity
             $photos = $request->files->all();
 
-//            if ($photos == null){
-//                //TODO Change this Later cause User already added one photo 29122023
-//                $this->addFlash('danger', 'Each product must have at least one photo');
-//                return $this->redirectToRoute('new_recipe');
-//            } else {
-//                $images = $photos['ingredient_recipe']['recipe']['photos'] ?? null;
-//                if ($images) {
-//                    $this->addExtraPhotos($images, $recipe);
-//                }
-//            }
-            // TODO MARIKA Code above without if else
             $images = $photos['ingredient_recipe']['recipe']['photos'] ?? null;
             if ($images) {
                 $this->addExtraPhotos($images, $recipe);
@@ -289,8 +278,6 @@ class RecipesController extends AbstractController
         Recipes $recipe,
         EntityManagerInterface $entityManager,
         IngredientsRepository $ingredientsRepository,
-        SluggerInterface $slugger,
-        SimpleUploadService $simpleUploadService,
         PhotosRepository $photosRepository): Response
     {
 
@@ -301,15 +288,16 @@ class RecipesController extends AbstractController
         $form = $this->createForm(IngredientRecipeType::class, [
             'recipe' => $recipe,
             'ingredients' => $ingredients,
+            'current_thumbnail' => $recipe->getThumbnail(), // Set the current thumbnail
         ]);
 
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()){
 
-            // TODO MArika Refactor Make sure I only allowed jpeg and png !!!
             $thumbnailFile = $form['recipe']['thumbnail']->getData();
             if ($thumbnailFile) {
-                $this->saveThumbnail($thumbnailFile, $slugger, $recipe);
+                $this->addThumbnail($thumbnailFile, $recipe);
             }
 
             // Form handler to insert into Recipes and Ingredients tables
@@ -327,14 +315,6 @@ class RecipesController extends AbstractController
             //Get additional photos
             $photos = $request->files->all();
 
-//            if ($photos === null){
-//                //TODO MARIKA Change here cause user already have one image
-//                $this->addFlash('danger', 'Each recipe must have at least one photo');
-//                return $this->redirectToRoute('edit_recipe' , ['id' => $recipe->getId()]);
-//            } else {
-//
-//            }
-
             $images = $photos['ingredient_recipe']['recipe']['photos'] ?? null;
             if ($images !== null) {
                 $this->addExtraPhotos($images, $recipe);
@@ -345,7 +325,7 @@ class RecipesController extends AbstractController
             $entityManager->flush();
 
             // Show flash message with recipe name
-            $this->addFlash('success', sprintf('The new recipe "%s" with ingredients is updated.', $recipe->getName()));
+            $this->addFlash('success', sprintf('The recipe "%s" with ingredients is updated.', $recipe->getName()));
 
             return $this->redirectToRoute("show_recipe", ['id' => $recipe->getId()]);
         }
@@ -354,6 +334,7 @@ class RecipesController extends AbstractController
             'recipe' => $recipe,
             'form' => $form->createView(),
             'photos' => $photosRepository->findBy(['recipe' => $recipe]),
+            'current_thumbnail' => $recipe->getThumbnail(),
         ]);
     }
 
@@ -438,29 +419,6 @@ class RecipesController extends AbstractController
 
             $sameCategoryMeals = $theMealDbAPIController->getSameCategoryMeals($category->getName());
 
-            //TODO This is not priority so if there is no time, delete this code !!!!
-//            TODO MARIKA This verify the same category names
-//            $theMealDBCategories = $theMealDbAPIController->getAllCategories();
-//
-//            if ($theMealDBCategories) {
-//                $allCategories = $categoriesRepository->findAll();
-//
-//                $localCategoryNames = array_map(function ($category) {
-//                    return $category->getName();
-//                }, $allCategories);
-//
-//
-//                $apiCategoryNames = array_map(function ($theMealDBCategories) {
-//                    return $theMealDBCategories['strCategory'];
-//                }, $theMealDBCategories['categories']);
-//
-//
-//                // TODO MARIKA Check What I can do with the same name category !!!! This returns three categories for now
-//                // It contains the names of categories that exist both locally and in The Meal DB API.
-//                $commonCategoryNames = array_intersect($localCategoryNames, $apiCategoryNames);
-//
-//            }
-
             return $this->render('recipes/recipes_filters.html.twig', [
                 'recipesByCategories' => $recipesRepository->findByCategories($category),
                 'formCuisines' => $formCuisines->createView(),
@@ -502,68 +460,6 @@ class RecipesController extends AbstractController
             $this->addFlash('danger', 'Error happened while deleting the photo ');
             return $this->redirectToRoute('app.recipes');
         }
-
-        //TODO MARIKA This is for AJAX call one 30122023 Add it later if needed
-//        $data = json_decode($request->getContent(), true);
-//
-//        if($this->isCsrfTokenValid("delete" . $photos->getId(), $data['_token']))
-//        {
-//            $photo_name = $photos->getName();
-//
-//            if($simpleUploadService->deleteImage($photo_name))
-//            {
-//                $entityManager->remove($photos);
-//
-//                $entityManager->flush();
-//
-//                $this->addFlash('success', 'Your photo is successfully deleted');
-//                return new JsonResponse(['success' => 'Your photo is successfully deleted'], 200);
-//            }
-//        }
-//        return new JsonResponse(['error' => 'Invalid Token'], 400);
-    }
-
-    private function saveThumbnail(UploadedFile $imageFile, SluggerInterface $slugger, $recipe)
-    {
-        // Get the original file name and extension
-        $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-        $fileExtension = $imageFile->getClientOriginalExtension();
-
-        // Generate a unique name for the file
-        $newFilename = $originalFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
-
-        // Move the file to the desired directory (you can configure this)
-        try {
-            $imageFile->move(
-                $this->getParameter('recipe_image_directory'),
-                $newFilename
-            );
-        } catch (FileException $e) {
-            throw new NotFoundHttpException('An error occurred while uploading the file.');
-        }
-
-        // Update the 'image' property of your entity to store the file name
-        // instead of its contents
-        $recipe->setThumbnail($newFilename);
-    }
-
-    public function renderFooter(): Response
-    {
-        $cuisines = $this->getDoctrine()->getRepository(Cuisines::class)->findAll();
-
-        return $this->render('footer.html.twig', ['cuisines' => $cuisines]);
-    }
-
-    // Private method to add extra photos
-    private function addExtraPhotos(array $images, Recipes $recipe): void
-    {
-        foreach ($images as $image) {
-            $new_photos = new Photos();
-            $image_new = $image['fileName'];
-            $new_photo = $this->simpleUploadService->uploadImage($image_new);
-            $new_photos->setFileName($new_photo);
-            $recipe->addPhoto($new_photos);
-        }
     }
 
     #[Route('/{id}/like', name: 'recipe_like', methods: ['GET', 'POST'])]
@@ -598,6 +494,49 @@ class RecipesController extends AbstractController
         $entityManager->flush();
 
         return $this->json(['liked' => $liked]);
+    }
+
+//    Refactor Marika upload file Refactored and using simpleUploadService for Thumbnail too
+//    private function addThumbnail(UploadedFile $imageFile, $recipe)
+//    {
+//        // Get the original file name and extension
+//        $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+//
+//        // Generate a unique name for the file
+//        $newFilename = $originalFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+//
+//        // Move the file to the desired directory (you can configure this)
+//        try {
+//            $imageFile->move(
+//                $this->getParameter('recipe_image_directory'),
+//                $newFilename
+//            );
+//        } catch (FileException $e) {
+//            throw new NotFoundHttpException('An error occurred while uploading the file.');
+//        }
+//
+//        // Update the 'image' property of your entity to store the file name
+//        // instead of its contents
+//        $recipe->setThumbnail($newFilename);
+//    }
+
+    private function addThumbnail($thumbnail, Recipes $recipe): void
+    {
+        $newFileName = $this->simpleUploadService->uploadImage($thumbnail);
+
+        // Set the new file name to the existing recipe's thumbnail property
+        $recipe->setThumbnail($newFileName);
+    }
+    // Private method to add extra photos
+    private function addExtraPhotos(array $images, Recipes $recipe): void
+    {
+        foreach ($images as $image) {
+            $new_photos = new Photos();
+            $image_new = $image['fileName'];
+            $new_photo = $this->simpleUploadService->uploadImage($image_new);
+            $new_photos->setFileName($new_photo);
+            $recipe->addPhoto($new_photos);
+        }
     }
 }
 
