@@ -14,7 +14,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 // the "name" and "description" arguments of AsCommand replace the
 // static $defaultName and $defaultDescription properties
-// todo Marika Write in README php bin/console DefaultCategoriesCommand to Update default Categories
+
 
 /**
  * This Symfony Console command, DefaultCategoriesCommand, is responsible for creating default categories

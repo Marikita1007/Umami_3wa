@@ -38,7 +38,7 @@ final class UsersFactory extends ModelFactory
     protected function getDefaults(): array
     {
         return [
-            // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
+            // Model Factories URL : https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories
             'email' => self::faker()->email(),
             'plainPassword' => 'umami12345',
             'username' => self::faker()->userName(),
@@ -47,7 +47,7 @@ final class UsersFactory extends ModelFactory
     }
     protected function initialize(): self
     {
-        // see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#initialization
+        // Initialization URL : https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#initialization
         return $this
             ->afterInstantiate(function(User $user) {
                 if ($user->getPlainPassword()) {

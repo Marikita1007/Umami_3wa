@@ -29,9 +29,9 @@ Encore
     .addEntry('comments', './public/js/comments.js')
     .addEntry('the-meal-db-api', './public/js/the-meal-db-api.js')
     .addEntry('base-functions', './public/js/base-functions.js')
-    .addEntry('show_like', './public/js/show_like.js')
-    .addEntry('recipes-dashboard', './public/js/recipes_dashboard.js')
-    .addEntry('delete-account-confirmation', './public/js/delete_account_confirmation.js')
+    .addEntry('recipe-likes', './public/js/recipes-likes.js')
+    .addEntry('recipes-dashboard', './public/js/recipes-dashboard.js')
+    .addEntry('delete-account-confirmation', './public/js/delete-account-confirmation.js')
 
     // Added scss files
     .addStyleEntry('base-styles', ['./assets/styles/base.scss'])

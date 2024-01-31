@@ -16,7 +16,6 @@ body[data-route="about_us"] {
   }
 
   .about-section {
-    background-color: $umami-grey-light;
     color: $umami-grey;
     margin-bottom: 3px;
     padding: 50px;
@@ -39,11 +38,12 @@ body[data-route="about_us"] {
     width: 100%;
 
     &:hover {
-      background-color: #555;
+      background-color: $umami-grey;
     }
   }
 
   h2 {
+    margin: 2vh;
     text-align: center;
   }
 
