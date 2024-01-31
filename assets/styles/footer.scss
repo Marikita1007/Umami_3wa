@@ -48,6 +48,10 @@
 
     text-align: center;
 
+    a, p {
+      font-size: 18px;
+    }
+
     .footer-columns {
       flex-wrap: wrap; // Prevent columns from wrapping on larger screens
     }

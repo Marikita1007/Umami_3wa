@@ -46,11 +46,11 @@ class CheckVerifiedUserSubscriber implements EventSubscriberInterface
             return;
         }
 
-//        $response = new RedirectResponse(
-//            $this->router->generate('app_verify_resend_email')
-//        );
-//
-//        $event->setResponse($response);
+        $response = new RedirectResponse(
+            $this->router->generate('login')
+        );
+
+        $event->setResponse($response);
     }
 
     public static function getSubscribedEvents()
@@ -64,21 +64,4 @@ class CheckVerifiedUserSubscriber implements EventSubscriberInterface
             LoginFailureEvent::class => 'onLoginFailure',
         ];
     }
-
-    // Refactor For now leave it as it is  and don't use this mathod.
-//    private function checkVerificationStatus(User $user)
-//    {
-//        // Check if the verification link has expired
-//        // TODO MARIKA I want to update verificationRequestedAt the moment the user verify and log in to their account.
-//        $verificationRequestedAt = $user->getVerificationRequestedAt();
-//        if ($verificationRequestedAt !== null) {
-//            if ($verificationRequestedAt > $user->getCreatedAt()->modify('+1 hour')) {
-//                dump($verificationRequestedAt);
-//                dump($user->getCreatedAt()->modify('+1 hour'));
-////                dd('inside subsc');
-//                $this->emailVerifier->sendNewVerificationEmail($user);
-//                $this->router->generate('app_verify_resend_email');
-//            }
-//        }
-//    }
 }
