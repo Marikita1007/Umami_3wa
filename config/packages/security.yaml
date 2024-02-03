@@ -7,6 +7,9 @@ security:
     password_hashers:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
+
+    # Any secured section of your application needs some concept of a user.
+    # The user provider loads users from any storage (e.g. the database) based on a "user identifier" (e.g. the user's email address);
     providers:
         users_in_memory: { memory: null }
         # Here Adding config for a user provider
@@ -14,6 +17,9 @@ security:
             entity:
                 class: App\Entity\User
                 property: email
+
+    # The firewall is the core of securing your application. Every request within the firewall is checked if it needs an authenticated user.
+    # The firewall also takes care of authenticating this user (e.g. using a login form);
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -55,8 +61,9 @@ security:
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
 
-    # Easy way to control access for large sections of your site
+    # Easy way to control access for large sections of your siteReci
     # Note: Only the *first* access control that matches will be used
+    # Define access control rules based on user roles
     access_control:
          - { path: ^/admin, roles: ROLE_ADMIN }
          - { path: ^/profile, roles: ROLE_USER }

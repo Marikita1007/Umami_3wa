@@ -23,7 +23,7 @@ class Ingredients
      * @Assert\NotBlank(message="Ingredient name is required")
      * @Assert\Length(
      *     min=2,
-     *     max=30,
+     *     max=35,
      *     minMessage="Ingredient name must be at least {{ limit }} characters long",
      *     maxMessage="Ingredient name cannot be longer than {{ limit }} characters")
      * @ORM\Column(type="string", length=30)

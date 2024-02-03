@@ -1,7 +1,12 @@
 # see https://symfony.com/doc/current/reference/configuration/framework.html
 framework:
+    # The secret key used for various security-related features, such as generating CSRF tokens.
     secret: '%env(APP_SECRET)%'
-    #csrf_protection: true
+
+    # Enable or disable CSRF protection. CSRF protection helps prevent Cross-Site Request Forgery attacks.
+    csrf_protection: true
+
+    # Enable or disable HTTP method override. This allows using non-GET/POST HTTP methods via "_method" parameter.
     http_method_override: false
 
     # Enables session support. Note that the session will ONLY be started if you read or write from it.

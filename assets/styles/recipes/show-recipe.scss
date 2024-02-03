@@ -81,7 +81,6 @@ body[data-route="show_recipes"] {
     }
   }
 
-
   .recommendation-recipes {
     background-color: $umami-white;
     margin-top: 20px;
@@ -95,77 +94,6 @@ body[data-route="show_recipes"] {
       max-width: 170px;
       object-fit: contain;
     }
-  }
-
-  /* Carousel Styles */
-  .umami-carousel-container {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-  }
-
-  .umami-carousel-inner {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-  }
-
-  .umami-carousel-item {
-    flex: 0 0 100%;
-  }
-
-  /* Carousel Control Buttons */
-  .umami-carousel-control {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 3rem;
-    height: 3rem;
-    border-radius: 50%;
-    background-color: rgba(0, 0, 0, 0.3);
-    color: $umami-white;
-    text-align: center;
-    line-height: 3rem;
-    font-size: 1.5rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-
-  .umami-carousel-control:hover {
-    background-color: rgba(0, 0, 0, 0.6);
-  }
-
-  .umami-carousel-prev {
-    left: 0;
-  }
-
-  .umami-carousel-next {
-    right: 0;
-  }
-
-  /* Carousel Indicator */
-  .umami-carousel-indicators {
-    position: absolute;
-    bottom: 1rem;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .umami-carousel-indicator {
-    width: 1rem;
-    height: 1rem;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.5);
-    margin: 0 0.5rem;
-    cursor: pointer;
-  }
-
-  /* Active Carousel Indicator */
-  .umami-carousel-indicator.active {
-    background-color: $umami-white;
   }
 
   @media screen and (max-width: $layout-breakpoint-medium) {
@@ -217,6 +145,10 @@ body[data-route="show_recipes"] {
       font-size: 1.5rem;
       font-weight: bold;
       margin-bottom: 10px;
+    }
+
+    #comments-flash-message-container {
+      padding: 0;
     }
   }
 

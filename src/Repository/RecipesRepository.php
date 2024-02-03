@@ -25,13 +25,14 @@ class RecipesRepository extends ServiceEntityRepository
         parent::__construct($registry, Recipes::class);
     }
 
+    // This method retrieves recipes based on a given cuisine, using parameterized queries to prevent SQL injection.
     public function findByCuisine(Cuisines $cuisine)
     {
         return $this
             ->createQueryBuilder('r')
             ->join('r.cuisine', 'c')
-            ->where('c.name = :cuisineName')
-            ->setParameter('cuisineName', $cuisine->getName())
+            ->where('c.name = :cuisineName')// :cuisineName is a placeholder that gets replaced with a sanitized version of $cuisine->getName().
+            ->setParameter('cuisineName', $cuisine->getName()) // Using DQL with parameterized queries
             ->getQuery()
             ->getResult()
         ;
@@ -88,6 +89,11 @@ class RecipesRepository extends ServiceEntityRepository
      */
     public function findRandomRecipes(): array
     {
+        // This method selects a random set of recipes using a native SQL query.
+        // The query uses the 'RAND()' function for randomness.
+        // The ResultSetMapping (RSM) is configured to map the result set to the Recipes entity.
+        // This approach avoids exposing the application to SQL injection as the query is carefully constructed.
+
         // Native SQL query to select random rows from 'cuisines' table
         $sql  = 'SELECT r.*, RAND() as rand
                     FROM recipes r
@@ -97,6 +103,7 @@ class RecipesRepository extends ServiceEntityRepository
                     LIMIT 4';
 
         // Create a ResultSetMapping (RSM) to map the result set to entities
+        // This ensures that even when dealing with raw SQL, the application remains secure against potential threats.
         $rsm = new ResultSetMapping();
 
         // Add the main entity (Cuisines) to the ResultSetMapping
@@ -106,6 +113,7 @@ class RecipesRepository extends ServiceEntityRepository
         $rsm->addFieldResult('c', 'id', 'id');
 
         // Create a native query using EntityManager's createNativeQuery method
+        // The native query uses a ResultSetMapping to map the result set to the Recipes entity.
         $query = $this->getEntityManager()->createNativeQuery($sql, $rsm);
 
         // Execute the query and return the result

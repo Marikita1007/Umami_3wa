@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block body_id 'user_edit' %}
+
+{% block body %}
+
+    <section>
+        {% include 'profile/profile_dashboard.html.twig' %}
+
+        <div class="content-container">
+            <h1>Edit User</h1>
+
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+
+            <button type="submit" class="custom-button-wide">
+                <i class="fa fa-save" aria-hidden="true"></i> Save
+            </button>
+            {{ form_end(form) }}
+        </div>
+    </section>
+
+{% endblock %}
+
+{% set pageRoute = 'user_profile' %}
+
+

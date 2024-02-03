@@ -1,5 +1,6 @@
 ### README en Français
 <div id="readme-top-fr"></div>
+<p align="right"><a href="#readme-top-eng">README in English</a></p>
 
 <!-- LOGO DU PROJET -->
 <br />
