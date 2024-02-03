@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Comments;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -12,15 +13,19 @@ class CommentsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-//            TODO Marika update form
-            ->add('content')
-        ;
+            ->add('content', TextareaType::class, [
+                'label' => 'Add a comment',
+                'attr' => [
+                    'aria-label' => 'Add a comment to the recipe',
+                    'role' => "comment",
+                ],
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-//            'data_class' => Comments::class,
+            'data_class' => Comments::class,
         ]);
     }
 }

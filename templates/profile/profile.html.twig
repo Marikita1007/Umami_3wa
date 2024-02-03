@@ -6,19 +6,21 @@
 
 {% block body %}
 
-    <section>
+    <section role="region" aria-labelledby="profileHeading">
         {% include 'profile/profile_dashboard.html.twig' %}
 
         <div class="content-container">
-            <h1>Edit User</h1>
+            <h1 id="profileHeading">Your Profile</h1>
 
-            {{ form_start(form) }}
-            {{ form_widget(form) }}
+            {# Display user information using a description list #}
+            <dl>
+                <dt>Username</dt>
+                <dd aria-label="User's Username">{{ user.username }}</dd>
 
-            <button type="submit" class="custom-button-wide">
-                <i class="fa fa-save" aria-hidden="true"></i> Save
-            </button>
-            {{ form_end(form) }}
+                <dt>Email</dt>
+                <dd aria-label="User's Email">{{ user.email }}</dd>
+            </dl>
+
         </div>
     </section>
 

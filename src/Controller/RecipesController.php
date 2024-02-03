@@ -26,6 +26,7 @@ use Doctrine\DBAL\Types\IntegerType;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -173,7 +174,34 @@ class RecipesController extends AbstractController
         $form = $this->createForm(CommentsType::class, $comments);
         $form->handleRequest($request);
 
+        if ($form->isSubmitted() && !$form->isValid()) {
+            // Handle form errors
+            $errors = [];
+
+            foreach ($form->getErrors(true) as $error) {
+                $errors[] = $error->getMessage();
+            }
+
+            foreach ($form->all() as $childForm) {
+                if ($childForm instanceof FormInterface) {
+                    $childErrors = $this->getFormErrors($childForm);
+                    $errors = array_merge($errors, $childErrors);
+                }
+            }
+
+            return new JsonResponse([
+                'success' => false,
+                'message' => 'Error submitting the comment. Please check your input.',
+                'errors' => $errors,
+            ]);
+        }
+
         if($form->isSubmitted() && $form->isValid()) {
+
+            foreach ($form->getErrors(true, true) as $error) {
+                $errors[] = $error->getMessage();
+            }
+
             // Set the user for the comment
             $comments->setUser($this->getUser());
 
@@ -199,7 +227,7 @@ class RecipesController extends AbstractController
             'extraPhotos' => $photosRepository->findBy(['recipe' => $recipe]),
             'form' => $form->createView(),
             // Fetch comments with associated user information
-            'comments' => $commentsRepository->findBy(['recipe' => $recipe], ['datetime' => 'ASC']),
+            'comments' => $commentsRepository->findBy(['recipe' => $recipe], ['datetime' => 'DESC']),
             'categories' => $recipe->getCategory(), // Fetch categories associated with the recipe
             'sameCategoriesRecipes' => $recipesRepository->getSameCategoriesRecipes($recipe->getCategory(), $recipe->getId()),
         ]);
@@ -537,6 +565,24 @@ class RecipesController extends AbstractController
             $new_photos->setFileName($new_photo);
             $recipe->addPhoto($new_photos);
         }
+    }
+
+    private function getFormErrors(FormInterface $form): array
+    {
+        $errors = [];
+
+        foreach ($form->getErrors(true, true) as $error) {
+            $errors[] = $error->getMessage();
+        }
+
+        foreach ($form->all() as $childForm) {
+            if ($childForm instanceof FormInterface) {
+                $childErrors = $this->getFormErrors($childForm);
+                $errors = array_merge($errors, $childErrors);
+            }
+        }
+
+        return $errors;
     }
 }
 

@@ -20,7 +20,7 @@ class UserType extends AbstractType
         $builder
             ->add('username', TextType::class,[
                 'label' => 'Username',
-                'disabled' => true, //Users can't change username once it's chosen. TODO MARIKA Write warning on registration page
+                'disabled' => true, //Users can't change username once it's chosen.
             ])
             ->addEventListener(FormEvents::PRE_SET_DATA, [$this, 'preFillUsername'])
             ->add('email', EmailType::class,[

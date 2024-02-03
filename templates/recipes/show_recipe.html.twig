@@ -99,6 +99,9 @@
     <section class="comment-section">
         <h2>Comments</h2>
 
+        {# Display a add flash messages of comments #}
+        <div id="comments-flash-message-container"role="alert"></div>
+
         {% if is_granted('ROLE_USER') %}
             {{ form_start(form, {'attr' : {'class': 'comments'}, 'action': path('show_recipe', {'id' : recipe.id}), 'method' : 'POST'}) }}
             {{ form_row(form.content) }}
@@ -107,7 +110,7 @@
             {{ form_end(form) }}
         {% else %}
             {# Display a message for non-authenticated users #}
-            <p>Please log in to leave or check comments.</p>
+            <p>Please log in to leave comments.</p>
         {% endif %}
 
         <div id="comment-parent">

@@ -38,7 +38,7 @@ class ProfileController extends AbstractController
 
         return $this->render('profile/profile.html.twig', [
             'controller_name' => 'ProfileController',
-            'form' => $form->createView(),
+            'user' => $user,
         ]);
     }
 
@@ -58,7 +58,7 @@ class ProfileController extends AbstractController
             return $this->redirectToRoute('user_edit');
         }
 
-        return $this->render('profile/profile.html.twig', [
+        return $this->render('profile/edit_profile.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
         ]);
