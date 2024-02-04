@@ -65,6 +65,12 @@ body[data-route="recipe-form"] {
         max-width: 40px;
       }
     }
+
+    #ingredient_recipe_recipe_category {
+      display: flex;
+      flex-direction: column;
+      flex-flow: wrap;
+    }
   }
 
   h1 {
