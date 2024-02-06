@@ -114,12 +114,12 @@ class RecipesType extends AbstractType
                 'placeholder' => 'Select Categories',
                 'choice_label' => 'name',
                 'multiple' => true, // Allow multiple selections
-                'expanded' => true, // Render as checkboxes (optional, depending on your UI preference)
-                'required' => false, // Make it optional if needed
+                'expanded' => true, // Render as checkboxes
+                'required' => true,
                 'by_reference' => false, // Set to false to handle updates properly
                 'help' => 'Choose Categories for your recipe.',
                 'attr' => [
-                    'aria-label' => 'Recipe category',
+                    'aria-label' => 'Recipe categories',
                 ],
             ])
             ->add('photos', CollectionType::class,[

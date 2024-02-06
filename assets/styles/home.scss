@@ -264,6 +264,18 @@ body[data-route="home"] {
 
   @media only screen and (max-width: $layout-breakpoint-small ) {
 
+    .home-section {
+      .ingredients-menu a {
+        font-size: 0.7em;
+        font-weight: 600;
+      }
+      .recipe-summary {
+        .recipe-summary-infos {
+          font-size: 1.5em;
+        }
+      }
+    }
+
     .block-right, .block-left{
       text-align: center;
     }
@@ -271,6 +283,7 @@ body[data-route="home"] {
     .block-right > .block-img, .block-left > .block-img {
       @include centerFlexContainer;
     }
+
   }
 
     /* Dark theme styles */
