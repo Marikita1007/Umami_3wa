@@ -38,6 +38,7 @@ class Recipes
      *      minMessage = "Recipe description must be at least {{ limit }} characters long",
      *      maxMessage = "Recipe description cannot be longer than {{ limit }} characters"
      * )
+     * @Assert\NotBlank(message="Description can not be blank.")
      */
     private ?string $description;
 
@@ -49,6 +50,7 @@ class Recipes
      *      minMessage = "Recipe description must be at least {{ limit }} characters long",
      *      maxMessage = "Recipe description cannot be longer than {{ limit }} characters"
      * )
+     * @Assert\NotBlank(message="Instructions can not be blank.")
      */
     private $instructions;
 

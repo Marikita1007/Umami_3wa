@@ -85,6 +85,10 @@
 
   @media screen and (max-width: $layout-breakpoint-small) {
 
+    .baseline {
+      padding: 2.5em 1em;
+    }
+
     .topnav {
       display: block; /* Override styles for screens smaller than $layout-breakpoint-small */
       justify-content: initial; /* Override styles for screens smaller than $layout-breakpoint-small */
@@ -112,7 +116,7 @@
   @media screen and (max-width: $layout-breakpoint-small) {
 
     .baseline {
-      padding: 7.8em 0 14.3em;
+      padding: 2.5em 1em;
 
       .baseline-name {
         padding-bottom: 0.3em;

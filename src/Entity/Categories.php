@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=CategoriesRepository::class)
@@ -22,6 +24,7 @@ class Categories
     private $id;
 
     /**
+     * @Assert\NotBlank(message="Choose at least one category")
      * @ORM\Column(type="string", length=100)
      */
     private $name;

@@ -2,6 +2,12 @@
 
 body[data-route="contact_form"] {
 
+  .contact-form {
+    .form-control {
+      max-width: 960px;
+    }
+  }
+
   /* Dark theme styles for Contact Form Page */
   .darktheme {
 
