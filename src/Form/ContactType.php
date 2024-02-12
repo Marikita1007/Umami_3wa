@@ -11,6 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class ContactType extends AbstractType
 {
@@ -27,8 +28,8 @@ class ContactType extends AbstractType
                     'aria-label' => 'Email Address',
                 ],
                 'constraints' => [
-                    new Email(['message' => 'Please enter a valid email address.']), // Validates email format
-                    new NotBlank(['message' => 'Email is required.']), // Ensures the field is not empty on the server side
+                    new Assert\Email(['message' => 'Please enter a valid email address.']), // Validates email format
+                    new Assert\NotBlank(['message' => 'Email is required.']), // Ensures the field is not empty on the server side
                 ],
             ])
             // Name field with client-side placeholder and server-side constraint
@@ -41,6 +42,10 @@ class ContactType extends AbstractType
                 ],
                 'constraints' => [
                     new NotBlank(['message' => 'Name is required.']),
+                    new Assert\Regex([
+                        'pattern' => '/^[A-Za-z\p{L}\p{N}!?\s;.]+$/u',
+                        'message' => 'Invalid characters in the name field.',
+                    ]),
                 ],
             ])
             // Message field with client-side rows attribute and server-side constraints
@@ -56,6 +61,10 @@ class ContactType extends AbstractType
                         'minMessage' => 'Your message must be at least {{ limit }} characters long.',
                     ]),
                     new NotBlank(['message' => 'Message is required.']),
+                    new Assert\Regex([
+                        'pattern' => '/^[A-Za-z\p{L}\p{N}!?\s;.]+$/u',
+                        'message' => 'Invalid characters in the message field.',
+                    ]),
                 ],
                 'required' => 'required',
             ])

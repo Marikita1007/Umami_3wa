@@ -14,6 +14,12 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 #[IsGranted("ROLE_USER")]
 class CuisinesController extends AbstractController
 {
+
+    /**
+     * Displays a list of cuisines.
+     *
+     * @return Response  A Symfony Response object rendering the cuisines page with a list of all cuisines.
+     */
     #[Route("/cuisines", name: "cuisines", methods: ["GET"])]
     public function index(): Response
     {
@@ -26,6 +32,11 @@ class CuisinesController extends AbstractController
         ]);
     }
 
+    /**
+     * Retrieves and returns a JSON response containing a list of all cuisines.
+     *
+     * @return JsonResponse  A Symfony JsonResponse object containing a list of cuisines in JSON format.
+     */
     #[Route("/cuisines/list", name: "cuisines_list", methods: ["GET"])]
     public function showAll(): JsonResponse
     {
@@ -45,6 +56,13 @@ class CuisinesController extends AbstractController
         return $this->json($data);
     }
 
+    /**
+     * Retrieves and returns a JSON response containing details of a specific cuisine.
+     *
+     * @param int $id  The unique identifier of the cuisine.
+     *
+     * @return JsonResponse  A Symfony JsonResponse object containing the details of the specified cuisine in JSON format.
+     */
     #[Route("/cuisines/show/{id}", name: "cuisines_show", methods: ["GET", "POST"])]
     public function show(int $id): JsonResponse
     {
@@ -65,6 +83,14 @@ class CuisinesController extends AbstractController
         return $this->json($data);
     }
 
+    /**
+     * Creates a new cuisine and stores it in the database.
+     *
+     * @param Request             $request   The HTTP request object containing the cuisine data.
+     * @param ValidatorInterface  $validator Symfony's validator service for validating the cuisine entity.
+     *
+     * @return JsonResponse  A Symfony JsonResponse indicating the success or failure of creating a new cuisine.
+     */
     #[Route("/cuisines/new", name: "cuisines_new", methods: ["POST"])]
     public function new(Request $request, ValidatorInterface $validator): JsonResponse
     {
@@ -92,6 +118,11 @@ class CuisinesController extends AbstractController
         return $this->json('Created new cuisines successfully with id ' . $cuisine->getId());
     }
 
+    /**
+     * Edits an existing cuisine based on its unique identifier.
+     *
+     * @return JsonResponse  A Symfony JsonResponse indicating the success or failure of editing the cuisine.
+     */
     #[Route("/cuisines/edit/{id}", name: "cuisine_edit", methods: ["PUT"])]
     public function edit(Request $request, int $id, ValidatorInterface $validator): JsonResponse
     {
@@ -127,6 +158,11 @@ class CuisinesController extends AbstractController
         return $this->json($data);
     }
 
+    /**
+     * Deletes an existing cuisine based on its unique identifier.
+     *
+     * @return JsonResponse  A Symfony JsonResponse indicating the success or failure of deleting the cuisine.
+     */
     #[Route("/cuisines/delete/{id}", name: "cuisine_delete", methods: ["DELETE"])]
     public function delete(int $id): JsonResponse
     {

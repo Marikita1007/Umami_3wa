@@ -18,17 +18,36 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class RecipesCrudController extends AbstractCrudController
 {
+    /**
+     * Get the fully-qualified class name of the managed entity.
+     *
+     * @return string
+     */
     public static function getEntityFqcn(): string
     {
         return Recipes::class;
     }
 
+    /**
+     * Configure CRUD settings.
+     *
+     * @param Crud $crud
+     *
+     * @return Crud
+     */
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
             ->setDefaultSort(['id' => 'DESC']); // Sort by id in descending order
     }
 
+    /**
+     * Configures the fields of the entity for different pages in the EasyAdmin CRUD interface.
+     *
+     * @param string $pageName The name of the current page (e.g., 'index', 'detail', 'new', 'edit').
+     *
+     * @return iterable An array of field configurations.
+     */
     public function configureFields(string $pageName): iterable
     {
         return [

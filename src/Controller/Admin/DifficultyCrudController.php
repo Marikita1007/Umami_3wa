@@ -12,11 +12,23 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class DifficultyCrudController extends AbstractCrudController
 {
+    /**
+     * Get the fully-qualified class name of the managed entity.
+     *
+     * @return string
+     */
     public static function getEntityFqcn(): string
     {
         return Difficulty::class;
     }
 
+    /**
+     * Configure fields for the CRUD controller.
+     *
+     * @param string $pageName
+     *
+     * @return iterable
+     */
     public function configureFields(string $pageName): iterable
     {
         return [

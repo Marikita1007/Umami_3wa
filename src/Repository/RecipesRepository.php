@@ -25,19 +25,30 @@ class RecipesRepository extends ServiceEntityRepository
         parent::__construct($registry, Recipes::class);
     }
 
-    // This method retrieves recipes based on a given cuisine, using parameterized queries to prevent SQL injection.
+    /**
+     * Retrieves recipes based on a given cuisine.
+     *
+     * @param Cuisines $cuisine The cuisine for which recipes are requested.
+     * @return array An array of Recipe entities associated with the specified cuisine.
+     */
     public function findByCuisine(Cuisines $cuisine)
     {
         return $this
             ->createQueryBuilder('r')
             ->join('r.cuisine', 'c')
-            ->where('c.name = :cuisineName')// :cuisineName is a placeholder that gets replaced with a sanitized version of $cuisine->getName().
+            ->where('c.name = :cuisineName') //:cuisineName is a placeholder that gets replaced with a sanitized version of $cuisine->getName().
             ->setParameter('cuisineName', $cuisine->getName()) // Using DQL with parameterized queries
             ->getQuery()
             ->getResult()
         ;
     }
 
+    /**
+     * Retrieves recipes based on a given category.
+     *
+     * @param Categories $category The category for which recipes are requested.
+     * @return array An array of Recipe entities associated with the specified category.
+     */
     public function findByCategories(Categories $category)
     {
         return $this
@@ -50,6 +61,12 @@ class RecipesRepository extends ServiceEntityRepository
         ;
     }
 
+    /**
+     * Retrieves recipes containing a specific word in their name.
+     *
+     * @param string $word The word to search for in recipe names.
+     * @return array An array of Recipe entities matching the search criteria.
+     */
     public function getByWord(string $word)
     {
         return $this
@@ -61,6 +78,12 @@ class RecipesRepository extends ServiceEntityRepository
         ;
     }
 
+    /**
+     * Retrieves recipes created by a specific user.
+     *
+     * @param mixed $user The user for whom recipes are requested.
+     * @return array An array of Recipe entities created by the specified user.
+     */
     public function findUserRecipes($user): array
     {
         return $this
@@ -73,6 +96,12 @@ class RecipesRepository extends ServiceEntityRepository
         ;
     }
 
+    /**
+     * Retrieves recipes based on a given cuisine ID.
+     *
+     * @param mixed $cuisineId The ID of the cuisine for which recipes are requested.
+     * @return array An array of Recipe entities associated with the specified cuisine ID.
+     */
     public function findByCuisineId($cuisineId): array
     {
         return $this
@@ -85,6 +114,8 @@ class RecipesRepository extends ServiceEntityRepository
     }
 
     /**
+     * Retrieves random recipes
+     *
      * @return recipes[] Returns an array of random 4 cuisines objects
      */
     public function findRandomRecipes(): array
@@ -138,6 +169,13 @@ class RecipesRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
+    /**
+     * Retrieves recipes with the same categories, excluding the specified recipe.
+     *
+     * @param array $recipeCategories An array of category IDs associated with the recipe.
+     * @param mixed $recipeId The ID of the recipe to exclude from the results.
+     * @return array An array of Recipe entities with similar categories, excluding the specified recipe.
+     */
     public function getSameCategoriesRecipes($recipeCategories, $recipeId): array
     {
         $queryBuilder = $this->createQueryBuilder('r')
@@ -151,7 +189,13 @@ class RecipesRepository extends ServiceEntityRepository
         return $queryBuilder->getQuery()->getResult();
     }
 
-    public function findlatestRecipes(int $limit = 9): array
+    /**
+     * Retrieves the latest recipes based on the creation date.
+     *
+     * @param int $limit The maximum number of latest recipes to retrieve.
+     * @return array An array of the latest Recipe entities.
+     */
+    public function findLatestRecipes(int $limit = 9): array
     {
         $queryBuilder = $this->createQueryBuilder('r')
             ->orderBy('r.createdAt', 'DESC') //Ordering by latest recipes calling createdAt
@@ -160,6 +204,12 @@ class RecipesRepository extends ServiceEntityRepository
         return $queryBuilder->getQuery()->getResult();
     }
 
+    /**
+     * Retrieves the top liked recipes based on the number of likes.
+     *
+     * @param int $limit The maximum number of top liked recipes to retrieve.
+     * @return array An array of the top liked Recipe entities.
+     */
     public function findTopLikedRecipes(int $limit = 2): array
     {
         $queryBuilder= $this->createQueryBuilder('r')

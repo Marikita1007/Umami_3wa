@@ -28,7 +28,7 @@ security:
             lazy: true
             provider: app_user_provider
             entry_point: form_login
-            login_throttling: true
+            login_throttling: true #Limiting the failed login attempts is one basic protection against brute force attacks.
             form_login:
                 login_path: login #Route to login form
                 check_path: login #Symfony calls the same route for show the form and the line

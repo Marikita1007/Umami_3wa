@@ -39,8 +39,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $plainPassword;
 
     /**
-     * @Assert\NotBlank(message = "Username must not be blank")
-     * @ORM\Column(type="string", length=50,  unique=true, nullable=false)
+     * @ORM\Column(type="string", length=50, unique=true, nullable=false)
+     * @Assert\NotBlank(message="Username must not be blank")
+     * @Assert\Length(
+     *      min=5,
+     *      max=40,
+     *      minMessage="Username must be at least {{ limit }} characters long",
+     *      maxMessage="Username cannot be longer than {{ limit }} characters"
+     * )
+     * @Assert\Regex(
+     *      pattern="/^[\p{L}0-9\s!&.:]+$/u",
+     *      message="Username can only contain letters, numbers, and spaces."
+     * )
      */
     private $username;
 

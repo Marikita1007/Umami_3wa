@@ -25,6 +25,16 @@ class Categories
 
     /**
      * @Assert\NotBlank(message="Choose at least one category")
+     * @Assert\NotBlank(message="Category name is required")
+     * @Assert\Length(
+     *     min=2,
+     *     max=35,
+     *     minMessage="Category name must be at least {{ limit }} characters long",
+     *     maxMessage="Category name cannot be longer than {{ limit }} characters")
+     * @Assert\Regex(
+     *      pattern="/^[\p{L}\s]+$/u",
+     *      message = "Invalid characters in the category name."
+     * )
      * @ORM\Column(type="string", length=100)
      */
     private $name;

@@ -15,9 +15,9 @@ body[data-route="home"] {
       }
 
       .ingredients-menu {
+        color: $umami-grey;
         margin: 40px 0;
         font-weight: 600;
-        color: $umami-grey;
         text-align: center;
         text-transform: uppercase;
       }
@@ -28,15 +28,15 @@ body[data-route="home"] {
         position: relative;
 
         &::after {
+          background: $umami-blue-dark;
+          bottom: 5px;
           content: '';
           display: block;
-          position: absolute;
-          bottom: 5px;
-          left: 0;
-          right: 0;
           height: 1px;
+          left: 0;
           opacity: 0;
-          background: $umami-blue-dark;
+          position: absolute;
+          right: 0;
           transition: .3s;
         }
 

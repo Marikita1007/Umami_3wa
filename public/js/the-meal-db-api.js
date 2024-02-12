@@ -1,5 +1,3 @@
-console.log('Coucou the-meal-db-api.js');
-
 // Check if recipe details are stored in local storage
 var storedRecipeDetails = localStorage.getItem('recipeDetails_{{ theMealDbRecipeDetails.idMeal }}');
 

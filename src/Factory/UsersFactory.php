@@ -30,11 +30,22 @@ final class UsersFactory extends ModelFactory
 {
     private UserPasswordHasherInterface $userPasswordHasherInterface;
 
+    /**
+     * UsersFactory constructor.
+     *
+     * @param UserPasswordHasherInterface $userPasswordHasherInterface Symfony's UserPasswordHasherInterface service.
+     */
     public function __construct(UserPasswordHasherInterface $userPasswordHasherInterface)
     {
         parent::__construct();
         $this->userPasswordHasherInterface = $userPasswordHasherInterface;
     }
+
+    /**
+     * Get the default values for creating User instances.
+     *
+     * @return array An array of default attributes for User instances.
+     */
     protected function getDefaults(): array
     {
         return [
@@ -45,6 +56,12 @@ final class UsersFactory extends ModelFactory
             //'isVerified' => true,
         ];
     }
+
+    /**
+     * Initialize the factory, setting up post-instantiation hooks.
+     *
+     * @return $this The initialized factory instance.
+     */
     protected function initialize(): self
     {
         // Initialization URL : https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#initialization
@@ -58,6 +75,12 @@ final class UsersFactory extends ModelFactory
             })
         ;
     }
+
+    /**
+     * Get the class name of the model this factory produces.
+     *
+     * @return string The fully qualified class name of the User model.
+     */
     protected static function getClass(): string
     {
         return User::class;

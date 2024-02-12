@@ -6,16 +6,21 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 class UserFixtures extends Fixture
 {
-    //MARIKA TODO : Write README about Factory and Fixtures
+    /**
+     * Load user fixtures into the database.
+     *
+     * @param ObjectManager $manager The ObjectManager instance.
+     */
     public function load(ObjectManager $manager)
     {
-        // Create test user admin with infos down below
+        // Create an admin user
         UsersFactory::createOne([
             'email' => 'umami_admin@example.com',
             'roles' => ['ROLE_ADMIN'],
             'username' => 'admin'
         ]);
-        // Create test user with ROLE_USER (default)
+
+        // Create a regular user
         UsersFactory::createOne([
             'email' => 'umami_user@example.com',
             'roles' => ['ROLE_USER'], // Set status to ROLE_USER
@@ -28,6 +33,7 @@ class UserFixtures extends Fixture
                 'roles' => ['ROLE_USER'] // Set status to ROLE_USER
             ];
         });
+
         $manager->flush();
     }
 }

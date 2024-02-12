@@ -29,6 +29,10 @@ class Cuisines
      *     max=30,
      *     minMessage="Cuisine name must be at least {{ limit }} characters long",
      *     maxMessage="Cuisine name cannot be longer than {{ limit }} characters")
+     * @Assert\Regex(
+     *      pattern = "/^[a-zA-Z0-9\s]+$/",
+     *      message = "Cuisine name can only contain letters, numbers, and spaces."
+     * )
      * @ORM\Column(type="string", length=30, unique=true, nullable=false)
      */
     private $name;

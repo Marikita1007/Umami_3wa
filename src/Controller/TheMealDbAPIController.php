@@ -11,6 +11,9 @@ use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
+/**
+ * Controller managing API requests to TheMealDb for random recipes.
+ */
 #[Route("/api-the-meal-db", name: "api_the_meal_db",methods: ["GET"])]
 class TheMealDbAPIController extends AbstractController
 {
@@ -26,6 +29,11 @@ class TheMealDbAPIController extends AbstractController
         $this->httpClient = $httpClient;
     }
 
+    /**
+     * Gets random recipes from TheMealDb API.
+     *
+     * @return JsonResponse  A Symfony JsonResponse object containing the MealDB API response.
+     */
     public function gettheMealDbRandomRecipes()
     {
         // Check if cached data exists and return it if available.
@@ -65,6 +73,13 @@ class TheMealDbAPIController extends AbstractController
         }
     }
 
+    /**
+     * Gets cuisine categories from TheMealDb API based on the provided cuisine.
+     *
+     * @param string $cuisine  The cuisine for which countries are requested.
+     *
+     * @return JsonResponse  A Symfony JsonResponse object containing the API response.
+     */
     public function getCuisineCategories($cuisine)
     {
         // Make an API request to get cuisine categories from theMealDb.
@@ -97,6 +112,14 @@ class TheMealDbAPIController extends AbstractController
         }
     }
 
+    /**
+     * Shows details of a cuisine from TheMealDb API based on the provided ID.
+     *
+     * @param int                 $id      The ID of the cuisine.
+     * @param HttpClientInterface $client  The Symfony HttpClientInterface for making API requests.
+     *
+     * @return JsonResponse  A Symfony JsonResponse object containing the API response.
+     */
     public function showCuisineDetails($id, HttpClientInterface $client): JsonResponse
     {
         $apiEndpoint = "https://www.themealdb.com/api/json/v1/1/lookup.php?i={$id}";
@@ -122,6 +145,12 @@ class TheMealDbAPIController extends AbstractController
         }
     }
 
+    /**
+     * Gets recipes from TheMealDb API based on the provided meal category.
+     *
+     * @param string $mealCategory  The meal category for which recipes are requested.
+     *
+     */
     public function sameCategoryRecipes($mealCategory)
     {
         // Make an API request to get cuisine categories from theMealDb.
@@ -161,7 +190,10 @@ class TheMealDbAPIController extends AbstractController
     }
 
     /**
-     * Retrieve Meals from The MealDB API by meal name
+     * Retrieves meals from The MealDB API based on the provided meal name.
+     *
+     * @param string $word  The meal name for which meals are requested.
+     *
      */
     public function getTheMealDbMealsByName($word)
     {
@@ -194,6 +226,14 @@ class TheMealDbAPIController extends AbstractController
         }
     }
 
+    /**
+     * Retrieves meals from The MealDB API based on the provided category name.
+     *
+     * @param string $categoryName  The category name for which meals are requested.
+     *
+     * @return array|JsonResponse Returns an array of meals for successful responses,
+     *                           or a JsonResponse with error details for error responses.
+     */
     public function getSameCategoryMeals($categoryName)
     {
         // Make an API request to get cuisine categories from theMealDb.
@@ -225,6 +265,15 @@ class TheMealDbAPIController extends AbstractController
         }
     }
 
+
+    /**
+     * Retrieves meals from The MealDB API based on the provided cuisine name.
+     *
+     * @param string $cuisineName The cuisine name for which meals are requested.
+     *
+     * @return array|JsonResponse Returns an array of meals for successful responses,
+     *                           or a JsonResponse with error details for error responses.
+     */
     public function getSameCuisineMeals($cuisineName)
     {
         // Make an API request to get cuisine categories from theMealDb.
@@ -256,8 +305,12 @@ class TheMealDbAPIController extends AbstractController
         }
     }
 
-
-    // Check If I should keep this function or not
+    /**
+     * Retrieves all categories from The MealDB API.
+     *
+     * @return array|JsonResponse Returns an array of categories for successful responses,
+     *                           or a JsonResponse with error details for error responses.
+     */
     public function getAllCategories()
     {
         // Make an API request to get cuisine categories from theMealDb.

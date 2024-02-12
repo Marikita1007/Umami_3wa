@@ -26,7 +26,16 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
 
     /**
-     * Used to upgrade (rehash) the user's password automatically over time.
+     * Upgrades (rehashes) the user's password automatically over time.
+     *
+     * This method is called automatically by Symfony when a user logs in, and it's used to
+     * update the hashed password stored in the database. It helps maintain a secure password
+     * storage strategy by rehashing passwords with stronger algorithms over time.
+     *
+     * @param PasswordAuthenticatedUserInterface $user              The user whose password needs to be upgraded.
+     * @param string                             $newHashedPassword The new hashed password for the user.
+     *
+     * @throws UnsupportedUserException If the provided user is not an instance of the expected User class.
      */
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
@@ -38,29 +47,4 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
     }
-
-//    /**
-//     * @return User[] Returns an array of User objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('u.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?User
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

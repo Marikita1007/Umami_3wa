@@ -27,6 +27,10 @@ class Recipes
      *      min = 2,
      *      minMessage = "Recipe name must be at least {{ limit }} characters long",
      * )
+     *  @Assert\Regex(
+     *      pattern = "/^[\p{L}0-9\s!&.:,]+$/u",
+     *      message = "Recipe name can only contain letters, numbers, and spaces."
+     * )
      */
     private string $name;
 
@@ -38,6 +42,10 @@ class Recipes
      *      minMessage = "Recipe description must be at least {{ limit }} characters long",
      *      maxMessage = "Recipe description cannot be longer than {{ limit }} characters"
      * )
+     * @Assert\Regex(
+     *      pattern = "/^[\p{L}0-9\s!&.:,]+$/u",
+     *      message = "Recipe description can only contain letters, numbers, and spaces."
+     * )
      * @Assert\NotBlank(message="Description can not be blank.")
      */
     private ?string $description;
@@ -47,8 +55,12 @@ class Recipes
      * @Assert\Length(
      *      min = 5,
      *      max = 10000,
-     *      minMessage = "Recipe description must be at least {{ limit }} characters long",
-     *      maxMessage = "Recipe description cannot be longer than {{ limit }} characters"
+     *      minMessage = "Recipe instructions must be at least {{ limit }} characters long",
+     *      maxMessage = "Recipe instructions cannot be longer than {{ limit }} characters"
+     * )
+     * @Assert\Regex(
+     *      pattern = "/^[\p{L}0-9\s!&.:,]+$/u",
+     *      message = "Recipe instructions can only contain letters, numbers, and spaces."
      * )
      * @Assert\NotBlank(message="Instructions can not be blank.")
      */

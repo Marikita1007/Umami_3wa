@@ -65,10 +65,21 @@ class RecipesController extends AbstractController
         return $this->recipeRepository->findAll();
     }
 
+    /**
+     * List all recipes for the authenticated user.
+     *
+     * This controller method retrieves and displays a list of recipes associated with the current user.
+     *
+     * @param Request             $request            The current request object.
+     * @param RecipesRepository   $recipesRepository  The repository for accessing recipe entities.
+     *
+     * @return Response  A Symfony Response object containing the rendered recipes dashboard
+     */
     #[Route("/list", name: "list_recipes", methods: ["GET"])]
     #[Security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')")]
     public function listAll(Request $request, RecipesRepository $recipesRepository): Response
     {
+        // Retrieve the requested page and items per page from the query parameters
         $page = $request->query->getInt('page', 1); // Default page: 1
         $perPage = $request->query->getInt('perPage', 10); // Default display count: 10
 
@@ -86,6 +97,7 @@ class RecipesController extends AbstractController
         // Determine if there is a previous page
         $hasPreviousPage = $page > 1;
 
+        // Render the recipes dashboard template with the retrieved data
         return $this->render('recipes/recipes_dashboard.html.twig', [
             'recipes' => $recipes,
             'page' => $page,
@@ -98,6 +110,11 @@ class RecipesController extends AbstractController
 
     /**
      * Display a single recipe from The Meal DB API based on its unique identifier.
+     *
+     * @param TheMealDbAPIController $theMealDbAPIController The controller responsible for interacting with The Meal DB API.
+     * @param HttpClientInterface   $client               The HTTP client interface for making API requests.
+     *
+     * @return Response  A Symfony Response object containing the rendered recipe details and comments.
      */
     #[Route("/show-the-meal-db-recipe-details/{idMeal}", name: "show_the_meal_db_recipe", requirements: ['idMeal' => '\d+'], methods: ["GET", "POST"])]
     public function showTheMealDbRecipeDetails(
@@ -122,6 +139,28 @@ class RecipesController extends AbstractController
 
         $form = $this->createForm(CommentsType::class, $comments);
         $form->handleRequest($request);
+
+        if ($form->isSubmitted() && !$form->isValid()) {
+            // Handle form errors
+            $errors = [];
+
+            foreach ($form->getErrors(true) as $error) {
+                $errors[] = $error->getMessage();
+            }
+
+            foreach ($form->all() as $childForm) {
+                if ($childForm instanceof FormInterface) {
+                    $childErrors = $this->getFormErrors($childForm);
+                    $errors = array_merge($errors, $childErrors);
+                }
+            }
+
+            return new JsonResponse([
+                'success' => false,
+                'message' => 'Error submitting the comment. Please check your input.',
+                'errors' => $errors,
+            ]);
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -157,6 +196,10 @@ class RecipesController extends AbstractController
 
     /**
      * Display a single recipe based on its unique identifier.
+     *
+     * @param EntityManagerInterface $entityManager      The entity manager for persisting comments.
+     *
+     * @return Response  A Symfony Response object containing the rendered recipe details and comments.
      */
     #[Route("/recipe/{id}", name: "show_recipe", methods: ["GET", "POST"])]
     public function showRecipe(
@@ -168,7 +211,7 @@ class RecipesController extends AbstractController
         CommentsRepository $commentsRepository,
         RecipesRepository $recipesRepository ): Response
     {
-        //Add comments to the recipe
+        // Create a new comment entity
         $comments = new Comments();
 
         $form = $this->createForm(CommentsType::class, $comments);
@@ -234,7 +277,10 @@ class RecipesController extends AbstractController
     }
 
     /**
-     * Controller method for creating a new recipe and a new ingredient.
+     * Controller method for creating a new recipe and adding new ingredients.
+     *
+     * @return Response  Redirects to the list of recipes on success or renders
+     *                   the new recipe creation form on failure.
      */
     #[Route("/new_recipe_ingredients", name: "new_recipe", methods: ["POST", "GET"])]
     #[Security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')")]
@@ -299,6 +345,12 @@ class RecipesController extends AbstractController
         ]);
     }
 
+    /**
+     * Controller for editing a recipe and modifying ingredients.
+     *
+     * @return Response  Redirects to the recipe details page on success or renders
+     *                   the edit form on failure.
+     */
     #[Route("/edit/{id}", name: "edit_recipe", methods: ["GET", "POST"])]
     #[Security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')")]
     public function editRecipeAndIngredients(
@@ -366,6 +418,11 @@ class RecipesController extends AbstractController
         ]);
     }
 
+    /**
+     * Controller for deleting a recipe and ingredients.
+     *
+     * @return Response  Redirects to the recipe dashboard page on success.
+     */
     #[Route("/delete/{id}", name: "delete_recipe", methods: ['GET', 'POST'])]
     #[Security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')")]
     public function deleteRecipe(EntityManagerInterface $entityManager, Request $request, Recipes $recipe): Response
@@ -380,6 +437,14 @@ class RecipesController extends AbstractController
         return $this->redirectToRoute("list_recipes");
     }
 
+    /**
+     * Controller for searching recipes based on various filters.
+     *
+     * @param TheMealDbAPIController  $theMealDbAPIController  The controller for interacting with The Meal DB API.
+     * @param HttpClientInterface     $client                  The HTTP client for API requests.
+     *
+     * @return Response  Renders the filtered recipe results based on the submitted forms.
+     */
     #[Route('/recipes_all_filters', name: 'app_recipes_all_filters', methods: ['GET', 'POST'])]
     public function searchRecipesByFilters(
         RecipesRepository $recipesRepository,
@@ -389,6 +454,7 @@ class RecipesController extends AbstractController
         HttpClientInterface $client,
     ): Response
     {
+        // Create form instances for filtering by word, cuisines, and categories
         $formFilterSearch = $this->createForm(FilterSearchType::class);
         $formFilterSearch->handleRequest($request);
 
@@ -412,6 +478,7 @@ class RecipesController extends AbstractController
 
             $category = $formCuisines->get('name')->getData();
 
+            // Render filtered recipes by word and related information
             return $this->render('recipes/recipes_filters.html.twig', [
                 'recipesByWord' => $recipesRepository->getByWord($word),
                 'formFilterSearch' => $formFilterSearch->createView(),
@@ -423,6 +490,7 @@ class RecipesController extends AbstractController
             ]);
         }
 
+        // Handle form submission for cuisine filter
         if ($formCuisines->isSubmitted() && $formCuisines->isValid()){
 
             $data = $formCuisines->getData();
@@ -430,6 +498,7 @@ class RecipesController extends AbstractController
 
             $sameCuisineMeals = $theMealDbAPIController->getSameCuisineMeals($cuisine->getName());
 
+            // Render filtered recipes by cuisine and related information
             return $this->render('recipes/recipes_filters.html.twig', [
                 'recipesByCuisine' => $recipesRepository->findByCuisine($cuisine),
                 'formCuisines' => $formCuisines->createView(),
@@ -439,14 +508,17 @@ class RecipesController extends AbstractController
             ]);
         }
 
+        // Handle form submission for category filter
         if ($formCategories->isSubmitted() && $formCategories->isValid()){
 
             $data = $formCategories->getData();
             $category = $formCategories->get('name')->getData();
             $cuisine = $formCuisines->get('name')->getData();
 
+            // Fetch meals with the same category from The Meal DB API
             $sameCategoryMeals = $theMealDbAPIController->getSameCategoryMeals($category->getName());
 
+            // Render filtered recipes by category and related information
             return $this->render('recipes/recipes_filters.html.twig', [
                 'recipesByCategories' => $recipesRepository->findByCategories($category),
                 'formCuisines' => $formCuisines->createView(),
@@ -458,6 +530,7 @@ class RecipesController extends AbstractController
             ]);
         }
 
+        // Default case: Render all recipes and related information
         return $this->render('recipes/recipes_filters.html.twig', [
             'recipes' => $recipesRepository->findAll(),
             'formFilterSearch' => $formFilterSearch->createView(),
@@ -468,6 +541,11 @@ class RecipesController extends AbstractController
         ]);
     }
 
+    /**
+     * Controller for deleting a photo associated with a recipe.
+     *
+     * @return Response  Redirects to the recipe edit page on successful deletion or the recipes list page on failure.
+     */
     #[Route('/recipe/{id}/delete-photo/{imageId}', name: 'app_delete_photo_recipe', methods: ['GET', 'POST'])]
     public function deleteRecipePhoto(
         Recipes $recipe,
@@ -490,6 +568,15 @@ class RecipesController extends AbstractController
         }
     }
 
+    /**
+     * Controller for handling recipe likes.
+     *
+     * @param int                     $id                The ID of the recipe to be liked or unliked.
+     * @param LoggerInterface         $logger            The logger for logging information.
+     * @param EntityManagerInterface  $entityManager     The entity manager for persisting entities.
+     *
+     * @return JsonResponse  Returns a JSON response indicating whether the user liked or unliked the recipe.
+     */
     #[Route('/{id}/like', name: 'recipe_like', methods: ['GET', 'POST'])]
     #[Security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')")]
     public function recipeLike($id, LoggerInterface $logger, EntityManagerInterface $entityManager): JsonResponse
@@ -524,30 +611,12 @@ class RecipesController extends AbstractController
         return $this->json(['liked' => $liked]);
     }
 
-//    Refactor Marika upload file Refactored and using simpleUploadService for Thumbnail too
-//    private function addThumbnail(UploadedFile $imageFile, $recipe)
-//    {
-//        // Get the original file name and extension
-//        $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-//
-//        // Generate a unique name for the file
-//        $newFilename = $originalFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
-//
-//        // Move the file to the desired directory (you can configure this)
-//        try {
-//            $imageFile->move(
-//                $this->getParameter('recipe_image_directory'),
-//                $newFilename
-//            );
-//        } catch (FileException $e) {
-//            throw new NotFoundHttpException('An error occurred while uploading the file.');
-//        }
-//
-//        // Update the 'image' property of your entity to store the file name
-//        // instead of its contents
-//        $recipe->setThumbnail($newFilename);
-//    }
-
+    /**
+     * Adds a thumbnail to a recipe.
+     *
+     * @param UploadedFile $thumbnail  The uploaded thumbnail file.
+     * @param Recipes      $recipe     The recipe entity to which the thumbnail will be added.
+     */
     private function addThumbnail($thumbnail, Recipes $recipe): void
     {
         $newFileName = $this->simpleUploadService->uploadImage($thumbnail);
@@ -555,7 +624,13 @@ class RecipesController extends AbstractController
         // Set the new file name to the existing recipe's thumbnail property
         $recipe->setThumbnail($newFileName);
     }
-    // Private method to add extra photos
+
+    /**
+     * Adds extra photos to a recipe.
+     *
+     * @param array   $images  An array of images to be added as extra photos.
+     * @param Recipes $recipe  The recipe entity to which the extra photos will be added.
+     */
     private function addExtraPhotos(array $images, Recipes $recipe): void
     {
         foreach ($images as $image) {
@@ -567,6 +642,13 @@ class RecipesController extends AbstractController
         }
     }
 
+    /**
+     * Retrieves errors from a form and its child forms.
+     *
+     * @param FormInterface $form  The form or form child to retrieve errors from.
+     *
+     * @return array  An array containing error messages from the given form and its child forms.
+     */
     private function getFormErrors(FormInterface $form): array
     {
         $errors = [];

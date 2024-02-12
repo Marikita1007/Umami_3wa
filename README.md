@@ -51,7 +51,7 @@
 
 UMAMI est une plateforme web conçue pour la communauté culinaire transcendant les barrières culturelles. Ce projet utilise les technologies de développement web les plus récentes pour offrir un espace où les passionnés de cuisine et les personnes peuvent efficacement partager et explorer une variété de recettes de différents pays, y compris leurs propres créations.
 
-Le terme "UMAMI" trouve son origine dans le mot japonais "旨味" ou “うま味” (umami). L'umami est une sensation gustative distincte, au-delà des quatre goûts de base que sont le sucré, l'acide, le salé et l'amer. Il est particulièrement associé à la notion de délicatesse, de saveur et de profondeur de goût. UMAMI est ainsi le nom de cette plateforme, qui tire son inspiration de cette notion, permettant le partage de la délicatesse des différentes cuisines et encourageant la recherche du plaisir de cuisiner.
+Le terme "UMAMI" trouve son origine dans le mot japonais “うま味” (umami). L'umami est une sensation gustative distincte, au-delà des quatre goûts de base que sont le sucré, l'acide, le salé et l'amer. Il est particulièrement associé à la notion de délicatesse, de saveur et de profondeur de goût. UMAMI est ainsi le nom de cette plateforme, qui tire son inspiration de cette notion, permettant le partage de la délicatesse des différentes cuisines et encourageant la recherche du plaisir de cuisiner.
 
 UMAMI vise à promouvoir le partage de la culture culinaire internationale et à connecter les passionnés de cuisine. Grâce à l'utilisation des technologies web les plus récentes, contribuant ainsi à partager la joie de cuisiner.
 
