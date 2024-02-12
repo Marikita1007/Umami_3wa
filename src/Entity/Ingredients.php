@@ -20,13 +20,18 @@ class Ingredients
 
 
     /**
+     * @ORM\Column(type="string", length=30)
      * @Assert\NotBlank(message="Ingredient name is required")
      * @Assert\Length(
      *     min=2,
      *     max=35,
      *     minMessage="Ingredient name must be at least {{ limit }} characters long",
-     *     maxMessage="Ingredient name cannot be longer than {{ limit }} characters")
-     * @ORM\Column(type="string", length=30)
+     *     maxMessage="Ingredient name cannot be longer than {{ limit }} characters"
+     * )
+     * @Assert\Regex(
+     *      pattern="/^[\p{L}0-9\s!&.:]+$/u",
+     *      message="Ingredient name can only contain letters, numbers, and spaces."
+     * )
      */
     private $name;
 
@@ -37,13 +42,18 @@ class Ingredients
     private $recipe;
 
     /**
+     * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank(message="Ingredient amount is required")
      * @Assert\Length(
      *     min=1,
      *     max=100,
      *     minMessage="Amount must not be empty",
-     *     maxMessage="Amount cannot be longer than {{ limit }} characters")
-     * @ORM\Column(type="string", length=100)
+     *     maxMessage="Amount cannot be longer than {{ limit }} characters"
+     * )
+     * @Assert\Regex(
+     *      pattern="/^[\p{L}0-9\s!&.:]+$/u",
+     *      message="Ingredient amount can only contain letters, numbers, and spaces."
+     * )
      */
     private $amount;
 

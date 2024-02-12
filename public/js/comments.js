@@ -6,7 +6,7 @@
 //
 //
 // document.addEventListener('DOMContentLoaded', function () {
-// // On form submission
+//     // On form submission
 //     commentForm.addEventListener('submit', function (e) {
 //
 //         // Prevent the default behavior (page reload)
@@ -95,6 +95,7 @@
 //     });
 //
 // });
+
 
 document.addEventListener('DOMContentLoaded', function () {
     const commentForm = document.querySelector('.comments');

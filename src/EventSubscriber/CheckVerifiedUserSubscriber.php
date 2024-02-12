@@ -4,7 +4,6 @@ namespace App\EventSubscriber;
 
 use App\Entity\User;
 use App\Security\AccountNotVerifiedAuthenticationException;
-use App\Security\EmailVerifier;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
@@ -16,21 +15,36 @@ use Symfony\Component\Security\Http\Event\LoginFailureEvent;
 class CheckVerifiedUserSubscriber implements EventSubscriberInterface
 {
     private RouterInterface $router;
-    private EmailVerifier $emailVerifier;
-    public function __construct(RouterInterface $router, EmailVerifier $emailVerifier)
+
+    /**
+     * CheckVerifiedUserSubscriber constructor.
+     *
+     * @param RouterInterface $router       The Symfony router service.
+     */
+    public function __construct(RouterInterface $router)
     {
         $this->router = $router;
-        $this->emailVerifier = $emailVerifier;
     }
 
+    /**
+     * Handles the 'CheckPassport' event and ensures the user is of the expected type.
+     *
+     * @param CheckPassportEvent $event The CheckPassportEvent event.
+     *
+     * @throws \Exception If the passport or user type is unexpected.
+     */
     public function onCheckPassport(CheckPassportEvent $event)
     {
         $passport = $event->getPassport();
+
+        // Ensure the passport is the expected type
         if (!$passport instanceof UserPassportInterface) {
             throw new \Exception('Unexpected passport type');
         }
 
         $user = $passport->getUser();
+
+        // Ensure the user is the expected type
         if (!$user instanceof User) {
             throw new \Exception('Unexpected user type');
         }
@@ -40,12 +54,19 @@ class CheckVerifiedUserSubscriber implements EventSubscriberInterface
 //        }
     }
 
+    /**
+     * Handles the 'LoginFailure' event and redirects to the login page on authentication failure.
+     *
+     * @param LoginFailureEvent $event The LoginFailureEvent event.
+     */
     public function onLoginFailure(LoginFailureEvent $event)
     {
+        // Check if the exception in the event is an AuthenticationException
         if (!$event->getException() instanceof AuthenticationException) {
             return;
         }
 
+        // Redirect to the login page on authentication failure
         $response = new RedirectResponse(
             $this->router->generate('login')
         );
@@ -53,6 +74,11 @@ class CheckVerifiedUserSubscriber implements EventSubscriberInterface
         $event->setResponse($response);
     }
 
+    /**
+     * Specifies the events to which this subscriber listens and their corresponding methods.
+     *
+     * @return array An array of subscribed events and their corresponding methods.
+     */
     public static function getSubscribedEvents()
     {
         /*

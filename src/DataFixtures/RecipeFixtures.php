@@ -15,10 +15,19 @@ class RecipeFixtures extends Fixture implements FixtureGroupInterface
 {
     protected Generator $faker;
 
+    /**
+     * Constructor for initializing the Faker generator.
+     */
     public function __construct()
     {
         $this->faker = Factory::create();
     }
+
+    /**
+     * Loads data fixtures into the database.
+     *
+     * @param ObjectManager $manager The ObjectManager instance.
+     */
     public function load(ObjectManager $manager)
     {
         // Create 20 recipes with faker
@@ -45,6 +54,11 @@ class RecipeFixtures extends Fixture implements FixtureGroupInterface
     }
 
 
+    /**
+     * Specify the groups to which this fixture belongs.
+     *
+     * @return array The fixture groups.
+     */
     public static function getGroups(): array
     {
         return ['recipes']; // Specify the group name

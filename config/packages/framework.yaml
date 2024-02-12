@@ -2,10 +2,8 @@
 framework:
     # The secret key used for various security-related features, such as generating CSRF tokens.
     secret: '%env(APP_SECRET)%'
-
     # Enable or disable CSRF protection. CSRF protection helps prevent Cross-Site Request Forgery attacks.
-    csrf_protection: true
-
+    # csrf_protection: true
     # Enable or disable HTTP method override. This allows using non-GET/POST HTTP methods via "_method" parameter.
     http_method_override: false
 

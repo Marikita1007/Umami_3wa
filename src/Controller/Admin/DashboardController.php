@@ -25,6 +25,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class DashboardController extends AbstractDashboardController
 {
+    /**
+     * Dashboard index action.
+     *
+     * @return Response
+     */
     #[IsGranted('ROLE_ADMIN')]
     #[Route('/admin', name: 'admin_dashboard')]
     public function index(): Response
@@ -47,6 +52,11 @@ class DashboardController extends AbstractDashboardController
         // return $this->render('some/path/my-dashboard.html.twig');
     }
 
+    /**
+     * Configure the EasyAdmin Dashboard.
+     *
+     * @return Dashboard
+     */
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
@@ -63,7 +73,13 @@ class DashboardController extends AbstractDashboardController
             ;
     }
 
-    // If non ROLE_ADMIN user try to see this page Admin, it redirects to User Page
+    /**
+     * Configure the user menu in the top-right corner of the dashboard.
+     *
+     * @param UserInterface $user
+     *
+     * @return UserMenu
+     */
     public function configureUserMenu(UserInterface $user): UserMenu
     {
         if (!$user instanceof User)

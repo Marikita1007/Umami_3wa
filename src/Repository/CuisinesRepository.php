@@ -40,42 +40,21 @@ class CuisinesRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * Retrieves the top seven cuisines based on the number of associated recipes.
+     *
+     * @return array An array of Cuisine entities with an additional 'recipeCount' field.
+     */
     public function findTopSevenCuisines(): array
     {
         return $this->createQueryBuilder('c')
-            ->select('c', 'COUNT(r.id) as recipeCount')
+            ->select('c', 'COUNT(r.id) as recipeCount') // Select the Cuisine entity and count of associated recipes
             ->leftJoin('c.recipes', 'r')
             ->groupBy('c.id')
             ->orderBy('recipeCount', 'DESC')
-            ->setMaxResults(7)
+            ->setMaxResults(7) // Limit the result set to the top seven cuisines
             ->getQuery()
             ->getResult()
         ;
     }
-
-
-//    /**
-//     * @return cuisines[] Returns an array of cuisines objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?cuisines
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

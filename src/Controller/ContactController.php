@@ -13,6 +13,14 @@ use Symfony\Component\Mailer\MailerInterface;
 
 class ContactController extends AbstractController
 {
+    /**
+     * Displays and handles the contact form submission.
+     *
+     * @param Request         $request  The HTTP request object.
+     * @param MailerInterface $mailer   The Symfony Mailer service for sending emails.
+     *
+     * @return Response  A Symfony Response object rendering the contact form page or handling form submission.
+     */
     #[Route('/contact/us', name: 'app_contact_us', methods: ['GET', 'POST'])]
     public function index(Request $request, MailerInterface $mailer): Response
     {

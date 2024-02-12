@@ -4,17 +4,15 @@ namespace App\Controller;
 
 use App\Repository\RecipesRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Recipes;
 
-
-//MARIKA TODO : ADD SECURITY conditions / Comments codes / Fix comments of error handlings / FIx Updated At
-//MARIKA TODO I make CRUD for Recipes (RecipeController.php) so if this is not used(API), I delete this file.
-
 #[Route("/api", name: "api_")]
+#[Security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')")]
 class RecipesApiController extends AbstractController
 {
     private EntityManagerInterface $entityManager;
@@ -41,7 +39,7 @@ class RecipesApiController extends AbstractController
                 'name'          => $recipe->getName(),
                 'description'   => $recipe->getDescription(),
                 'instructions'  => $recipe->getInstructions(),
-                'image'         => $recipe->getImage(),
+                'thumbnail'         => $recipe->getThumbnail(),
                 'prepTime'     => $recipe->getPrepTime(),
                 'servings'      => $recipe->getServings(),
                 'cookTime'     => $recipe->getPrepTime(),
@@ -67,7 +65,7 @@ class RecipesApiController extends AbstractController
         $recipe->setInstructions($request->request->get('instructions'));
         $recipe->setCreatedAt($request->request->get('created_at'));
         $recipe->setThumbnail($request->request->get('instructions'));
-        $recipe->setInstructions($request->request->get('image'));
+        $recipe->setInstructions($request->request->get('thumbnail'));
         $recipe->setPrepTime($request->request->get('prepTime'));
         $recipe->setServings($request->request->get('servings'));
         $recipe->setCookTime($request->request->get('cookTime'));
@@ -99,7 +97,7 @@ class RecipesApiController extends AbstractController
             'description'  => $recipe->getDescription(),
             'instructions' => $recipe->getInstructions(),
             'created_at'   => $recipe->getCreatedAt(),
-            'image'        => $recipe->getImage(),
+            'thumbnail'        => $recipe->getThumbnail(),
             'prepTime'    => $recipe->getPrepTime(),
             'servings'     => $recipe->getServings(),
             'cookTime'    => $recipe->getCookTime(),
@@ -119,9 +117,6 @@ class RecipesApiController extends AbstractController
             return $this->json('No recipe found for id ' . $id, 404);
         }
 
-        //MARIKA : From POSTMAN Send the properties with x-www-form-urlencoded
-        //MARIKA : Make more Error handling here to make sure we don't accept securities vulnerabilities.
-
         // Check if the "name" is provided in the request and update it
         $newName = $request->request->get('name');
 
@@ -135,8 +130,7 @@ class RecipesApiController extends AbstractController
             'name'         => 'setName',
             'description'  => 'setDescription',
             'instructions' => 'setInstructions',
-//            'updatedAt'   => 'setUpdatedAt',
-            'image'        => 'setImage',
+            'thumbnail'        => 'setThumbnail',
             'prepTime'    => 'setPrepTime',
             'servings'     => 'setServings',
             'cookTime'    => 'setCookTime',
@@ -160,7 +154,7 @@ class RecipesApiController extends AbstractController
             'instructions' => $recipe->getInstructions(),
             'createdAt'   => $recipe->getCreatedAt(),
             'updatedAt'   => $recipe->getUpdatedAt(),
-            'image'        => $recipe->getImage(),
+            'thumbnail'        => $recipe->getThumbnail(),
             'prep_time'    => $recipe->getPrepTime(),
             'servings'     => $recipe->getServings(),
             'cookTime'    => $recipe->getCookTime(),

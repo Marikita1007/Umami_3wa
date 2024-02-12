@@ -10,10 +10,12 @@ use Symfony\Component\Routing\RouterInterface;
 
 
 /**
- * This class redirect none authorized user to login page
+ * AccessDeniedHandler is responsible for handling access denied situations by redirecting
+ * none authorized users to the login page.
  */
 class AccessDeniedHandler implements AccessDeniedHandlerInterface
 {
+    /** @var RouterInterface $router The router service to generate URLs */
     private $router;
 
     public function __construct(RouterInterface $router)
@@ -21,6 +23,14 @@ class AccessDeniedHandler implements AccessDeniedHandlerInterface
         $this->router = $router;
     }
 
+    /**
+     * Handles the access denied situation by redirecting the user to the login page.
+     *
+     * @param Request $request The request object
+     * @param AccessDeniedException $accessDeniedException The exception representing access denied
+     *
+     * @return Response A Response instance representing the redirection to the login page
+     */
     public function handle(Request $request, AccessDeniedException $accessDeniedException): Response
     {
         // Redirect to the login page

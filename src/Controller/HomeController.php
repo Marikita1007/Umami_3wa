@@ -21,6 +21,11 @@ class HomeController extends AbstractController
         $this->recipesController =$recipesController;
     }
 
+    /**
+     * Displays the home page with various recipe and cuisine information.
+     *
+     * @return Response  A Symfony Response object rendering the home page with recipe and cuisine information.
+     */
     #[Route("/", name: "home")]
     public function index(CuisinesRepository $cuisinesRepository, RecipesRepository $recipesRepository): Response
     {
@@ -29,7 +34,7 @@ class HomeController extends AbstractController
         $getRecipes = $this->recipesController->showRecipes(); // Call function to show recipes from database
 
         // Get only the first 9 recipes to pass to the template
-        $nineLatestRecipes = $recipesRepository->findlatestRecipes();
+        $nineLatestRecipes = $recipesRepository->findLatestRecipes();
 
         return $this->render('home/home.html.twig', [
             'nineLatestRecipes' => $nineLatestRecipes, // get latest recipes that created

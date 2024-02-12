@@ -19,8 +19,14 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
+/**
+ * Controller for user registration and email verification.
+ */
 class RegistrationController extends AbstractController
 {
+    /**
+     * EmailVerifier instance for handling email verification.
+     */
     private EmailVerifier $emailVerifier;
 
     public function __construct(EmailVerifier $emailVerifier)
@@ -28,6 +34,16 @@ class RegistrationController extends AbstractController
         $this->emailVerifier = $emailVerifier;
     }
 
+    /**
+     * Handles user registration and sends email verification.
+     *
+     * @param Request                      $request              The HTTP request object.
+     * @param UserPasswordHasherInterface  $userPasswordHasher   The Symfony password hasher service.
+     * @param EntityManagerInterface       $entityManager        The Doctrine entity manager.
+     * @param SessionInterface             $session              The Symfony session service.
+     *
+     * @return Response  A Symfony Response object rendering the registration form or handling form submission.
+     */
     #[Route("/register", name: "register")]
     public function register(
         Request $request,
@@ -46,7 +62,7 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
             $user->setPassword(
-            $userPasswordHasher->hashPassword(
+                $userPasswordHasher->hashPassword(
                     $user,
                     $form->get('plainPassword')->getData()
                 )
@@ -76,6 +92,14 @@ class RegistrationController extends AbstractController
         ]);
     }
 
+    /**
+     * Verifies the user's email address after clicking on the confirmation link.
+     *
+     * @param Request               $request        The HTTP request object.
+     * @param TranslatorInterface   $translator     The Symfony translator service.
+     *
+     * @return Response  A Symfony Response object handling email verification and rendering appropriate messages.
+     */
     #[Route("/verify/email", name: "app_verify_email")]
     public function verifyUserEmail(Request $request, TranslatorInterface $translator): Response
     {

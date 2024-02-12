@@ -15,17 +15,36 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class PhotosCrudController extends AbstractCrudController
 {
+    /**
+     * Get the fully-qualified class name of the managed entity.
+     *
+     * @return string
+     */
     public static function getEntityFqcn(): string
     {
         return Photos::class;
     }
 
+    /**
+     * Configure CRUD settings.
+     *
+     * @param Crud $crud
+     *
+     * @return Crud
+     */
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
             ->setDefaultSort(['id' => 'DESC']); // Sort by id in descending order
     }
 
+    /**
+     * Configure fields for the CRUD controller.
+     *
+     * @param string $pageName
+     *
+     * @return iterable
+     */
     public function configureFields(string $pageName): iterable
     {
         return [
@@ -51,7 +70,14 @@ class PhotosCrudController extends AbstractCrudController
         ];
     }
 
-    //This method overrides default method and do not show the Show derails button
+    /**
+     * Configure actions for the CRUD controller.
+     * This method overrides default method and do not show the Show details button.
+     *
+     * @param Actions $actions
+     *
+     * @return Actions
+     */
     public function configureActions(Actions $actions): Actions
     {
         return parent::configureActions($actions)

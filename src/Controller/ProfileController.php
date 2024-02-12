@@ -19,6 +19,9 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
+/**
+ * Profile controller for displaying and editing user profiles.
+ */
 #[Route('/profile')]
 #[Security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')")]
 class ProfileController extends AbstractController
@@ -30,6 +33,14 @@ class ProfileController extends AbstractController
         $this->tokenStorage = $tokenStorage;
     }
 
+
+    /**
+     * Displays the user profile.
+     *
+     * @param Request $request  The HTTP request object.
+     *
+     * @return Response  A Symfony Response object rendering the user profile page.
+     */
     #[Route('/', name: 'app_profile')]
     public function index(Request $request): Response
     {
@@ -42,6 +53,15 @@ class ProfileController extends AbstractController
         ]);
     }
 
+
+    /**
+     * Edits the user profile.
+     *
+     * @param Request             $request        The HTTP request object.
+     * @param EntityManagerInterface $entityManager The Doctrine entity manager.
+     *
+     * @return Response  A Symfony Response object rendering the edit profile page or handling form submission.
+     */
     #[Route('/edit', name: 'user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -64,6 +84,13 @@ class ProfileController extends AbstractController
         ]);
     }
 
+    /**
+     * Changes the user password.
+     *
+     * @param UserPasswordHasherInterface  $passwordHasher The Symfony password hasher service.
+     *
+     * @return Response  A Symfony Response object rendering the change password page or handling form submission.
+     */
     #[Route('/change-password', name: 'user_change_password', methods: ['GET', 'POST'])]
     public function changePassword(
         Request $request,
@@ -86,6 +113,14 @@ class ProfileController extends AbstractController
         ]);
     }
 
+    /**
+     * Displays the delete account confirmation page.
+     *
+     * @param Request                $request        The HTTP request object.
+     * @param EntityManagerInterface $entityManager The Doctrine entity manager.
+     *
+     * @return Response  A Symfony Response object rendering the delete account confirmation page or handling form submission.
+     */
     #[Route('/delete-confirm', name: 'app_confirm_delete', methods: ['GET'])]
     public function deleteAccountConfirmation(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -108,60 +143,24 @@ class ProfileController extends AbstractController
         ]);
     }
 
+    /**
+     * Deletes the user account.
+     *
+     * @return Response  A Symfony Response object handling the deletion of the user account.
+     */
     #[Route('/{id}', name: 'app_user_delete', methods: ['POST'])]
     public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
+        // Check if the CSRF token is valid
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+            // Remove the user entity from the database
             $entityManager->remove($user);
             $entityManager->flush();
         }
 
+        // Clear the security token (logout)
         $this->tokenStorage->setToken(null);
 
         return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
     }
-//
-//    #[Route('/user-delete/{id}', name: 'app_user_delete', methods: ['GET','POST'])]
-//    public function deleteAccount(
-//        Request $request,
-//        User $user,
-//        UserRepository $userRepository,
-//        RecipesRepository $recipesRepository,
-//        Recipes $recipes,
-//        EntityManagerInterface $entityManager): Response
-//    {
-//        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
-//
-////            foreach ($recipesRepository->findUserRecipes($user) as $recipe) {
-////
-////                $recipeUser = $recipe->getUser();
-////
-////                if ($recipeUser && $recipeUser->getId() === $user->getId()) {
-////                    // Preserve user ID and username
-////                    $userId = $user->getId();
-////                    $username = $user->getUsername();
-////
-////                    // Remove sensitive user information
-////                    $user->setEmail(null);
-////                    $user->setPassword(null);
-////
-////                    // Process the recipe with preserved user ID and username
-////                    $recipe->setCreatedBy($username);
-////                    $recipe->setUserId($userId);
-////
-////                    // Persist changes to the database
-////                    $entityManager->flush();
-////                }
-////            }
-//
-//            dump($recipes);
-//            dump('inside if after for loop');
-//            $entityManager->remove($user);
-//            $entityManager->flush();
-//        }
-//
-//        $this->tokenStorage->setToken(null);
-//
-//        return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
-//    }
 }

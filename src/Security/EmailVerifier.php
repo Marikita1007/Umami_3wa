@@ -14,6 +14,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
 
+
+/**
+ * The EmailVerifier class is responsible for handling email verification related tasks,
+ * such as sending confirmation emails, handling email confirmation, and sending new verification emails.
+ */
 class EmailVerifier
 {
     private VerifyEmailHelperInterface $verifyEmailHelper;
@@ -21,6 +26,14 @@ class EmailVerifier
     private EntityManagerInterface $entityManager;
     private RouterInterface $router;
 
+    /**
+     * EmailVerifier constructor.
+     *
+     * @param VerifyEmailHelperInterface $helper The service for generating and validating email verification signatures
+     * @param MailerInterface $mailer The mailer service used for sending emails
+     * @param EntityManagerInterface $manager The entity manager for managing user entities
+     * @param RouterInterface $router The router service for generating URLs
+     */
     public function __construct(VerifyEmailHelperInterface $helper, MailerInterface $mailer, EntityManagerInterface $manager, RouterInterface $router)
     {
         $this->verifyEmailHelper = $helper;
@@ -30,7 +43,11 @@ class EmailVerifier
     }
 
     /**
-     * This method is called when the user register the registration form.
+     * Sends an email confirmation to the user upon registration.
+     *
+     * @param string $verifyEmailRouteName The name of the route for email verification
+     * @param UserInterface $user The user to send the confirmation email to
+     * @param TemplatedEmail $email The templated email containing the confirmation message
      */
     public function sendEmailConfirmation(string $verifyEmailRouteName, UserInterface $user, TemplatedEmail $email): void
     {
@@ -51,9 +68,12 @@ class EmailVerifier
     }
 
     /**
-     * Handle the email confirmation and check for expiration.
+     * Handles the email confirmation process and updates the user's verification status.
      *
-     * @throws VerifyEmailExceptionInterface
+     * @param Request $request The request containing the confirmation URL
+     * @param UserInterface $user The user whose email is being confirmed
+     *
+     * @throws VerifyEmailExceptionInterface Thrown if the email confirmation fails
      */
     public function handleEmailConfirmation(Request $request, UserInterface $user): void
     {
@@ -66,7 +86,9 @@ class EmailVerifier
     }
 
     /**
-     * Send a new verification email to the user.
+     * Sends a new verification email to the user when the previous confirmation is expired.
+     *
+     * @param UserInterface $user The user to send the new verification email to
      */
     public function sendNewVerificationEmail(UserInterface $user): void
     {

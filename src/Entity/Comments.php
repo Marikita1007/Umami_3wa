@@ -27,6 +27,10 @@ class Comments
      *      minMessage = "Comment content must be at least {{ limit }} characters long",
      *      maxMessage = "Comment content cannot be longer than {{ limit }} characters"
      * )
+     * @Assert\Regex(
+     *      pattern="/^[^\p{Zl}\p{Zp}\x00-\x1F\x7F-\x9F<>]+$/u",
+     *      message="Comments can only contain printable characters and exclude specific symbols."
+     * )
      */
     private $content;
 
