@@ -35,7 +35,7 @@
                                 <h3 class="recipe-summary-title">{{ fourRandomRecipe.name }}</h3>
                                 {# Display Maximum 20 words of the recipe description #}
                                 <p>{{ fourRandomRecipe.description|split(' ')|slice(0, 20)|join(' ') }}</p>
-                                <div class="recipe-summary-infos">{{ fourRandomRecipe.cuisine }}</div>
+                                <p class="recipe-summary-infos">{{ fourRandomRecipe.cuisine }}</p>
                             </a>
                         </article>
                     {% endfor %}
@@ -122,7 +122,7 @@
                                     <figcaption>
                                         <h4>{{ recipe.name }}</h4>
                                         <p>{{ recipe.description|slice(0, 50) }}...</p>
-                                        <p>See More</p>
+                                        <p class="see-more">See More</p>
                                     </figcaption>
                                 </figure>
                             </a>

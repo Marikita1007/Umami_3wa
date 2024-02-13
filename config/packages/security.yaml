@@ -5,8 +5,7 @@ security:
     enable_authenticator_manager: true
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
-        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
-    # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
+        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto' # auto hasher with default options
 
     # Any secured section of your application needs some concept of a user.
     # The user provider loads users from any storage (e.g. the database) based on a "user identifier" (e.g. the user's email address);
@@ -28,7 +27,9 @@ security:
             lazy: true
             provider: app_user_provider
             entry_point: form_login
-            login_throttling: true #Limiting the failed login attempts is one basic protection against brute force attacks.
+            login_throttling:
+                max_attempts: 3
+                interval: '15 minutes' #Limiting the failed login attempts by same emails and same IP addresses.
             form_login:
                 login_path: login #Route to login form
                 check_path: login #Symfony calls the same route for show the form and the line
