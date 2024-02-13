@@ -19,12 +19,23 @@
 
   h4 {
     font-weight: bold;
-    font-size: 1.2em;
+    font-size: 1em;
     text-align: center;
   }
 
-  p {
-    padding: 0.5em;
+  figure {
+    display: flex;
+    flex-direction: column;
+    height: 100%; // Ensures the figure takes the full height
+    justify-content: space-between;
+
+    p {
+      padding: 0.5em;
+    }
+
+    .see-more {
+      margin-top: auto;
+    }
   }
 
   img {

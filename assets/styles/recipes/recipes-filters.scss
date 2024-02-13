@@ -34,12 +34,6 @@ body[data-route="recipes_filters"] {
       }
     }
 
-    /* Text when there is no recipe result  */
-    p {
-      font-weight: bold;
-      text-align: center;
-    }
-
     @media (max-width: $layout-breakpoint-small) {
       flex-direction: column;
 

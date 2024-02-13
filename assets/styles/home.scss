@@ -77,15 +77,15 @@ body[data-route="home"] {
         margin-bottom: 0;
       }
 
-      .recipe-summary p {
+      .recipe-summary {
         margin: 0;
         padding-bottom: 1rem;
         font-size: 0.875rem;
       }
 
       .recipe-summary-infos {
-        font-family: $umami-font-family-cursive, serif;
         color: $umami-blue-dark;
+        font-family: $umami-font-family-cursive, serif;
         font-size: 2.5rem;
         line-height: 1;
       }
@@ -145,8 +145,8 @@ body[data-route="home"] {
       }
 
       .block-body {
-        width: 22em;
         flex: none;
+        width: 22em;
       }
     }
 
@@ -284,6 +284,9 @@ body[data-route="home"] {
       @include centerFlexContainer;
     }
 
+    .block-body > p {
+      padding: 0.6em;
+    }
   }
 
     /* Dark theme styles */
