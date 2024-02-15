@@ -58,11 +58,24 @@
       }
 
       .see-more {
+        display: inline-block;
         margin-top: auto;
+      }
+
+      .see-more:after {
+        background: $umami-blue-dark;
+        content: '';
+        display: block;
+        height: 2px;
+        transition: 300ms;
+        width: 0;
+      }
+
+      .see-more:hover:after {
+        width: 35%;
       }
     }
   }
-
 }
 
 /* Use Flexbox for card layout */
