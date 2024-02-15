@@ -54,6 +54,7 @@
 
     .footer-columns {
       flex-wrap: wrap; // Prevent columns from wrapping on larger screens
+      justify-content: center;
     }
 
     .footer-column {
