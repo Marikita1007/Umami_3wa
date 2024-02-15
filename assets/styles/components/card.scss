@@ -17,34 +17,6 @@
     box-shadow: $hover-shadow;
   }
 
-  h4 {
-    font-weight: bold;
-    font-size: 1em;
-    text-align: center;
-  }
-
-  figure {
-    display: flex;
-    flex-direction: column;
-    height: 100%; // Ensures the figure takes the full height
-    justify-content: space-between;
-
-    p {
-      padding: 0.5em;
-    }
-
-    .see-more {
-      margin-top: auto;
-    }
-  }
-
-  img {
-    border-radius: 5px;
-    width: 100%;
-    height: 220px; // Set a fixed height for the image
-    object-fit: fill;
-  }
-
   .like-container {
     cursor: pointer;
     margin: inherit; // Put Like icon inside the image
@@ -55,6 +27,42 @@
       }
     }
   }
+
+  figure {
+    display: flex;
+    flex-direction: column;
+    height: 100%; // Ensures the figure takes the full height
+    justify-content: space-between;
+
+    img {
+      border-radius: 5px;
+      height: 220px; // Set a fixed height for the image
+      margin: 0;
+      object-fit: cover;
+      width: 100%;
+    }
+
+    figcaption {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      h4 {
+        font-weight: bold;
+        font-size: 1em;
+        text-align: center;
+      }
+
+      p {
+        padding: 0.5em;
+      }
+
+      .see-more {
+        margin-top: auto;
+      }
+    }
+  }
+
 }
 
 /* Use Flexbox for card layout */

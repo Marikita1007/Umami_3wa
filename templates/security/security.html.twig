@@ -17,12 +17,12 @@
 
                     <div class="form-row">
                         <label for="username">Email:</label>
-                        <input class="input-text" type="text" id="username" name="_username" value="{{ last_username }}" aria-required="true" aria-describedby="email-error">
+                        <input class="input-text" type="text" id="username" name="_username" value="{{ last_username }}" aria-required="true" aria-label="email">
                     </div>
 
                     <div class="form-row">
                         <label for="password">Password:</label>
-                        <input class="input-text" type="password" id="password" name="_password" aria-required="true" aria-describedby="password-error">
+                        <input class="input-text" type="password" id="password" name="_password" aria-required="true" aria-label="password">
                     </div>
 
                     {# This is where we store a long-lived "remember me" cookie in the user's browser.#}
@@ -35,7 +35,7 @@
                     </div>
 
                     {# ARIA attributes for CSRF token #}
-                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" aria-hidden="true">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
                     <div class="signup-button-container">
                         <p>Don't have an account yet?</p>

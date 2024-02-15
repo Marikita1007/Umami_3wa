@@ -59,7 +59,7 @@ class Recipes
      *      maxMessage = "Recipe instructions cannot be longer than {{ limit }} characters"
      * )
      * @Assert\Regex(
-     *      pattern = "/^[\p{L}0-9\s!&.:,]+$/u",
+     *      pattern="/^[\p{L}0-9\s!&.':,°()-]+$/u",
      *      message = "Recipe instructions can only contain letters, numbers, and spaces."
      * )
      * @Assert\NotBlank(message="Instructions can not be blank.")

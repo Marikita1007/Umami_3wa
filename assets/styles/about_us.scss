@@ -98,6 +98,7 @@ body[data-route="about_us"] {
 
     .button {
       background-color: $umami-grey-medium;
+      border: 1px solid $umami-white-second;
       color: $umami-white;
 
       &:hover {
@@ -128,11 +129,11 @@ body[data-route="about_us"] {
   }
 }
 
-// Include mixin for card styles
 .row {
   .column {
 
     .card {
+
       @include card-styles;
 
       .container {

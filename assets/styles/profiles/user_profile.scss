@@ -50,20 +50,20 @@ body[data-route="user_profile"]  {
   /*  Responsive Design for User Profile Page  */
   section {
     .content-container {
-      @media screen and (max-width: 768px) {
+      @media screen and (max-width: $layout-breakpoint-medium) {
         align-items: stretch; /* Stretch content to full width on smaller screens */
       }
     }
 
     .dashboard-container {
-      @media screen and (max-width: 768px) {
+      @media screen and (max-width: $layout-breakpoint-medium) {
         margin-bottom: 20px; /* Add space between dashboard and content on smaller screens */
         padding-right: 0;
         width: 100%; /* Full width on smaller screens */
       }
     }
 
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: $layout-breakpoint-medium) {
       flex-direction: column; /* Stack items vertically on smaller screens */
 
       .custom-button-wide {
