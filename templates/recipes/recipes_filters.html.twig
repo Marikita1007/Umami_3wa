@@ -169,7 +169,7 @@
                 <figcaption>
                     <h4>{{ recipe.name }}</h4>
                     <p>{{ recipe.description|slice(0, 50) }}...</p>
-                    <p><a href="{{ path('show_recipe', {id: recipe.id}) }}">See More</a></p>
+                    <p class="see-more"><a href="{{ path('show_recipe', {id: recipe.id}) }}">See More</a></p>
                 </figcaption>
             </figure>
         </li>
