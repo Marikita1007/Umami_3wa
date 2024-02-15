@@ -26,7 +26,7 @@
         </div>
         {% if fourRandomRecipes is not empty %}
             {#     Container for Four Random Cuisines Recipes      #}
-            <div class="container" role="region" aria-labelledby="menu-heading">
+            <div class="container" role="region">
                 <div class="recipe-summary" id="menu">
                     {% for fourRandomRecipe in fourRandomRecipes %}
                         <article class="recipe-summary-item">
@@ -101,7 +101,6 @@
             <div class="container-small flex-content">
                 <ul class="card-container" role="list">
                     {% for recipe in nineLatestRecipes %}
-
                         <li class="custom-card" role="listitem">
                             {% if app.user and 'ROLE_USER' in app.user.roles %}
                                 <div class="like-container">
@@ -116,8 +115,6 @@
                                 <figure>
                                     {% if recipe.thumbnail %}
                                         <img src="{{ asset('uploads/images/' ~ recipe.thumbnail) }}" alt="{{ recipe.name }}" title="{{ recipe.name }}">
-                                    {% else %}
-                                        <i class="fa-solid fa-eye-slash fa-2xl" aria-label="No image available"></i>
                                     {% endif %}
                                     <figcaption>
                                         <h4>{{ recipe.name }}</h4>

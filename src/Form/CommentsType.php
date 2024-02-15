@@ -16,8 +16,7 @@ class CommentsType extends AbstractType
             ->add('content', TextareaType::class, [
                 'label' => 'Add a comment',
                 'attr' => [
-                    'aria-label' => 'Add a comment to the recipe',
-                    'role' => "comment",
+                    'aria-label' => 'Enter your comment',
                 ],
             ]);
     }

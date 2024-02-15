@@ -71,9 +71,9 @@
 
                 <div class="recipe-infos">
                     {% if  recipe.updatedAt > recipe.createdAt %}
-                        <time><i class="fa fa-calendar"></i>Updated : {{ recipe.updatedAt|date('Y-m-d') }}</time>
+                        <span><i class="fa fa-calendar"></i>Updated : {{ recipe.updatedAt|date('Y-m-d') }}</span>
                     {% else %}
-                        <time><i class="fa fa-calendar"></i>Created : {{ recipe.createdAt|date('Y-m-d') }}</time>
+                        <span><i class="fa fa-calendar"></i>Created : {{ recipe.createdAt|date('Y-m-d') }}</span>
                     {% endif %}
                     <i class="fa-solid fa-heart like-icon liked" data-recipe-id="{{ recipe.id }}"></i>{{ LikesCountForRecipe }}
                 </div>
@@ -100,7 +100,7 @@
         <h2>Comments</h2>
 
         {# Display a add flash messages of comments #}
-        <div id="comments-flash-message-container"role="alert"></div>
+        <div id="comments-flash-message-container" role="alert"></div>
 
         {% if is_granted('ROLE_USER') %}
             {{ form_start(form, {'attr' : {'class': 'comments'}, 'action': path('show_recipe', {'id' : recipe.id}), 'method' : 'POST'}) }}

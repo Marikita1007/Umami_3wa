@@ -24,7 +24,6 @@ class ContactType extends AbstractType
                 'attr' => [
                     'class' => 'input-text',
                     'placeholder' => 'Email Address',
-                    'required' => 'required', // Ensures the field is required on the client side
                     'aria-label' => 'Email Address',
                 ],
                 'constraints' => [
@@ -37,7 +36,6 @@ class ContactType extends AbstractType
                 'label' => 'Name (Optional: Username if you have an account)',
                 'attr' => [
                     'placeholder' => 'Name',
-                    'required' => 'required',
                     'aria-label' => 'Name',
                 ],
                 'constraints' => [
@@ -66,7 +64,6 @@ class ContactType extends AbstractType
                         'message' => 'Invalid characters in the message field.',
                     ]),
                 ],
-                'required' => 'required',
             ])
         ;
     }
