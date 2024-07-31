@@ -259,18 +259,34 @@ function destroyCuisine(id) {
 
     // Handle the delete operation in the confirmDelete function
     confirmDeleteHandler = function () {
+        // First check if the cuisine can be deleted
         $.ajax({
-            url: "/cuisines/delete/" + id,
-            method: "DELETE",
+            url: "/cuisines/check/" + id,
+            method: "GET",
             success: function(response) {
-                let successHtml = '<div class="alert-success-message alert-flash" role="alert">Cuisine Deleted Successfully</div>';
-                $("#alert-div").html(successHtml);
-                showAllCuisines();
+                if (response.canDelete) {
+                    // If it can be deleted, proceed with the deletion
+                    $.ajax({
+                        url: "/cuisines/delete/" + id,
+                        method: "DELETE",
+                        success: function(response) {
+                            let successHtml = '<div class="alert-success-message alert-flash" role="alert">Cuisine Deleted Successfully</div>';
+                            $("#alert-div").html(successHtml);
+                            showAllCuisines();
 
-                // Remove success message after 5 seconds
-                setTimeout(function() {
-                    $("#alert-div").empty();
-                }, 5000);
+                            // Remove success message after 5 seconds
+                            setTimeout(function() {
+                                $("#alert-div").empty();
+                            }, 5000);
+                        },
+                        error: function(response) {
+                            console.log(response.responseJSON);
+                        }
+                    });
+                } else {
+                    // Handle the case where the cuisine cannot be deleted
+                    alert('Cannot delete the cuisine because it is used by at least one recipe');
+                }
             },
             error: function(response) {
                 console.log(response.responseJSON);
@@ -278,4 +294,5 @@ function destroyCuisine(id) {
         });
     }
 }
+
 

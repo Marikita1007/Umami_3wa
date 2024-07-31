@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Cuisines;
+use App\Repository\CuisinesRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -14,6 +15,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CuisinesCrudController extends AbstractCrudController
 {
+    private $cuisinesRepository;
+
+    public function __construct(CuisinesRepository $cuisinesRepository)
+    {
+        $this->cuisinesRepository = $cuisinesRepository;
+    }
+
     /**
      * Get the fully-qualified class name of the managed entity.
      *
@@ -51,6 +59,16 @@ class CuisinesCrudController extends AbstractCrudController
                 ->hideOnForm(),
             TextField::new('name'),
         ];
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        return $actions
+            ->update(Crud::PAGE_INDEX, Action::DELETE, function (Action $action){
+               return $action->displayIf(function ($entity) {
+                  return !$this->cuisinesRepository->isCuisineNameUsed($entity->getId());
+               });
+            });
     }
 
 }
