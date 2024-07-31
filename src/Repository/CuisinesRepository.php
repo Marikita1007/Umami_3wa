@@ -57,4 +57,19 @@ class CuisinesRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    /**
+     * This DQL checks if a cuisine is used by at least a recipe.
+     */
+    public function isCuisineNameUsed(int $cuisineId): bool
+    {
+        // Directly query the Recipe entity to check if there are recipes with the given cuisine ID
+        return (bool) $this->createQueryBuilder('c')
+            ->select('COUNT(r.id)')
+            ->leftJoin('c.recipes', 'r')
+            ->where('c.id = :cuisineId')
+            ->setParameter('cuisineId', $cuisineId)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }

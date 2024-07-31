@@ -173,6 +173,13 @@ class CuisinesController extends AbstractController
             return $this->json('No cuisine found for id' . $id, 404);
         }
 
+        // Check if any recipes are associated with this cuisine
+        // TODO This process needs to be handled by js async
+        $recipes = $cuisine->getRecipes();
+        if ($recipes->count() > 0) {
+            return $this->json('Cannot delete the cuisine because it is used by at least one recipe', 400);
+        }
+
         $entityManager->remove($cuisine);
         $entityManager->flush();
 
